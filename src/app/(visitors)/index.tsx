@@ -7,6 +7,14 @@ import UploadIcon from 'react-native-vector-icons/Feather';
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+type CookieUserData = {
+    SocietyID: string;
+    ID: string;
+    year: string;
+
+};
 
 const VisitorsPage = () => {
     const [date, setDate] = useState(new Date());
@@ -18,6 +26,8 @@ const VisitorsPage = () => {
     const [loading, setLoading] = useState(true);
     const [name, setName] = useState<string>('');
     const [mobileNumber, setMobileNumber] = useState<string>('');
+
+    const [cookies, setCookies] = useState<CookieUserData | null>(null)
 
     const pickImage = async () => {
         let result = await ImagePicker.launchCameraAsync({
@@ -35,7 +45,7 @@ const VisitorsPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://192.168.1.7:3000/flats');
+                const response = await axios.get('http://192.168.1.6:3000/flats');
                 setFlats(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -46,23 +56,48 @@ const VisitorsPage = () => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        const fetchAsyncStorageData = async () => {
+            try {
+                const keys = ['SocietyID', 'ID', 'Year'];
+                const result = await AsyncStorage.multiGet(keys);
+
+                const userData = result.reduce((acc, [key, value]) => {
+                    if (value !== null) {
+                        acc[key as keyof CookieUserData] = value;
+                    }
+                    return acc;
+                }, {} as CookieUserData);
+
+                setCookies(userData);
+                console.log("Async Storage DATA from UseEffect: ", userData);
+            } catch (error) {
+                console.error('Error retrieving user data:', error);
+            }
+        };
+        fetchAsyncStorageData();
+    }, []);
+
     const handleSubmit = async () => {
         setLoading(true);
         try {
+            const [wingCode, flatID] = flat.split("-")
             const requestData = {
                 name,
                 mobileNumber,
                 date,
                 image,
-                flat,
+                wingCode,
+                flatID,
+                year: cookies?.year,
+                ...cookies
             };
 
-            const response = await axios.post('http://192.168.1.7:3000/visitors', requestData);
+
+            const response = await axios.post('http://192.168.1.6:3000/visitors', requestData);
             console.log('Response from server:', response.data);
-            // Handle success, show confirmation, etc.
         } catch (error) {
             console.error('Error submitting data:', error);
-            // Handle error, show error message, etc.
         } finally {
             setLoading(false);
         }
@@ -164,11 +199,13 @@ const VisitorsPage = () => {
                             onValueChange={(itemValue) => setFlat(itemValue)}
                         >
                             {flats.map((item) => (
-                                <Picker.Item key={item.WingFlatCode} label={item.WingFlat} value={item.WingFlatCode} />
+                                <Picker.Item key={item.WingFlatCode} label={item.WingFlat} value={`${item.WingCode}-${item.FlatID}`} />
                             ))}
                         </Picker>
                     </View>
                 </View>
+
+
 
                 {/* Submit Button */}
                 <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>

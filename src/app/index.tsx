@@ -3,7 +3,6 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import LoginForm from '../components/LoginForm';
 import { useEffect } from 'react';
-import connectToDb from '../../utility/connectToDb';
 import DataFetcher from '../components/DataFetcher';
 
 export default function HomeScreen() {

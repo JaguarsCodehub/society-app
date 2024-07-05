@@ -1,9 +1,9 @@
-// LoginForm.tsx
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginForm: React.FC = () => {
     const [userId, setUserId] = useState<string>('');
@@ -12,19 +12,34 @@ const LoginForm: React.FC = () => {
     const [loading, setLoading] = useState(false)
 
     const handleLogin = async () => {
-        setLoading(true); // Show loading indicator
+        setLoading(true);
         try {
-            const response = await axios.post('http://192.168.1.7:3000/login', {
+            const response = await axios.post('http://192.168.1.6:3000/login', {
                 userId,
                 password,
                 year,
             });
+            // console.log(response)
             setLoading(false);
 
             if (response.status === 200) {
                 Alert.alert('Login Successful', `Welcome, ${response.data.data.UserName}`);
             } else {
                 Alert.alert('Login Failed', response.data.msg);
+            }
+
+            if (response.status === 200) {
+                const { Name, SocietyID, ID } = response.data.data
+
+                // Values are getting stored in the AsyncStorage (Device)
+                await AsyncStorage.multiSet([
+                    ['SocietyID', SocietyID.toString()],
+                    ['ID', ID.toString()],
+                    ['Year', year]
+                ]);
+
+                console.log("Data was added to AsyncStorage")
+                Alert.alert('Login Successful', `Welcome, ${Name}`);
             }
             router.push({ pathname: "/(visitors)" })
         } catch (error) {
@@ -33,6 +48,14 @@ const LoginForm: React.FC = () => {
             Alert.alert('Login Error', 'An error occurred during login.');
         }
     };
+
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <Text>Loading...</Text>
+            </View>
+        );
+    }
 
 
     return (
