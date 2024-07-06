@@ -1,8 +1,11 @@
-import { Slot, Stack } from "expo-router";
-import { Text, View } from "react-native";
+import { Stack } from 'expo-router';
+import { Montserrat_300Light, Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat'
 
-export default function RootLayout() {
+export default function Layout() {
     return (
-        <Stack />
-    )
+        <Stack>
+            <Stack.Screen name="index" options={{}} />
+            <Stack.Screen name="(member)" options={{ headerShown: false }} />
+        </Stack>
+    );
 }
