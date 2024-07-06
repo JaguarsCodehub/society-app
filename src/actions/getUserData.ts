@@ -8,7 +8,7 @@ type UserData = {
 
 export const getUserData = async (): Promise<UserData | null> => {
     try {
-        const keys = ['SocietyID', 'ID'];
+        const keys = ['SocietyID', 'ID', 'Year'];
         const result = await AsyncStorage.multiGet(keys);
 
         const userData = result.reduce((acc, [key, value]) => {

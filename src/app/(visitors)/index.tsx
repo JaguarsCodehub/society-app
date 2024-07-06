@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Alert, Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { Stack } from 'expo-router'
+import React, { useEffect, useState } from 'react';
+import { Alert, Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { router, Stack } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Foundation';
 import UploadIcon from 'react-native-vector-icons/Feather';
@@ -8,12 +8,12 @@ import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 
 type CookieUserData = {
     SocietyID: string;
     ID: string;
     year: string;
-
 };
 
 const VisitorsPage = () => {
@@ -26,14 +26,13 @@ const VisitorsPage = () => {
     const [loading, setLoading] = useState(true);
     const [name, setName] = useState<string>('');
     const [mobileNumber, setMobileNumber] = useState<string>('');
-
-    const [cookies, setCookies] = useState<CookieUserData | null>(null)
+    const [cookies, setCookies] = useState<CookieUserData | null>(null);
 
     const pickImage = async () => {
         let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [16, 9],
             quality: 1,
         });
 
@@ -41,20 +40,6 @@ const VisitorsPage = () => {
             setImage(result.assets[0].uri);
         }
     };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://192.168.1.6:3000/flats');
-                setFlats(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
 
     useEffect(() => {
         const fetchAsyncStorageData = async () => {
@@ -78,10 +63,37 @@ const VisitorsPage = () => {
         fetchAsyncStorageData();
     }, []);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            if (cookies) {
+                const headers = {
+                    'SocietyID': cookies.SocietyID,
+                };
+                console.log("Headers being sent:", headers); // Log headers
+
+                try {
+                    const response = await axios.get('http://192.168.1.6:3000/flats', {
+                        headers
+                    });
+                    setFlats(response.data);
+                    console.log("Flats:", flats); // Logging the Flats from one Society ID Only
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    console.log("Cookies:", cookies); //
+                    console.log(cookies?.SocietyID);
+                } finally {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchData();
+    }, [cookies]);
+
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            const [wingCode, flatID] = flat.split("-")
+            const [wingCode, flatID] = flat.split("-");
             const requestData = {
                 name,
                 mobileNumber,
@@ -92,7 +104,6 @@ const VisitorsPage = () => {
                 year: cookies?.year,
                 ...cookies
             };
-
 
             const response = await axios.post('http://192.168.1.6:3000/visitors', requestData);
             console.log('Response from server:', response.data);
@@ -114,12 +125,9 @@ const VisitorsPage = () => {
         setMode('date');
     };
 
-
     if (loading) {
         return (
-            <View style={styles.container}>
-                <Text>Loading...</Text>
-            </View>
+            <LoadingScreen />
         );
     }
 
@@ -205,17 +213,27 @@ const VisitorsPage = () => {
                     </View>
                 </View>
 
-
-
                 {/* Submit Button */}
                 <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
                     <Text style={{ color: "white", fontSize: 18 }}>Submit Data</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push({ pathname: "/(visitors)/view" })} style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: 30,
+                    margin: 40,
+                    padding: 15,
+                    backgroundColor: "#fff",
+                    borderRadius: 5,
+                }}>
+                    <Text style={{ color: "black", fontSize: 18 }}>Go to View Visitors</Text>
                 </TouchableOpacity>
                 <UploadIcon name='upload' size={20} color="white" />
             </View >
         </ScrollView>
     );
-}
+};
 
 export default VisitorsPage;
 

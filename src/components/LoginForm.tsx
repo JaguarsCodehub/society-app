@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingScreen from './ui/LoadingScreen';
 
 const LoginForm: React.FC = () => {
     const [userId, setUserId] = useState<string>('');
@@ -51,9 +52,7 @@ const LoginForm: React.FC = () => {
 
     if (loading) {
         return (
-            <View style={styles.container}>
-                <Text>Loading...</Text>
-            </View>
+            <LoadingScreen />
         );
     }
 
