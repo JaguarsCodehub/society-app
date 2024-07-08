@@ -20,7 +20,7 @@ const MemberForm = () => {
 
         try {
             console.log("Inside TryCatch Block for Getting Members")
-            const response = await axios.post('http://192.168.1.6:3000/member/login', {
+            const response = await axios.post('http://192.168.1.7:3000/member/login', {
                 mobileNumber,
                 password,
                 year
@@ -33,16 +33,18 @@ const MemberForm = () => {
                 Alert.alert('Login Failed', response.data.msg)
             }
 
-            console.log("Response Data: ", response.data.data)
-
             if (response.status === 200) {
-                const { MemberName, SocietyID, ID } = response.data.data
+                const { MemberName, SocietyID, UserID, ID, Wing, Flat } = response.data.data
 
                 // Values are getting stored in the AsyncStorage (Device)
                 await AsyncStorage.multiSet([
                     ['MemberSocietyID', SocietyID.toString()],
                     ['MemberID', ID.toString()],
-                    ['MemberYear', year]
+                    ['UserID', UserID.toString()],
+                    ['MemberYear', year],
+                    ['MemberName', MemberName],
+                    ['MemberWing', Wing],
+                    ['MemberFlat', Flat]
                 ]);
                 console.log("Data was addded to AsyncStorage")
                 Alert.alert("Login Successfull", `Welcome, ${MemberName}`)

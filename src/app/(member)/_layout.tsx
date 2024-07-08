@@ -18,6 +18,50 @@ export default function TabLayout() {
                     tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
                 }}
             />
+            <Tabs.Screen
+                name="ledger"
+                options={{
+                    href: null
+                }}
+            />
+            <Tabs.Screen
+                name="nomination"
+                options={{
+                    href: null
+                }}
+            />
+            <Tabs.Screen
+                name="onlinePayment"
+                options={{
+                    href: null
+                }}
+            />
+            <Tabs.Screen
+                name="receipt"
+                options={{
+                    href: null
+                }}
+            />
+            <Tabs.Screen
+                name="book-services"
+                options={{
+                    href: null
+                }}
+            />
+            <Tabs.Screen
+                name="complaint-register"
+                options={{
+                    href: null
+                }}
+            />
+            <Tabs.Screen
+                name="complaint-track"
+                options={{
+                    href: null
+                }}
+            />
+
+
         </Tabs>
     );
 }
