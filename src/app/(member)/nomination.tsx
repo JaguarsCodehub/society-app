@@ -62,7 +62,7 @@ const Nomination = () => {
                 console.log("Headers being sent:", headers); // Log headers
 
                 try {
-                    const response = await axios.get('http://192.168.1.7:3000/member/nomination', {
+                    const response = await axios.get('http://192.168.1.8:3000/member/nomination', {
                         headers
                     });
                     setNominationData(response.data);

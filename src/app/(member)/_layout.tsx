@@ -60,6 +60,12 @@ export default function TabLayout() {
                     href: null
                 }}
             />
+            <Tabs.Screen
+                name="services/airconditioning"
+                options={{
+                    href: null
+                }}
+            />
 
 
         </Tabs>

@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         fontSize: 18,
+        padding: 5,
         marginVertical: 10,
     },
     activeDrawerItem: {
@@ -230,6 +231,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         fontSize: 16,
+        padding: 5,
         marginVertical: 5,
         paddingLeft: 20, // Indent sub-items
     },
