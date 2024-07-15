@@ -29,7 +29,7 @@ const VisitorsPage = () => {
     const [cookies, setCookies] = useState<CookieUserData | null>(null);
 
     const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
+        let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [16, 9],

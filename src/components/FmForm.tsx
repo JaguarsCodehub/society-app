@@ -1,61 +1,60 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import axios from 'axios';
-import { router } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
+import { Picker } from '@react-native-picker/picker'
 import LoadingScreen from './ui/LoadingScreen';
-// import { useFonts, Montserrat_300Light, Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat'
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
 
+const FmForm = () => {
 
-const LoginForm: React.FC = () => {
     const [userId, setUserId] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [year, setYear] = useState<string>('');
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
-
-    // const [fontLoaders] = useFonts([
-    //     Montserrat_300Light, Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold
-    // ])
 
     const handleLogin = async () => {
         setLoading(true);
+
+
         try {
-            const response = await axios.post('http://192.168.1.8:3000/login', {
+            console.log("Inside TryCatch Block for Getting Members")
+            const response = await axios.post('http://192.168.1.8:3000/fm/login', {
                 userId,
                 password,
-                year,
-            });
-            // console.log(response)
+                year
+            })
             setLoading(false);
 
             if (response.status === 200) {
-                Alert.alert('Login Successful', `Welcome, ${response.data.data.UserName}`);
+                Alert.alert('Login Successfull', `Welcome, ${response.data.data.UserName}`)
             } else {
-                Alert.alert('Login Failed', response.data.msg);
+                Alert.alert('Login Failed', response.data.msg)
             }
 
             if (response.status === 200) {
-                const { Name, SocietyID, ID } = response.data.data
+                const { UserName, SocietyID, ID } = response.data.data
 
                 // Values are getting stored in the AsyncStorage (Device)
                 await AsyncStorage.multiSet([
-                    ['SocietyID', SocietyID.toString()],
-                    ['ID', ID.toString()],
-                    ['Year', year]
+                    ['FMSocietyID', SocietyID.toString()],
+                    ['FMID', ID.toString()],
+                    ['FMYear', year],
+                    ['FMName', UserName],
                 ]);
-
-                console.log("Data was added to AsyncStorage")
-                Alert.alert('Login Successful', `Welcome, ${Name}`);
+                console.log("Data was addded to AsyncStorage")
+                Alert.alert("Login Successfull", `Welcome, ${UserName}`)
             }
-            router.push({ pathname: "/(visitors)" })
+
+            router.push({ pathname: "/(fm)/dashboard" })
+
         } catch (error) {
             setLoading(false);
-            console.error('Error logging in:', error);
-            Alert.alert('Login Error', 'An error occurred during login.');
+            console.error("Error logging in:", error)
+            Alert.alert('Login Error', 'An error occured during Login')
         }
-    };
+    }
 
     if (loading) {
         return (
@@ -63,20 +62,19 @@ const LoginForm: React.FC = () => {
         );
     }
 
-
     return (
         <View style={styles.container}>
             <View style={styles.card}>
-                <Text style={styles.title}>Watchman Login</Text>
+                <Text style={styles.title}>Member Login</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="User ID"
+                    placeholder="Enter your Username"
                     value={userId}
                     onChangeText={setUserId}
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder="Password"
+                    placeholder="Enter your Password"
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
@@ -99,8 +97,10 @@ const LoginForm: React.FC = () => {
                 </TouchableOpacity>
             </View>
         </View>
-    );
-};
+    )
+}
+
+export default FmForm
 
 const styles = StyleSheet.create({
     container: {
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
-
     },
     input: {
         height: 40,
@@ -145,7 +144,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button: {
-        backgroundColor: '#007bff',
+        backgroundColor: 'purple',
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',
@@ -154,8 +153,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
-        // fontFamily: "Montserrat_400Regular"
     },
 });
 
-export default LoginForm;
