@@ -3,7 +3,7 @@ import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
     return (
-        <Tabs screenOptions={{ tabBarActiveTintColor: 'blue', headerShown: false }}>
+        <Tabs screenOptions={{ tabBarActiveTintColor: 'blue', headerShown: true, }}>
             <Tabs.Screen
                 name="dashboard/dashboard"
                 options={{
@@ -58,6 +58,13 @@ export default function TabLayout() {
                 name="complaint-track"
                 options={{
                     href: null
+                }}
+            />
+            <Tabs.Screen
+                name="request-service"
+                options={{
+                    href: null,
+                    headerTitle: "Request A Service",
                 }}
             />
             <Tabs.Screen

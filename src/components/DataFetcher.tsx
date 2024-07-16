@@ -18,7 +18,7 @@ const DataFetcher: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://192.168.1.8:3000/api/data');
+                const response = await axios.get('http://192.168.1.6:3000/api/data');
                 console.log(response.data)
                 setData(response.data);
             } catch (error) {

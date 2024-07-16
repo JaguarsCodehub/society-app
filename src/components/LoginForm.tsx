@@ -22,7 +22,7 @@ const LoginForm: React.FC = () => {
     const handleLogin = async () => {
         setLoading(true);
         try {
-            const response = await axios.post('http://192.168.1.8:3000/login', {
+            const response = await axios.post('http://192.168.1.6:3000/login', {
                 userId,
                 password,
                 year,
@@ -70,13 +70,13 @@ const LoginForm: React.FC = () => {
                 <Text style={styles.title}>Watchman Login</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="User ID"
+                    placeholder="Enter Your User ID"
                     value={userId}
                     onChangeText={setUserId}
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder="Password"
+                    placeholder="Enter your Password"
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
@@ -104,13 +104,14 @@ const LoginForm: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#f0f0f0',
     },
     card: {
-        width: '80%',
+        width: '90%',
         padding: 20,
         borderRadius: 10,
         backgroundColor: '#fff',
@@ -143,9 +144,10 @@ const styles = StyleSheet.create({
         height: 50,
         width: '100%',
         marginBottom: 20,
+        backgroundColor: "#f1f1f1"
     },
     button: {
-        backgroundColor: '#007bff',
+        backgroundColor: 'black',
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',

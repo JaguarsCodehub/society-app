@@ -1,6 +1,6 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 import Icon from 'react-native-vector-icons/Feather'
 import MenuIcon from 'react-native-vector-icons/MaterialIcons'
 import CustomDrawer from '../../../navigation/CustomDrawer'
@@ -29,14 +29,11 @@ const Dashboard = () => {
                         {/* Left Side Brand Name */}
                         <View style={styles.brandWrapper}>
                             <MenuIcon name='adobe' size={30} color="gray" style={{ marginTop: 5 }} />
-                            <Text style={{ fontSize: 25, fontWeight: "900", marginLeft: 5, color: "gray" }}>Raviva Society</Text>
+                            <Text style={{ fontSize: 25, fontWeight: "900", marginLeft: 5, color: "black" }}>Raviva Society</Text>
                         </View>
 
                         {/* Right Side Content */}
                         <View style={styles.rightWrapper}>
-                            {/* <View style={{ borderWidth: 1, borderColor: "#D3D3D3", borderRadius: 50, alignItems: "center", justifyContent: "center" }}>
-                            <MenuIcon name='bell' size={20} color="#292929" />
-                        </View> */}
                             <View style={{ padding: 10 }}>
                                 <Icon
                                     name='bell' color="#292929" size={25}
@@ -66,9 +63,9 @@ const Dashboard = () => {
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity>
-                                <View style={{ marginLeft: 15, backgroundColor: "green", padding: 15, borderRadius: 10, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                                    <MenuIcon name='account-circle' size={25} color="white" />
-                                    <Text style={{ color: "white", paddingHorizontal: 30 }}>Account</Text>
+                                <View style={{ marginLeft: 15, backgroundColor: "#FFA966", padding: 15, borderRadius: 10, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                                    <MenuIcon name='account-circle' size={25} color="black" />
+                                    <Text style={{ color: "black", paddingHorizontal: 30, fontWeight: "600" }}>Account</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -84,6 +81,18 @@ const Dashboard = () => {
                                 </View>
                             </View>
                         </View>
+
+                        <TouchableOpacity onPress={() => router.push({ pathname: "/(member)/request-service" })}>
+                            <View style={{ backgroundColor: "#FFA966", paddingVertical: 30, borderRadius: 5, marginTop: 15, padding: 5 }}>
+                                <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}>
+                                    <MenuIcon name='add-box' size={50} color="black" style={{ marginLeft: 20 }} />
+                                    <View style={{ flexDirection: "column", flex: 1 }}>
+                                        <Text style={{ marginLeft: 20, fontSize: 20, fontWeight: "700", color: "black" }}>Request a Service</Text>
+                                        <Text style={{ marginLeft: 20, color: "black" }}>You can request for a service or repair and we will make sure that is fulfilled.</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>

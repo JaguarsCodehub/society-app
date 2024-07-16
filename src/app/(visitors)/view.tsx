@@ -21,7 +21,7 @@ const ViewVisitors = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://192.168.1.8:3000/visitors');
+                const response = await axios.get('http://192.168.1.6:3000/visitors');
                 // console.log(response.data);
                 // console.log(response.data.WingName)
                 setVisitorsData(response.data);

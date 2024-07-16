@@ -20,7 +20,7 @@ const MemberForm = () => {
 
         try {
             console.log("Inside TryCatch Block for Getting Members")
-            const response = await axios.post('http://192.168.1.8:3000/member/login', {
+            const response = await axios.post('http://192.168.1.6:3000/member/login', {
                 mobileNumber,
                 password,
                 year
@@ -34,7 +34,7 @@ const MemberForm = () => {
             }
 
             if (response.status === 200) {
-                const { MemberName, SocietyID, UserID, ID, Wing, Flat } = response.data.data
+                const { MemberName, SocietyID, UserID, ID, Wing, Flat, CodePWD, MobileNumber } = response.data.data
 
                 // Values are getting stored in the AsyncStorage (Device)
                 await AsyncStorage.multiSet([
@@ -44,7 +44,9 @@ const MemberForm = () => {
                     ['MemberYear', year],
                     ['MemberName', MemberName],
                     ['MemberWing', Wing],
-                    ['MemberFlat', Flat]
+                    ['MemberFlat', Flat],
+                    ['MemberCode', CodePWD],
+                    ['MemberMobileNumber', MobileNumber],
                 ]);
                 console.log("Data was addded to AsyncStorage")
                 Alert.alert("Login Successfull", `Welcome, ${MemberName}`)
@@ -107,13 +109,14 @@ export default MemberForm
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#f0f0f0',
     },
     card: {
-        width: '80%',
+        width: '90%',
         padding: 20,
         borderRadius: 10,
         backgroundColor: '#fff',
@@ -147,7 +150,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button: {
-        backgroundColor: 'green',
+        backgroundColor: 'black',
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',

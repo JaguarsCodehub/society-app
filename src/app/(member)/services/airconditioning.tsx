@@ -44,6 +44,9 @@ const ServicesPage: React.FC = () => {
                 keyExtractor={item => item.id}
                 contentContainerStyle={styles.contractorList}
             />
+            <View>
+
+            </View>
         </View>
     );
 };

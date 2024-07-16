@@ -72,7 +72,7 @@ const VisitorsPage = () => {
                 console.log("Headers being sent:", headers); // Log headers
 
                 try {
-                    const response = await axios.get('http://192.168.1.8:3000/flats', {
+                    const response = await axios.get('http://192.168.1.6:3000/flats', {
                         headers
                     });
                     setFlats(response.data);
@@ -105,7 +105,7 @@ const VisitorsPage = () => {
                 ...cookies
             };
 
-            const response = await axios.post('http://192.168.1.8:3000/visitors', requestData);
+            const response = await axios.post('http://192.168.1.6:3000/visitors', requestData);
             console.log('Response from server:', response.data);
         } catch (error) {
             console.error('Error submitting data:', error);

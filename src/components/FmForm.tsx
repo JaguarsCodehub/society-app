@@ -20,7 +20,7 @@ const FmForm = () => {
 
         try {
             console.log("Inside TryCatch Block for Getting Members")
-            const response = await axios.post('http://192.168.1.8:3000/fm/login', {
+            const response = await axios.post('http://192.168.1.6:3000/fm/login', {
                 userId,
                 password,
                 year
@@ -65,7 +65,7 @@ const FmForm = () => {
     return (
         <View style={styles.container}>
             <View style={styles.card}>
-                <Text style={styles.title}>Member Login</Text>
+                <Text style={styles.title}>Facility Manager Login</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your Username"
@@ -104,13 +104,14 @@ export default FmForm
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#f0f0f0',
     },
     card: {
-        width: '80%',
+        width: '90%',
         padding: 20,
         borderRadius: 10,
         backgroundColor: '#fff',
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button: {
-        backgroundColor: 'purple',
+        backgroundColor: 'black',
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',
