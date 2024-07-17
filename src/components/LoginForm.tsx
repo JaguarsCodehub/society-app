@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from './ui/LoadingScreen';
-// import { useFonts, Montserrat_300Light, Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat'
+import { NetworkInfo } from 'react-native-network-info';
 
 
 const LoginForm: React.FC = () => {
     const [userId, setUserId] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [year, setYear] = useState<string>('');
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
 
-    // const [fontLoaders] = useFonts([
-    //     Montserrat_300Light, Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold
-    // ])
+
 
     const handleLogin = async () => {
         setLoading(true);
         try {
-            const response = await axios.post('http://192.168.1.6:3000/login', {
+            const response = await axios.post(`https://society-backend-h2ql.onrender.com/login`, {
                 userId,
                 password,
                 year,
             });
-            // console.log(response)
             setLoading(false);
 
             if (response.status === 200) {
@@ -53,7 +50,7 @@ const LoginForm: React.FC = () => {
         } catch (error) {
             setLoading(false);
             console.error('Error logging in:', error);
-            Alert.alert('Login Error', 'An error occurred during login.');
+            // Alert.alert('Login Error', error,);
         }
     };
 

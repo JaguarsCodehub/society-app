@@ -21,7 +21,7 @@ const ViewVisitors = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://192.168.1.6:3000/visitors');
+                const response = await axios.get('https://society-backend-h2ql.onrender.com/visitors');
                 // console.log(response.data);
                 // console.log(response.data.WingName)
                 setVisitorsData(response.data);
@@ -45,7 +45,7 @@ const ViewVisitors = () => {
         <View style={styles.container}>
             <FlatList
                 data={visitorsData}
-                keyExtractor={(item) => item.ID}
+                keyExtractor={(item) => item.Name}
                 renderItem={({ item }) => (
                     <View style={styles.itemCard}>
                         <Image

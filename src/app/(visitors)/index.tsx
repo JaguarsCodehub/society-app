@@ -72,7 +72,7 @@ const VisitorsPage = () => {
                 console.log("Headers being sent:", headers); // Log headers
 
                 try {
-                    const response = await axios.get('http://192.168.1.6:3000/flats', {
+                    const response = await axios.get('https://society-backend-h2ql.onrender.com/flats', {
                         headers
                     });
                     setFlats(response.data);

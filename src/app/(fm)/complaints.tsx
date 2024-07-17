@@ -63,7 +63,7 @@ const Complaints = () => {
                 };
                 console.log('Headers being sent: ', headers);
                 try {
-                    const response = await axios.get('http://192.168.1.6:3000/fm/allcomplaints', {
+                    const response = await axios.get('https://society-backend-h2ql.onrender.com/fm/allcomplaints', {
                         headers,
                     });
                     setComplaints(response.data);
@@ -87,7 +87,7 @@ const Complaints = () => {
         if (selectedComplaint) {
             // Update the status logic here, e.g., making an API call
             try {
-                const response = await axios.put(`http://192.168.1.6:3000/fm/updatecomplaint/${selectedComplaint.ComplaintCode}`, { status });
+                const response = await axios.put(`https://society-backend-h2ql.onrender.com/fm/updatecomplaint/${selectedComplaint.ComplaintCode}`, { status });
                 console.log(response.data);
                 // Update the local state to reflect the changes
                 setComplaints((prev) =>

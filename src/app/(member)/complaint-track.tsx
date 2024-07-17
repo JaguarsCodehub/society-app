@@ -48,7 +48,7 @@ const ComplaintTrack = () => {
                 }
                 console.log("Headers being sent: ", headers)
                 try {
-                    const response = await axios.get('http://192.168.1.6:3000/member/complaints', {
+                    const response = await axios.get('https://society-backend-h2ql.onrender.com/member/complaints', {
                         headers
                     });
                     // console.log(response.data);

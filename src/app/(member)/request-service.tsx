@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Foundation';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { uploadImageAsync } from '../../utils/uploadImageAsync';
 
 type CookieUserData = {
     MemberSocietyID: string;
@@ -69,7 +70,8 @@ const RequestService = () => {
                 ...cookies
             };
 
-            const response = await axios.post('http://192.168.1.6:3000/member/service-request', postData);
+            // const response = await axios.post('https://society-backend-h2ql.onrender.com/member/service-request', postData);
+            const response = await axios.post('http://192.168.1.7:3000/member/service-request', postData);
             console.log('Response from server:', response.data);
         } catch (error) {
             console.error('Error submitting data:', error);
@@ -82,12 +84,14 @@ const RequestService = () => {
         let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            // aspect: [16, 9],
+            aspect: [16, 9],
             quality: 1,
         });
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            const localUri = result.assets[0].uri;
+            const imageUrl = await uploadImageAsync(localUri);
+            setImage(imageUrl);
         }
     };
 

@@ -60,8 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 30,
     marginBottom: 70
-    // display: "flex"
-    // padding: 20,
+
   },
   switcher: {
     flexDirection: 'row',
@@ -74,7 +73,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   switcherButton: {
-    // marginTop: 20,
   },
   activeText: {
     fontWeight: 'bold',
@@ -82,14 +80,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     borderRadius: 3,
     padding: 15,
-    // paddingTop: 20,
     backgroundColor: "white"
   },
   inactiveText: {
     color: 'gray',
     fontSize: 15,
     padding: 15,
-    // backgroundColor: "#ececec",
     borderRadius: 3,
   },
   form: {
