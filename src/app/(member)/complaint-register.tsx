@@ -6,13 +6,9 @@ import Icon from 'react-native-vector-icons/Foundation';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { uploadImageAsync } from '../../utils/uploadImageAsync';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 
-interface Attachment {
-    name: string;
-    uri: string;
-    size: number;
-    type: string;
-}
 
 type CookieUserData = {
     MemberSocietyID: string;
@@ -72,6 +68,10 @@ export default function ComplaintRegister() {
 
             const response = await axios.post('https://society-backend-h2ql.onrender.com/member/complaint', postData);
             console.log('Response from server:', response.data);
+            setSubject("");
+            setDescription("");
+            setStatus("")
+            setImage(null)
         } catch (error) {
             console.error('Error submitting data:', error);
         } finally {
@@ -80,15 +80,17 @@ export default function ComplaintRegister() {
     };
 
     const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
+        let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            // aspect: [16, 9],
+            aspect: [16, 9],
             quality: 1,
         });
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            const localUri = result.assets[0].uri;
+            const imageUrl = await uploadImageAsync(localUri);
+            setImage(imageUrl);
         }
     };
 
@@ -103,6 +105,12 @@ export default function ComplaintRegister() {
         setShow(true);
         setMode('date');
     };
+
+    if (loading) {
+        return (
+            <LoadingScreen />
+        )
+    }
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -163,9 +171,9 @@ export default function ComplaintRegister() {
                 </Picker>
 
                 <View style={styles.cameraContainer}>
-                    <Text style={{ fontSize: 15, fontWeight: "600" }}>Upload Document</Text>
-                    <TouchableOpacity onPress={pickImage}>
-                        <Text style={{ marginTop: 10, width: 200, padding: 10, backgroundColor: "green", color: "white", borderRadius: 5 }}>Upload</Text>
+                    <Text style={{ fontSize: 15, fontWeight: "600" }}>Upload Photo Regarding a Complaint</Text>
+                    <TouchableOpacity onPress={pickImage} style={{ paddingHorizontal: 10 }}>
+                        <Text style={{ marginTop: 10, padding: 10, backgroundColor: "green", textAlign: "center", color: "white", borderRadius: 5 }}>Upload Photo</Text>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, fontSize: 20, fontWeight: "600" }}>Photo: </Text>
                     {image && <Image source={{ uri: image }} style={styles.image} />}
@@ -182,10 +190,10 @@ export default function ComplaintRegister() {
 const styles = StyleSheet.create({
     container: {
         // flex: 1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         padding: 20,
         backgroundColor: '#f0f0f0',
-        marginTop: 60
+        // marginTop: 60
     },
     label: {
         fontSize: 16,
@@ -205,10 +213,11 @@ const styles = StyleSheet.create({
         height: 50,
         width: '100%',
         marginBottom: 20,
+        backgroundColor: "lightgray"
     },
     button: {
         marginTop: 90,
-        backgroundColor: 'green',
+        backgroundColor: 'black',
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',
@@ -224,7 +233,8 @@ const styles = StyleSheet.create({
         fontWeight: "600"
     },
     cameraContainer: {
-        marginTop: 20,
+        // paddingHorizontal: 30,
+        // marginTop: 20,
         // paddingHorizontal: 20
     },
     image: {

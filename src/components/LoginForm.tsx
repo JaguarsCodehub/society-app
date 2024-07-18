@@ -46,7 +46,9 @@ const LoginForm: React.FC = () => {
                 console.log("Data was added to AsyncStorage")
                 Alert.alert('Login Successful', `Welcome, ${Name}`);
             }
-            router.push({ pathname: "/(visitors)" })
+            router.push({ pathname: "/(visitors)/dashboard" })
+            setUserId("");
+            setPassword("")
         } catch (error) {
             setLoading(false);
             console.error('Error logging in:', error);

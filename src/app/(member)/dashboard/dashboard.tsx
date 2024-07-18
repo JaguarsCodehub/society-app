@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { router, Stack } from 'expo-router'
 import Icon from 'react-native-vector-icons/Feather'
@@ -6,6 +6,28 @@ import MenuIcon from 'react-native-vector-icons/MaterialIcons'
 import CustomDrawer from '../../../navigation/CustomDrawer'
 
 const Dashboard = () => {
+
+    const showToast = () => {
+        ToastAndroid.show('A pikachu appeared nearby !', ToastAndroid.SHORT);
+    };
+
+    const showToastWithGravity = () => {
+        ToastAndroid.showWithGravity(
+            'All Your Base Are Belong To Us',
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER,
+        );
+    };
+
+    const showToastWithGravityAndOffset = () => {
+        ToastAndroid.showWithGravityAndOffset(
+            'A wild toast appeared!',
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+            50,
+            50,
+        );
+    }
 
 
     const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -62,7 +84,7 @@ const Dashboard = () => {
                                     <Text style={{ color: "white", paddingHorizontal: 30, fontSize: 15 }}>Transfer</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={showToastWithGravityAndOffset}>
                                 <View style={{ marginLeft: 15, backgroundColor: "#FFA966", padding: 15, borderRadius: 10, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                                     <MenuIcon name='account-circle' size={25} color="black" />
                                     <Text style={{ color: "black", paddingHorizontal: 30, fontWeight: "600" }}>Account</Text>

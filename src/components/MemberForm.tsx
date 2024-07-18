@@ -54,6 +54,8 @@ const MemberForm = () => {
 
             router.push({ pathname: "/(member)/dashboard/dashboard" })
 
+            setMobileNumber("");
+            setPassword("")
         } catch (error) {
             setLoading(false);
             console.error("Error logging in:", error)

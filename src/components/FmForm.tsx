@@ -48,6 +48,8 @@ const FmForm = () => {
             }
 
             router.push({ pathname: "/(fm)/dashboard" })
+            setUserId("");
+            setPassword("")
 
         } catch (error) {
             setLoading(false);

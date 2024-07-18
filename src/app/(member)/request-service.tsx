@@ -70,9 +70,15 @@ const RequestService = () => {
                 ...cookies
             };
 
-            // const response = await axios.post('https://society-backend-h2ql.onrender.com/member/service-request', postData);
-            const response = await axios.post('http://192.168.1.7:3000/member/service-request', postData);
+            const response = await axios.post('https://society-backend-h2ql.onrender.com/member/service-request', postData);
+            // const response = await axios.post('http://192.168.1.7:3000/member/service-request', postData);
             console.log('Response from server:', response.data);
+            setCategory("");
+            setSubject("");
+            setDescription("");
+            setServiceStatus(0);
+            setImage(null)
+
         } catch (error) {
             console.error('Error submitting data:', error);
         } finally {
@@ -247,7 +253,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: '100%',
         marginBottom: 20,
-        backgroundColor: "#FFD2AF",
+        backgroundColor: "#AFFFD9",
         borderRadius: 20,
         fontWeight: "700"
     },

@@ -9,6 +9,7 @@ import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from '../../components/ui/LoadingScreen';
+import { uploadImageAsync } from '../../utils/uploadImageAsync';
 
 type CookieUserData = {
     SocietyID: string;
@@ -32,12 +33,14 @@ const VisitorsPage = () => {
         let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [16, 9],
+            aspect: [1, 1],
             quality: 1,
         });
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            const localUri = result.assets[0].uri;
+            const imageUrl = await uploadImageAsync(localUri);
+            setImage(imageUrl);
         }
     };
 
@@ -105,8 +108,12 @@ const VisitorsPage = () => {
                 ...cookies
             };
 
-            const response = await axios.post('http://192.168.1.6:3000/visitors', requestData);
+            const response = await axios.post('https://society-backend-h2ql.onrender.com/visitors', requestData);
             console.log('Response from server:', response.data);
+            setName("");
+            setMobileNumber("")
+            setImage(null)
+            setFlat("")
         } catch (error) {
             console.error('Error submitting data:', error);
         } finally {
@@ -190,14 +197,6 @@ const VisitorsPage = () => {
                         </View>
                     </View>
 
-                    <View style={styles.cameraContainer}>
-                        <Text style={{ fontSize: 15, fontWeight: "600" }}>Upload Visitor's Live Photo</Text>
-                        <TouchableOpacity onPress={pickImage}>
-                            <Text style={{ marginTop: 10, width: 200, padding: 10, backgroundColor: "green", color: "white", borderRadius: 5 }}>Upload Photo</Text>
-                        </TouchableOpacity>
-                        <Text style={{ marginTop: 10, fontSize: 20, fontWeight: "600" }}>Photo: </Text>
-                        {image && <Image source={{ uri: image }} style={styles.image} />}
-                    </View>
 
                     <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
                         <Text style={styles.label}>Select Flat</Text>
@@ -213,9 +212,21 @@ const VisitorsPage = () => {
                     </View>
                 </View>
 
+
+                <View style={styles.cameraContainer}>
+                    <Text style={{ fontSize: 15, fontWeight: "600" }}>Upload Visitor's Live Photo</Text>
+                    <TouchableOpacity onPress={pickImage} style={{ paddingHorizontal: 10 }}>
+                        <Text style={{ marginTop: 10, padding: 10, backgroundColor: "green", textAlign: "center", color: "white", borderRadius: 5 }}>Upload Photo</Text>
+                    </TouchableOpacity>
+                    <Text style={{ marginTop: 10, fontSize: 20, fontWeight: "600" }}>Photo: </Text>
+                    {image && <Image source={{ uri: image }} style={styles.image} />}
+                </View>
+
+
                 {/* Submit Button */}
                 <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
                     <Text style={{ color: "white", fontSize: 18 }}>Submit Data</Text>
+                    <UploadIcon name='upload' size={20} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => router.push({ pathname: "/(visitors)/view" })} style={{
                     display: "flex",
@@ -229,7 +240,7 @@ const VisitorsPage = () => {
                 }}>
                     <Text style={{ color: "black", fontSize: 18 }}>Go to View Visitors</Text>
                 </TouchableOpacity>
-                <UploadIcon name='upload' size={20} color="white" />
+
             </View >
         </ScrollView>
     );
@@ -277,8 +288,9 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     cameraContainer: {
-        marginTop: 20,
-        paddingHorizontal: 20
+        paddingHorizontal: 30,
+        // marginTop: 20,
+        // paddingHorizontal: 20
     },
     image: {
         width: 200,
@@ -291,7 +303,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         margin: 40,
         padding: 15,
-        backgroundColor: "#00A25B",
+        backgroundColor: "black",
         borderRadius: 5,
         color: "white",
     },

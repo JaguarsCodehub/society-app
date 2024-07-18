@@ -51,7 +51,8 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="complaint-register"
                 options={{
-                    href: null
+                    href: null,
+                    headerTitle: "Log a Complaint"
                 }}
             />
             <Tabs.Screen
