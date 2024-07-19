@@ -4,6 +4,24 @@ import { router, Stack } from 'expo-router'
 import Icon from 'react-native-vector-icons/Feather'
 import MenuIcon from 'react-native-vector-icons/MaterialIcons'
 import CustomDrawer from '../../../navigation/CustomDrawer'
+import InfoCard from '../../../components/ui/InfoCard'
+
+
+const infoCardsData = [
+    {
+        title: 'Check your Parking Slot',
+        description: 'You have been given a parking slot.',
+        imageSource: require('../../../../assets/vendor.png'), // example image
+        onPress: () => router.push({ pathname: "(member)/parking-slot" }),
+    },
+    {
+        title: 'Your Account Ledger',
+        description: 'Access your accounts and ledger.',
+        imageSource: require('../../../../assets/camera.png'), // example image
+        onPress: () => router.push({ pathname: "(member)/account-ledger" }),
+    },
+];
+
 
 const Dashboard = () => {
 
@@ -115,6 +133,22 @@ const Dashboard = () => {
                                 </View>
                             </View>
                         </TouchableOpacity>
+
+
+
+
+                    </View>
+
+                    <View style={{ marginHorizontal: 10 }}>
+                        {infoCardsData.map((card, index) => (
+                            <InfoCard
+                                key={index}
+                                title={card.title}
+                                description={card.description}
+                                imageSource={card.imageSource}
+                                onPress={card.onPress}
+                            />
+                        ))}
                     </View>
                 </View>
             </ScrollView>

@@ -69,6 +69,27 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
+                name="parking-slot"
+                options={{
+                    href: null,
+                    headerTitle: "Check Parking Slot",
+                }}
+            />
+            <Tabs.Screen
+                name="account-ledger"
+                options={{
+                    href: null,
+                    headerTitle: "Accounts",
+                }}
+            />
+            <Tabs.Screen
+                name="bill-details"
+                options={{
+                    href: null,
+                    headerTitle: "Bill Details",
+                }}
+            />
+            <Tabs.Screen
                 name="services/airconditioning"
                 options={{
                     href: null

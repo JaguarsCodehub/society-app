@@ -6,9 +6,10 @@ import MemberForm from '../components/MemberForm';
 import FmForm from '../components/FmForm';
 import { Stack } from 'expo-router';
 import { Image } from 'react-native';
+import AdminForm from '../components/AdminForm';
 
 
-type FormType = 'watchman' | 'member' | 'facilityManager';
+type FormType = 'watchman' | 'member' | 'facilityManager' | 'admin';
 
 const Home: React.FC = () => {
   const [currentForm, setCurrentForm] = useState<FormType>('watchman');
@@ -21,6 +22,8 @@ const Home: React.FC = () => {
         return <MemberForm />;
       case 'facilityManager':
         return <FmForm />;
+      case 'admin':
+        return <AdminForm />
       default:
         return null;
     }
@@ -47,6 +50,9 @@ const Home: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setCurrentForm('facilityManager')} style={styles.switcherButton}>
             <Text style={currentForm === 'facilityManager' ? styles.activeText : styles.inactiveText}>Facility Manager</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setCurrentForm('admin')} style={styles.switcherButton}>
+            <Text style={currentForm === 'admin' ? styles.activeText : styles.inactiveText}>Admin</Text>
           </TouchableOpacity>
         </View>
         {renderForm()}

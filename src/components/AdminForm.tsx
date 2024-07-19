@@ -1,68 +1,60 @@
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
-import { Picker } from '@react-native-picker/picker'
-import LoadingScreen from './ui/LoadingScreen';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingScreen from './ui/LoadingScreen';
+import { NetworkInfo } from 'react-native-network-info';
 
-const MemberForm = () => {
 
-    const [mobileNumber, setMobileNumber] = useState<string>('');
+const AdminForm: React.FC = () => {
+    const [userId, setUserId] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [year, setYear] = useState<string>('');
     const [loading, setLoading] = useState(false);
 
 
+
+
     const handleLogin = async () => {
         setLoading(true);
-
-
         try {
-            console.log("Inside TryCatch Block for Getting Members")
-            const response = await axios.post('http://192.168.1.9:3000/member/login', {
-                mobileNumber,
+            const response = await axios.post(`http://192.168.1.9:3000/admin/login`, {
+                userId,
                 password,
-                year
-            })
+                year,
+            });
             setLoading(false);
 
             if (response.status === 200) {
-                Alert.alert('Login Successfull', `Welcome, ${response.data.data.UserName}`)
+                Alert.alert('Login Successful', `Welcome, ${response.data.data.UserName}`);
             } else {
-                Alert.alert('Login Failed', response.data.msg)
+                Alert.alert('Login Failed', response.data.msg);
             }
 
             if (response.status === 200) {
-                const { MemberName, SocietyID, UserID, ID, Wing, Flat, CodePWD, MobileNumber, MasterCode } = response.data.data
+                const { UserName, SocietyID, ID } = response.data.data
 
                 // Values are getting stored in the AsyncStorage (Device)
                 await AsyncStorage.multiSet([
-                    ['MemberSocietyID', SocietyID.toString()],
-                    ['MemberID', ID.toString()],
-                    ['UserID', UserID.toString()],
-                    ['MemberYear', year],
-                    ['MemberName', MemberName],
-                    ['MemberWing', Wing],
-                    ['MemberFlat', Flat],
-                    ['MemberCode', CodePWD],
-                    ['MemberMobileNumber', MobileNumber],
-                    ['MemberMasterCode', MasterCode]
+                    ['SocietyID', SocietyID.toString()],
+                    ['ID', ID.toString()],
+                    ['Year', year]
                 ]);
-                console.log("Data was addded to AsyncStorage")
-                Alert.alert("Login Successfull", `Welcome, ${MemberName}`)
+
+                console.log("Data was added to AsyncStorage")
+                Alert.alert('Login Successful', `Welcome, ${UserName}`);
             }
-
-            router.push({ pathname: "/(member)/dashboard/dashboard" })
-
-            setMobileNumber("");
+            router.push({ pathname: "/(admin)" })
+            setUserId("");
             setPassword("")
         } catch (error) {
             setLoading(false);
-            console.error("Error logging in:", error)
-            Alert.alert('Login Error', 'An error occured during Login')
+            console.error('Error logging in:', error);
+            // Alert.alert('Login Error', error,);
         }
-    }
+    };
 
     if (loading) {
         return (
@@ -70,15 +62,16 @@ const MemberForm = () => {
         );
     }
 
+
     return (
         <View style={styles.container}>
             <View style={styles.card}>
-                <Text style={styles.title}>Member Login</Text>
+                <Text style={styles.title}>Admin Login</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter your Mobile Number"
-                    value={mobileNumber}
-                    onChangeText={setMobileNumber}
+                    placeholder="Enter Your User ID"
+                    value={userId}
+                    onChangeText={setUserId}
                 />
                 <TextInput
                     style={styles.input}
@@ -105,10 +98,8 @@ const MemberForm = () => {
                 </TouchableOpacity>
             </View>
         </View>
-    )
-}
-
-export default MemberForm
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -134,6 +125,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
+
     },
     input: {
         height: 40,
@@ -151,6 +143,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: '100%',
         marginBottom: 20,
+        backgroundColor: "#f1f1f1"
     },
     button: {
         backgroundColor: 'black',
@@ -162,6 +155,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
+        // fontFamily: "Montserrat_400Regular"
     },
 });
 
+export default AdminForm;
