@@ -20,7 +20,7 @@ const MemberForm = () => {
 
         try {
             console.log("Inside TryCatch Block for Getting Members")
-            const response = await axios.post('http://192.168.1.9:3000/member/login', {
+            const response = await axios.post('http://https://society-backend-h2ql.onrender.com/member/login', {
                 mobileNumber,
                 password,
                 year

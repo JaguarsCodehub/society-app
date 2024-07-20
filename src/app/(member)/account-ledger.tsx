@@ -53,7 +53,7 @@ const AccountLedger = () => {
                 }
                 console.log("Headers being sent: ", headers)
                 try {
-                    const response = await axios.get('http://192.168.1.9:3000/member/account-ledger', {
+                    const response = await axios.get('http://https://society-backend-h2ql.onrender.com/member/account-ledger', {
                         headers
                     });
                     // console.log(response.data);
@@ -74,15 +74,15 @@ const AccountLedger = () => {
     return (
         <ScrollView>
             <View>
-                <Text style={{ fontSize: 30, fontWeight: "600", marginLeft: 10 }}>AccountLedger</Text>
+                <Text style={{ fontSize: 30, fontWeight: "600", marginLeft: 10 }}>Account Report</Text>
                 <View>
                     {accountData.map((item: any) => (
                         <TouchableOpacity
                             key={item.BillNumber}
-                            style={{ backgroundColor: "lightgray", padding: 10, margin: 10 }}
+                            style={{ backgroundColor: "#D8D8D8", padding: 20, margin: 10, borderRadius: 5 }}
                             onPress={() => router.push({ pathname: '(member)/bill-details', params: { item: JSON.stringify(item) } })}
                         >
-                            <Text>Bill Number: {item.BillNumber}</Text>
+                            <Text style={{ fontWeight: "600", fontSize: 20 }}>Bill Number: {item.BillNumber}</Text>
                             <Text>Ledger Type: {item.Type}</Text>
                             <Text>Ledger DocDate: {item.DocDate}</Text>
                             <Text>CustomerName: {item.CustomerName}</Text>

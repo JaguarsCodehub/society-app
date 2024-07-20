@@ -71,7 +71,7 @@ const RequestService = () => {
             };
 
             const response = await axios.post('https://society-backend-h2ql.onrender.com/member/service-request', postData);
-            // const response = await axios.post('http://192.168.1.7:3000/member/service-request', postData);
+            // const response = await axios.post('http://https://society-backend-h2ql.onrender.com/member/service-request', postData);
             console.log('Response from server:', response.data);
             setCategory("");
             setSubject("");

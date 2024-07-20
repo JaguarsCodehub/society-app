@@ -20,7 +20,7 @@ const AdminForm: React.FC = () => {
     const handleLogin = async () => {
         setLoading(true);
         try {
-            const response = await axios.post(`http://192.168.1.9:3000/admin/login`, {
+            const response = await axios.post(`http://https://society-backend-h2ql.onrender.com/admin/login`, {
                 userId,
                 password,
                 year,
