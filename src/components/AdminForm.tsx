@@ -36,13 +36,14 @@ const AdminForm: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://society-backend-h2ql.onrender.com/admin/login`,
+        `https://api.chsltd.net//admin/login`,
         {
           userId,
           password,
           year,
         }
       );
+
       setLoading(false);
 
       if (response.status === 200) {

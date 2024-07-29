@@ -15,7 +15,7 @@ const AdminServiceRequests = () => {
             setLoading(true)
             try {
                 const response = await axios.get(
-                    'https://society-backend-h2ql.onrender.com/admin/service-reqests',
+                    'https://api.chsltd.net/admin/service-reqests',
                 );
                 setServiceRequestsData(response.data);
             } catch (error) {

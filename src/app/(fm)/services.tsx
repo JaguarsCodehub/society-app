@@ -54,7 +54,7 @@ const Services = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          'https://society-backend-h2ql.onrender.com/member/service-requests'
+          'https://api.chsltd.net/member/service-requests'
         );
         setRequestsData(response.data);
       } catch (error) {

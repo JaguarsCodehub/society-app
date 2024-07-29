@@ -69,7 +69,7 @@ const AccountLedger = () => {
         console.log('Headers being sent: ', headers);
         try {
           const response = await axios.get(
-            'https://society-backend-h2ql.onrender.com/member/account-ledger',
+            'https://api.chsltd.net//member/account-ledger',
             {
               headers,
             }

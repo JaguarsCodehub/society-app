@@ -62,7 +62,7 @@ const Nomination = () => {
                 console.log("Headers being sent:", headers); // Log headers
 
                 try {
-                    const response = await axios.get('https://society-backend-h2ql.onrender.com/member/nomination', {
+                    const response = await axios.get('https://api.chsltd.net/member/nomination', {
                         headers
                     });
                     setNominationData(response.data);

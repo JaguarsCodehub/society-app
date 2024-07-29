@@ -84,7 +84,7 @@ const Complaints = () => {
         console.log('Headers being sent: ', headers);
         try {
           const response = await axios.get(
-            'https://society-backend-h2ql.onrender.com/fm/allcomplaints',
+            'https://api.chsltd.net/fm/allcomplaints',
             {
               headers,
             }
@@ -112,7 +112,7 @@ const Complaints = () => {
       // Update the status logic here, e.g., making an API call
       try {
         const response = await axios.put(
-          `https://society-backend-h2ql.onrender.com/fm/updatecomplaint/${selectedComplaint.ComplaintCode}`,
+          `https://api.chsltd.net//fm/updatecomplaint/${selectedComplaint.ComplaintCode}`,
           { status }
         );
         console.log(response.data);

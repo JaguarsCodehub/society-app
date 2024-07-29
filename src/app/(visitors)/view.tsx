@@ -22,7 +22,7 @@ const ViewVisitors = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          'https://society-backend-h2ql.onrender.com/visitors'
+          'https://api.chsltd.net/visitors'
         );
         // console.log(response.data);
         // console.log(response.data.WingName)

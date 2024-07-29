@@ -93,7 +93,7 @@ export default function ComplaintRegister() {
       };
 
       const response = await axios.post(
-        'https://society-backend-h2ql.onrender.com/member/complaint',
+        'https://api.chsltd.net/member/complaint',
         postData
       );
       console.log('Response from server:', response.data);

@@ -36,7 +36,7 @@ const LoginForm: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://society-backend-h2ql.onrender.com/login`,
+        `https://api.chsltd.net/login`,
         {
           userId,
           password,
@@ -55,12 +55,12 @@ const LoginForm: React.FC = () => {
       }
 
       if (response.status === 200) {
-        const { Name, SocietyID, ID } = response.data.data;
+        const { name, societyID, id } = response.data.data;
 
         // Values are getting stored in the AsyncStorage (Device)
         await AsyncStorage.multiSet([
-          ['SocietyID', SocietyID.toString()],
-          ['ID', ID.toString()],
+          ['SocietyID', societyID.toString()],
+          ['ID', id.toString()],
           ['Year', year],
         ]);
 

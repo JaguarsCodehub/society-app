@@ -60,7 +60,7 @@ const ParkingSlot = () => {
         console.log('Headers being sent: ', headers);
         try {
           const response = await axios.get(
-            'https://society-backend-h2ql.onrender.com/member/parking-slot',
+            'https://api.chsltd.net/member/parking-slot',
             {
               headers,
             }

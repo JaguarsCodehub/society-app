@@ -100,10 +100,10 @@ const RequestService = () => {
       };
 
       const response = await axios.post(
-        'https://society-backend-h2ql.onrender.com/member/service-request',
+        'https://api.chsltd.net/member/service-request',
         postData
       );
-      // const response = await axios.post('https://society-backend-h2ql.onrender.com/member/service-request', postData);
+      // const response = await axios.post('https://api.chsltd.net//member/service-request', postData);
       console.log('Response from server:', response.data);
       showToastWithGravityAndOffset('Service request was submitted !');
       setCategory('');

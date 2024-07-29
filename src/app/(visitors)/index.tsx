@@ -33,7 +33,7 @@ const VisitorsPage = () => {
   const [mode, setMode] = useState<'date' | 'time'>('date');
   const [show, setShow] = useState(false);
   const [image, setImage] = useState<string | null>(null);
-  const [flats, setFlats] = useState<any[]>([]);
+  const [flats, setFlats] = useState([]);
   const [flat, setFlat] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState<string>('');
@@ -90,27 +90,36 @@ const VisitorsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (cookies) {
+        const societyid = parseInt(cookies.SocietyID, 10);
+
         const headers = {
-          SocietyID: cookies.SocietyID,
+          societyid: societyid,
         };
         console.log('Headers being sent:', headers); // Log headers
 
         try {
           const response = await axios.get(
-            'https://society-backend-h2ql.onrender.com/flats',
+            'https://api.chsltd.net/flats',
             {
               headers,
             }
           );
-          setFlats(response.data);
-          console.log('Flats:', flats); // Logging the Flats from one Society ID Only
+          if (response.data.data) {
+            setFlats(response.data.data)
+            console.log('Flats:', response.data.data); // Logging the Flats from one Society ID Only
+          } else {
+            console.error('Unexpected response data:', response.data);
+            // setFlats(response.data.data);
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
-          console.log('Cookies:', cookies); //
+          console.log('Cookies:', cookies);
           console.log(cookies?.SocietyID);
         } finally {
           setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     };
 
@@ -133,7 +142,7 @@ const VisitorsPage = () => {
       };
 
       const response = await axios.post(
-        'https://society-backend-h2ql.onrender.com/visitors',
+        'https://api.chsltd.net/visitors',
         requestData
       );
       console.log('Response from server:', response.data);
@@ -244,11 +253,11 @@ const VisitorsPage = () => {
               style={styles.picker}
               onValueChange={(itemValue) => setFlat(itemValue)}
             >
-              {flats.map((item) => (
+              {flats.map((item: any) => (
                 <Picker.Item
-                  key={item.WingFlatCode}
-                  label={item.WingFlat}
-                  value={`${item.WingCode}-${item.FlatID}`}
+                  key={item.flatID}
+                  label={item.wingFlat}
+                  value={`${item.wingCode}-${item.flatID}`}
                 />
               ))}
             </Picker>
