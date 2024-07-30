@@ -52,9 +52,13 @@ const ParkingSlot = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (cookies) {
+
+        const societyid = parseInt(cookies.MemberSocietyID, 10);
+        const userid = parseInt(cookies.UserID, 10);
+
         const headers = {
-          societyid: cookies.MemberSocietyID,
-          userid: cookies.UserID,
+          societyid,
+          userid,
           membercode: cookies.MemberCode,
         };
         console.log('Headers being sent: ', headers);
@@ -65,9 +69,9 @@ const ParkingSlot = () => {
               headers,
             }
           );
-          console.log(response.data);
+          console.log(response.data.data);
 
-          setParkingSlotData(response.data);
+          setParkingSlotData(response.data.data);
         } catch (error) {
           console.error('Error fetching data:', error);
         } finally {
@@ -88,10 +92,10 @@ const ParkingSlot = () => {
       </Text>
       {parkingSlotData.map((item: any) => (
         <View style={{ backgroundColor: 'lightgray', padding: 10, margin: 10 }}>
-          <Text>MemberName: {item.Name}</Text>
-          <Text>Parking Slot: {item.Slot}</Text>
-          <Text>Parking SlotCode: {item.SlotCode}</Text>
-          <Text>Date: {item.Date}</Text>
+          <Text>MemberName: {item.name}</Text>
+          <Text>Parking Slot: {item.slot}</Text>
+          <Text>Parking SlotCode: {item.slotCode}</Text>
+          <Text>Date: {item.date}</Text>
         </View>
       ))}
     </View>

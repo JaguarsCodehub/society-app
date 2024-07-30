@@ -112,7 +112,7 @@ const Complaints = () => {
       // Update the status logic here, e.g., making an API call
       try {
         const response = await axios.put(
-          `https://api.chsltd.net//fm/updatecomplaint/${selectedComplaint.ComplaintCode}`,
+          `https://api.chsltd.net/fm/updatecomplaint/${selectedComplaint.ComplaintCode}`,
           { status }
         );
         console.log(response.data);

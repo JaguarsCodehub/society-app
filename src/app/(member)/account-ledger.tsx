@@ -69,7 +69,7 @@ const AccountLedger = () => {
         console.log('Headers being sent: ', headers);
         try {
           const response = await axios.get(
-            'https://api.chsltd.net//member/account-ledger',
+            'https://api.chsltd.net/member/account-ledger',
             {
               headers,
             }
@@ -96,7 +96,7 @@ const AccountLedger = () => {
         <View>
           {accountData.map((item: any) => (
             <TouchableOpacity
-              key={item.BillNumber}
+              key={item.billNumber}
               style={{
                 backgroundColor: '#D8D8D8',
                 padding: 20,
@@ -111,15 +111,15 @@ const AccountLedger = () => {
               }
             >
               <Text style={{ fontWeight: '600', fontSize: 20 }}>
-                Bill Number: {item.BillNumber}
+                Bill Number: {item.billNumber}
               </Text>
-              <Text>Ledger Type: {item.Type}</Text>
-              <Text>Ledger DocDate: {item.DocDate}</Text>
-              <Text>CustomerName: {item.CustomerName}</Text>
-              <Text>Credit: {item.Credit}</Text>
-              <Text>Debit: {item.Debit}</Text>
-              <Text>Balance: {item.Balance}</Text>
-              <Text>Member Room: {item.Member}</Text>
+              <Text>Ledger Type: {item.type}</Text>
+              <Text>Ledger DocDate: {item.docDate}</Text>
+              <Text>CustomerName: {item.customerName}</Text>
+              <Text>Credit: {item.credit}</Text>
+              <Text>Debit: {item.debit}</Text>
+              <Text>Balance: {item.balance}</Text>
+              <Text>Member Room: {item.member}</Text>
             </TouchableOpacity>
           ))}
         </View>

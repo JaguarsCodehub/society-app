@@ -106,7 +106,7 @@ const VisitorsPage = () => {
           );
           if (response.data.data) {
             setFlats(response.data.data)
-            console.log('Flats:', response.data.data); // Logging the Flats from one Society ID Only
+            // console.log('Flats:', response.data.data); // Logging the Flats from one Society ID Only
           } else {
             console.error('Unexpected response data:', response.data);
             // setFlats(response.data.data);
@@ -129,7 +129,12 @@ const VisitorsPage = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const [wingCode, flatID] = flat.split('-');
+      const [wingCode, flatIDString] = flat.split('-');
+      const flatID = parseInt(flatIDString, 10);
+
+      // Default to 0 or any other appropriate value if cookies are undefined
+      const societyID = parseInt(cookies?.SocietyID || '0', 10);
+      const ID = parseInt(cookies?.ID || '0', 10);
       const requestData = {
         name,
         mobileNumber,
@@ -138,11 +143,12 @@ const VisitorsPage = () => {
         wingCode,
         flatID,
         year: cookies?.year,
-        ...cookies,
+        societyID,
+        ID
       };
 
       const response = await axios.post(
-        'https://api.chsltd.net/visitors',
+        'https://api.chsltd.net/addvisitors',
         requestData
       );
       console.log('Response from server:', response.data);

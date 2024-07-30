@@ -5,13 +5,13 @@ import LoadingScreen from '../../components/ui/LoadingScreen';
 
 // Define the type for visitor data
 type VisitorData = {
-  ID: number;
-  Date: string;
-  Name: string;
-  WingName: string;
-  FlatNumber: string;
-  MobileNumber: string;
-  Photo: string;
+  // ID: number;
+  date: string;
+  name: string;
+  wingName: string;
+  flatNumber: string;
+  mobileNumber: string;
+  photo: string;
 };
 
 const ViewVisitors = () => {
@@ -24,9 +24,9 @@ const ViewVisitors = () => {
         const response = await axios.get(
           'https://api.chsltd.net/visitors'
         );
-        // console.log(response.data);
+        // console.log(response.data.data);
         // console.log(response.data.WingName)
-        setVisitorsData(response.data);
+        setVisitorsData(response.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -45,28 +45,28 @@ const ViewVisitors = () => {
     <View style={styles.container}>
       <FlatList
         data={visitorsData}
-        keyExtractor={(item) => item.Name}
+        keyExtractor={(item) => item.name}
         renderItem={({ item }) => (
           <View style={styles.itemCard}>
             <Image
-              source={{ uri: item.Photo }}
+              source={{ uri: item.photo }}
               resizeMode='contain'
               style={styles.image}
             />
             <View style={styles.infoContainer}>
               <Text style={{ fontSize: 16, fontWeight: '600' }}>
-                {item.Name}
+                {item.name}
               </Text>
               <Text style={{ fontSize: 16, fontWeight: '600' }}>
-                {item.Date}
+                {item.date}
               </Text>
               <Text style={{ fontSize: 16, color: 'black' }}>
-                {item.WingName}
+                {item.wingName}
               </Text>
               <Text style={{ fontSize: 16, color: 'black' }}>
-                {item.FlatNumber}
+                {item.flatNumber}
               </Text>
-              <Text style={{ fontSize: 16 }}>{item.MobileNumber}</Text>
+              <Text style={{ fontSize: 16 }}>{item.mobileNumber}</Text>
             </View>
           </View>
         )}

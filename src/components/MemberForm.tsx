@@ -36,7 +36,7 @@ const MemberForm = () => {
     try {
       console.log('Inside TryCatch Block for Getting Members');
       const response = await axios.post(
-        'https://api.chsltd.net//member/login',
+        'https://api.chsltd.net/member/login',
         {
           mobileNumber,
           password,
@@ -56,29 +56,29 @@ const MemberForm = () => {
 
       if (response.status === 200) {
         const {
-          MemberName,
-          SocietyID,
-          UserID,
-          ID,
-          Wing,
-          Flat,
-          CodePWD,
-          MobileNumber,
-          MasterCode,
+          memberName,
+          societyID,
+          userID,
+          id,
+          wing,
+          flat,
+          codePWD,
+          mobileNumber,
+          masterCode,
         } = response.data.data;
 
         // Values are getting stored in the AsyncStorage (Device)
         await AsyncStorage.multiSet([
-          ['MemberSocietyID', SocietyID.toString()],
-          ['MemberID', ID.toString()],
-          ['UserID', UserID.toString()],
+          ['MemberSocietyID', societyID.toString()],
+          ['MemberID', id.toString()],
+          ['UserID', userID.toString()],
           ['MemberYear', year],
-          ['MemberName', MemberName],
-          ['MemberWing', Wing],
-          ['MemberFlat', Flat],
-          ['MemberCode', CodePWD],
-          ['MemberMobileNumber', MobileNumber],
-          ['MemberMasterCode', MasterCode],
+          ['MemberName', memberName],
+          ['MemberWing', wing],
+          ['MemberFlat', flat],
+          ['MemberCode', codePWD],
+          ['MemberMobileNumber', mobileNumber],
+          ['MemberMasterCode', masterCode],
         ]);
         console.log('Data was addded to AsyncStorage');
         // Alert.alert('Login Successfull', `Welcome, ${MemberName}`);

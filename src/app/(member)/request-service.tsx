@@ -37,7 +37,7 @@ const RequestService = () => {
   const [subject, setSubject] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [category, setCategory] = useState<string>('');
-  const [serviceStatus, setServiceStatus] = useState<number>(0);
+  const [status, setStatus] = useState<number>(0);
   const [image, setImage] = useState<string | null>(null);
 
   const [cookies, setCookies] = useState<CookieUserData | null>(null);
@@ -93,14 +93,14 @@ const RequestService = () => {
         description,
         image,
         date,
-        serviceStatus,
+        status,
         serviceName,
         serviceCode,
         ...cookies,
       };
 
       const response = await axios.post(
-        'https://api.chsltd.net/member/service-request',
+        'https://api.chsltd.net/member/service-requests',
         postData
       );
       // const response = await axios.post('https://api.chsltd.net//member/service-request', postData);
@@ -109,7 +109,7 @@ const RequestService = () => {
       setCategory('');
       setSubject('');
       setDescription('');
-      setServiceStatus(0);
+      setStatus(0);
       setImage(null);
     } catch (error) {
       showToastWithGravityAndOffset('Request Failed to Submit');
@@ -232,7 +232,7 @@ const RequestService = () => {
         <View style={{ marginTop: 10 }}>
           <Text style={{ fontWeight: '600' }}>Choose your Service Status</Text>
           <Picker
-            selectedValue={serviceStatus}
+            selectedValue={status}
             style={{
               height: 50,
               width: '100%',
@@ -242,7 +242,7 @@ const RequestService = () => {
               borderRadius: 20,
               fontWeight: '700',
             }}
-            onValueChange={(itemValue) => setServiceStatus(itemValue)}
+            onValueChange={(itemValue) => setStatus(itemValue)}
           >
             <Picker.Item label='Select fulfillment status' value='' />
             <Picker.Item label='New Request' value='0' />

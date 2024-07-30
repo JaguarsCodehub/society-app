@@ -67,8 +67,10 @@ const ComplaintTrack = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (cookies) {
+        const memberId = parseInt(cookies.MemberID, 10);
+
         const headers = {
-          memberId: cookies.MemberID,
+          memberId,
         };
         console.log('Headers being sent: ', headers);
         try {
@@ -78,9 +80,9 @@ const ComplaintTrack = () => {
               headers,
             }
           );
-          // console.log(response.data);
+          console.log(response.data.data);
           // console.log(response.data.WingName)
-          setComplaints(response.data);
+          setComplaints(response.data.data);
         } catch (error) {
           showToastWithGravityAndOffset('Complaints data was not fetched');
           console.error('Error fetching data:', error);
@@ -94,18 +96,18 @@ const ComplaintTrack = () => {
   }, [cookies]);
   return (
     <ScrollView>
-      <View style={{ marginTop: 60 }}>
+      <View>
         <Text>ComplaintTrack</Text>
         {complaints.map((item: any) => (
           <View
             style={{ backgroundColor: 'lightgray', padding: 10, margin: 10 }}
           >
-            <Text>MemberName: {item.MemberName}</Text>
-            <Text>Subject: {item.Subject}</Text>
-            <Text>Description: {item.Description}</Text>
-            <Text>{item.ComplaintCode}</Text>
+            <Text>MemberName: {item.memberName}</Text>
+            <Text>Subject: {item.subject}</Text>
+            <Text>Description: {item.description}</Text>
+            <Text>{item.complaintCode}</Text>
             <Image
-              source={{ uri: item.File }}
+              source={{ uri: item.file }}
               resizeMode='contain'
               style={styles.image}
             />

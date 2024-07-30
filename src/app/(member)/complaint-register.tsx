@@ -20,9 +20,9 @@ import { uploadImageAsync } from '../../utils/uploadImageAsync';
 import LoadingScreen from '../../components/ui/LoadingScreen';
 
 type CookieUserData = {
-  MemberSocietyID: string;
+  MemberSocietyIDCookie: string;
   MemberID: string;
-  UserID: string;
+  UserIDCookie: string;
   MemberYear: string;
   MemberName: string;
   MemberWing: string;
@@ -83,12 +83,17 @@ export default function ComplaintRegister() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
+      // Default to 0 or any other appropriate value if cookies are undefined
+      const MemberSocietyID = parseInt(cookies?.MemberSocietyIDCookie || '0', 10);
+      const ID = parseInt(cookies?.UserIDCookie || '0', 10);
       const postData = {
         subject,
         description,
         status,
         image,
         date,
+        MemberSocietyID,
+        ID,
         ...cookies,
       };
 

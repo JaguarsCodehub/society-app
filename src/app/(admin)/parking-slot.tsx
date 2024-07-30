@@ -16,7 +16,7 @@ const AdminParkingSlot = () => {
                 const response = await axios.get(
                     'https://api.chsltd.net/admin/parking-slot',
                 );
-                setParkingData(response.data);
+                setParkingData(response.data.data);
             } catch (error) {
                 showToastWithGravityAndOffset('Complaints data was not fetched');
                 console.error('Error fetching data:', error);
@@ -38,11 +38,11 @@ const AdminParkingSlot = () => {
             <Text>AdminComplaints</Text>
             <View>
                 {parkingData.map((item: any) => (
-                    <View style={styles.card} key={item.ID}>
-                        <Text style={styles.title}>Parking Slot Code: {item.Slot}</Text>
-                        <Text>Slot Code: {item.SlotCode}</Text>
-                        <Text>Member Name: {item.Name}</Text>
-                        <Text>Date: {item.Date}</Text>
+                    <View style={styles.card} key={item.id}>
+                        <Text style={styles.title}>Parking Slot Code: {item.slot}</Text>
+                        <Text>Slot Code: {item.slotCode}</Text>
+                        <Text>Member Name: {item.name}</Text>
+                        <Text>Date: {item.date}</Text>
                     </View>
                 ))}
             </View>

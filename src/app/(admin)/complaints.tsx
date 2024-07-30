@@ -16,7 +16,7 @@ const AdminComplaints = () => {
                 const response = await axios.get(
                     'https://api.chsltd.net/admin/complaint-track',
                 );
-                setComplaintsData(response.data);
+                setComplaintsData(response.data.data);
             } catch (error) {
                 showToastWithGravityAndOffset('Complaints data was not fetched');
                 console.error('Error fetching data:', error);
@@ -37,13 +37,13 @@ const AdminComplaints = () => {
             <View>
                 {complaintsData.map((item: any) => (
                     <View style={styles.card}>
-                        <Text style={styles.title}>Complaint Code: {item.ComplaintCode}</Text>
-                        <Text>Member Name: {item.MemberName}</Text>
-                        <Text>Flat: {item.Wing} - {item.Flat}</Text>
-                        <Text>Subject: {item.Subject}</Text>
-                        <Text>Description: {item.Description}</Text>
-                        <Text>Status: {item.Status}</Text>
-                        {item.File && <Image source={{ uri: item.File }} style={styles.image} />}
+                        <Text style={styles.title}>Complaint Code: {item.complaintCode}</Text>
+                        <Text>Member Name: {item.memberName}</Text>
+                        <Text>Flat: {item.wing} - {item.flat}</Text>
+                        <Text>Subject: {item.subject}</Text>
+                        <Text>Description: {item.description}</Text>
+                        <Text>Status: {item.status}</Text>
+                        {item.File && <Image source={{ uri: item.file }} style={styles.image} />}
                     </View>
                 ))}
             </View>

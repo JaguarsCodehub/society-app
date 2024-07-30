@@ -36,7 +36,7 @@ const AdminForm: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://api.chsltd.net//admin/login`,
+        `https://api.chsltd.net/admin/login`,
         {
           userId,
           password,
@@ -57,12 +57,12 @@ const AdminForm: React.FC = () => {
       }
 
       if (response.status === 200) {
-        const { UserName, SocietyID, ID } = response.data.data;
+        const { UserName, societyID, id } = response.data.data;
 
         // Values are getting stored in the AsyncStorage (Device)
         await AsyncStorage.multiSet([
-          ['SocietyID', SocietyID.toString()],
-          ['ID', ID.toString()],
+          ['SocietyID', societyID.toString()],
+          ['ID', id.toString()],
           ['Year', year],
         ]);
 

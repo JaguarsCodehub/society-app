@@ -36,7 +36,7 @@ const FmForm = () => {
     try {
       console.log('Inside TryCatch Block for Getting Members');
       const response = await axios.post(
-        'https://api.chsltd.net//fm/login',
+        'https://api.chsltd.net/fm/login',
         {
           userId,
           password,
@@ -52,14 +52,14 @@ const FmForm = () => {
       // }
 
       if (response.status === 200) {
-        const { UserName, SocietyID, ID } = response.data.data;
+        const { userName, societyID, id } = response.data.data;
 
         // Values are getting stored in the AsyncStorage (Device)
         await AsyncStorage.multiSet([
-          ['FMSocietyID', SocietyID.toString()],
-          ['FMID', ID.toString()],
+          ['FMSocietyID', societyID.toString()],
+          ['FMID', id.toString()],
           ['FMYear', year],
-          ['FMName', UserName],
+          ['FMName', userName],
         ]);
         console.log('Data was addded to AsyncStorage');
         showToastWithGravityAndOffset('Login Successful');

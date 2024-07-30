@@ -11,14 +11,25 @@ type BillDetailsProps = {
 
 const BillDetails = () => {
     const { item } = useLocalSearchParams() as BillDetailsProps;
-    const billData = JSON.parse(item);
-    const [modalVisible, setModalVisible] = useState(false);
-    const dateString = billData.DocDate;
-    const dateFormat = "MM/dd/yyyy";
-    const parsedDate = parse(dateString, dateFormat, new Date());
-    const formattedDate = format(parsedDate, "MMMM yyyy");
+    const billData = item ? JSON.parse(item) : null;
 
-    const tableRef = useRef(null);
+    if (!billData) {
+        return <Text>Loading...</Text>;
+    }
+
+    const dateString = billData.docDate;
+    const dateFormat = "MM/dd/yyyy";
+    let formattedDate;
+
+    try {
+        const parsedDate = parse(dateString, dateFormat, new Date());
+        formattedDate = format(parsedDate, "MMMM yyyy");
+    } catch (error) {
+        console.error('Error parsing date:', error);
+        formattedDate = 'Invalid Date';
+    }
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const generatePDF = async () => {
         const html = `
@@ -40,12 +51,12 @@ const BillDetails = () => {
             <div class="container">
                 <div class="title">Bill for the Month of ${formattedDate}</div>
                 <div class="row">
-                    <div class="cell">Flat: ${billData.Member}</div>
-                    <div class="cell">Bill No: ${billData.BillNumber}</div>
+                    <div class="cell">Flat: ${billData.member}</div>
+                    <div class="cell">Bill No: ${billData.billNumber}</div>
                 </div>
                 <div class="row">
                     <div class="cell">Name: MEMBER B</div>
-                    <div class="cell">Bill Date: ${billData.DocDate}</div>
+                    <div class="cell">Bill Date: ${billData.docDate}</div>
                 </div>
                 <div class="table">
                     <div class="tableRow">
@@ -76,15 +87,15 @@ const BillDetails = () => {
                 <div class="table">
                     <div class="tableRow">
                         <div class="tableHeader">Balance</div>
-                        <div class="tableHeader">${billData.Balance}.00</div>
+                        <div class="tableHeader">${billData.balance}.00</div>
                     </div>
                     <div class="tableRow">
                         <div class="tableCell">Credit</div>
-                        <div class="tableCell">${billData.Credit}.00</div>
+                        <div class="tableCell">${billData.credit}.00</div>
                     </div>
                     <div class="tableRow">
                         <div class="tableCell">Debit</div>
-                        <div class="tableCell">${billData.Debit}.00</div>
+                        <div class="tableCell">${billData.debit}.00</div>
                     </div>
                     <div class="tableRow">
                         <div class="tableCell">Current Bill</div>
@@ -117,10 +128,10 @@ const BillDetails = () => {
             <Text style={styles.title}>Bill for the Month of {formattedDate}</Text>
             <View style={styles.row}>
                 <View style={styles.cell}>
-                    <Text>Flat: {billData.Member}</Text>
+                    <Text>Flat: {billData.member}</Text>
                 </View>
                 <View style={styles.cell}>
-                    <Text>Bill No: {billData.BillNumber}</Text>
+                    <Text>Bill No: {billData.billNumber}</Text>
                 </View>
             </View>
             <View style={styles.row}>
@@ -128,7 +139,7 @@ const BillDetails = () => {
                     <Text>Name: MEMBER B</Text>
                 </View>
                 <View style={styles.cell}>
-                    <Text>Bill Date: {billData.DocDate}</Text>
+                    <Text>Bill Date: {billData.docDate}</Text>
                 </View>
             </View>
 
@@ -167,24 +178,24 @@ const BillDetails = () => {
             <View style={styles.table}>
                 <View style={styles.tableRow}>
                     <Text style={styles.tableHeader}>Balance</Text>
-                    <Text style={styles.tableHeader}>{billData.Balance}.00</Text>
+                    <Text style={styles.tableHeader}>{billData.balance}</Text>
                 </View>
                 <View style={styles.tableRow}>
                     <Text style={styles.tableCell}>Credit</Text>
-                    <Text style={styles.tableCell}>{billData.Credit}.00</Text>
+                    <Text style={styles.tableCell}>{billData.credit}</Text>
                 </View>
                 <View style={styles.tableRow}>
                     <Text style={styles.tableCell}>Debit</Text>
-                    <Text style={styles.tableCell}>{billData.Debit}.00</Text>
+                    <Text style={styles.tableCell}>{billData.debit}</Text>
                 </View>
 
                 <View style={styles.tableRow}>
                     <Text style={styles.tableCell}>Current Bill</Text>
-                    <Text style={styles.tableCell}>{billData.Debit}.00</Text>
+                    <Text style={styles.tableCell}>{billData.debit}</Text>
                 </View>
                 <View style={styles.tableRow}>
                     <Text style={styles.tableCell}>Amount Due</Text>
-                    <Text style={styles.tableCell}>-{billData.Debit}.00</Text>
+                    <Text style={styles.tableCell}>-{billData.debit}</Text>
                 </View>
             </View>
 
