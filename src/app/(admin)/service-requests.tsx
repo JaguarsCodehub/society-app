@@ -15,9 +15,9 @@ const AdminServiceRequests = () => {
             setLoading(true)
             try {
                 const response = await axios.get(
-                    'https://api.chsltd.net/admin/service-reqests',
+                    'https://api.chsltd.net/member/service-requests',
                 );
-                setServiceRequestsData(response.data);
+                setServiceRequestsData(response.data.data);
             } catch (error) {
                 showToastWithGravityAndOffset('Complaints data was not fetched');
                 console.error('Error fetching data:', error);

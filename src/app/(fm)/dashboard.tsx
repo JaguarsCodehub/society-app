@@ -56,7 +56,7 @@ const FmDashboard = () => {
 
                 </View>
                 <View style={styles.buttonRow}>
-                    <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: "/complaints" })}>
+                    <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: "/(fm)/complaints" })}>
                         <Text style={styles.buttonText}>Complaints</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: "/services" })}>

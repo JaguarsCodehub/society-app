@@ -48,7 +48,7 @@ const LoginForm: React.FC = () => {
       if (response.status === 200) {
         Alert.alert(
           'Login Successful',
-          `Welcome, ${response.data.data.UserName}`
+          `Welcome, ${response.data.data.userName}`
         );
       } else {
         Alert.alert('Login Failed', response.data.msg);

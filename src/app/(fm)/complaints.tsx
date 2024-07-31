@@ -23,12 +23,12 @@ type CookieUserData = {
 };
 
 type Complaint = {
-  ID: string;
-  MemberName: string;
-  Subject: string;
-  Description: string;
-  ComplaintCode: string;
-  File: string;
+  id: string;
+  memberName: string;
+  subject: string;
+  description: string;
+  complaintCode: string;
+  file: string;
   status: string;
 };
 
@@ -89,7 +89,7 @@ const Complaints = () => {
               headers,
             }
           );
-          setComplaints(response.data);
+          setComplaints(response.data.data);
         } catch (error) {
           showToastWithGravityAndOffset('Complaint data was not fetched');
           console.error('Error fetching data:', error);
@@ -112,14 +112,14 @@ const Complaints = () => {
       // Update the status logic here, e.g., making an API call
       try {
         const response = await axios.put(
-          `https://api.chsltd.net/fm/updatecomplaint/${selectedComplaint.ComplaintCode}`,
+          `https://api.chsltd.net/fm/updatecomplaint/${selectedComplaint.complaintCode}`,
           { status }
         );
         console.log(response.data);
         // Update the local state to reflect the changes
         setComplaints((prev) =>
           prev.map((comp) =>
-            comp.ID === selectedComplaint.ID ? { ...comp, status } : comp
+            comp.id === selectedComplaint.id ? { ...comp, status } : comp
           )
         );
       } catch (error) {
@@ -143,7 +143,7 @@ const Complaints = () => {
           </Text>
           {complaints.map((item) => (
             <View
-              key={item.ComplaintCode}
+              key={item.complaintCode}
               style={{
                 backgroundColor: '#C4FFE1',
                 padding: 10,
@@ -154,25 +154,25 @@ const Complaints = () => {
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
               >
-                MemberName: {item.MemberName}
+                MemberName: {item.memberName}
               </Text>
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
               >
-                Subject: {item.Subject}
+                Subject: {item.subject}
               </Text>
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
               >
-                Description: {item.Description}
+                Description: {item.description}
               </Text>
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
               >
-                {item.ComplaintCode}
+                {item.complaintCode}
               </Text>
               <Image
-                source={{ uri: item.File }}
+                source={{ uri: item.file }}
                 resizeMode='contain'
                 style={styles.image}
               />
@@ -197,7 +197,7 @@ const Complaints = () => {
           {selectedComplaint && (
             <>
               <Text style={styles.bottomSheetHeader}>Update Status</Text>
-              <Text>Complaint Code: {selectedComplaint.ID}</Text>
+              <Text>Complaint Code: {selectedComplaint.id}</Text>
               <Picker
                 selectedValue={status}
                 onValueChange={(itemValue) => setStatus(itemValue)}

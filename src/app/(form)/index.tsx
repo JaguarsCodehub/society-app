@@ -8,7 +8,7 @@ import MemberForm from '../../components/MemberForm';
 import FmForm from '../../components/FmForm';
 import AdminForm from '../../components/AdminForm';
 
-type FormType = 'watchman' | 'member' | 'facilityManager' | 'admin';
+type FormType = 'watchman' | 'member' | 'fm' | 'admin';
 
 const Form: React.FC = () => {
     const [currentForm, setCurrentForm] = useState<FormType>('watchman');
@@ -19,7 +19,7 @@ const Form: React.FC = () => {
                 return <LoginForm />;
             case 'member':
                 return <MemberForm />;
-            case 'facilityManager':
+            case 'fm':
                 return <FmForm />;
             case 'admin':
                 return <AdminForm />
@@ -47,8 +47,8 @@ const Form: React.FC = () => {
                     <TouchableOpacity onPress={() => setCurrentForm('member')} style={styles.switcherButton}>
                         <Text style={currentForm === 'member' ? styles.activeText : styles.inactiveText}>Member</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setCurrentForm('facilityManager')} style={styles.switcherButton}>
-                        <Text style={currentForm === 'facilityManager' ? styles.activeText : styles.inactiveText}>Facility Manager</Text>
+                    <TouchableOpacity onPress={() => setCurrentForm('fm')} style={styles.switcherButton}>
+                        <Text style={currentForm === 'fm' ? styles.activeText : styles.inactiveText}>Fm</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => setCurrentForm('admin')} style={styles.switcherButton}>
                         <Text style={currentForm === 'admin' ? styles.activeText : styles.inactiveText}>Admin</Text>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     switcher: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        padding: 10,
+        padding: 8,
         backgroundColor: "#ececec",
         marginTop: 5,
         marginHorizontal: 10,
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 15,
         borderRadius: 3,
-        padding: 15,
+        padding: 10,
         backgroundColor: "white"
     },
     inactiveText: {
         color: 'gray',
         fontSize: 15,
-        padding: 15,
+        padding: 10,
         borderRadius: 3,
     },
     form: {

@@ -99,13 +99,13 @@ const Dashboard = () => {
                             <TouchableOpacity>
                                 <View style={{ backgroundColor: "black", padding: 15, borderRadius: 10, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                                     <MenuIcon name='currency-rupee' size={25} color="white" />
-                                    <Text style={{ color: "white", paddingHorizontal: 30, fontSize: 15 }}>Transfer</Text>
+                                    <Text style={{ color: "white", paddingHorizontal: 20, fontSize: 15 }}>Transfer</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={showToastWithGravityAndOffset}>
                                 <View style={{ marginLeft: 15, backgroundColor: "#FFA966", padding: 15, borderRadius: 10, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                                     <MenuIcon name='account-circle' size={25} color="black" />
-                                    <Text style={{ color: "black", paddingHorizontal: 30, fontWeight: "600" }}>Account</Text>
+                                    <Text style={{ color: "black", paddingHorizontal: 20, fontWeight: "600" }}>Account</Text>
                                 </View>
                             </TouchableOpacity>
 

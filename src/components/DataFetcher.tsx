@@ -18,7 +18,7 @@ const DataFetcher: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://api.chsltd.net//api/data');
+                const response = await axios.get('https://api.chsltd.net/api/data');
                 console.log(response.data)
                 setData(response.data);
             } catch (error) {

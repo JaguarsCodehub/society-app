@@ -37,7 +37,7 @@ interface ServiceRequest {
 
 const Services = () => {
   const [loading, setLoading] = useState(false);
-  const [requestsData, setRequestsData] = useState<ServiceRequest[]>([]);
+  const [requestsData, setRequestsData] = useState([]);
 
   const showToastWithGravityAndOffset = (msg: string) => {
     ToastAndroid.showWithGravityAndOffset(
@@ -56,7 +56,7 @@ const Services = () => {
         const response = await axios.get(
           'https://api.chsltd.net/member/service-requests'
         );
-        setRequestsData(response.data);
+        setRequestsData(response.data.data);
       } catch (error) {
         showToastWithGravityAndOffset('Error fetching data');
         console.error('Error fetching data:', error);
@@ -79,9 +79,9 @@ const Services = () => {
           <Text style={{ fontSize: 30, fontWeight: '700', marginLeft: 10 }}>
             Service Requests
           </Text>
-          {requestsData.map((item) => (
+          {requestsData.map((item: any) => (
             <View
-              key={item.ID}
+              key={item.id}
               style={{
                 backgroundColor: '#EAEAEA',
                 padding: 10,
@@ -92,27 +92,27 @@ const Services = () => {
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
               >
-                ServiceName: {item.ServiceName}
+                ServiceName: {item.serviceName}
               </Text>
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
               >
-                ServiceCode: {item.ServiceCode}
+                ServiceCode: {item.serviceCode}
               </Text>
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
               >
-                Subject: {item.Subject}
+                Subject: {item.subject}
               </Text>
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
               >
-                Description: {item.Description}
+                Description: {item.description}
               </Text>
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
               >
-                MemberName{item.MemberName}
+                MemberName{item.memberName}
               </Text>
               <Image
                 source={{ uri: item.file }}
