@@ -74,7 +74,6 @@ const AccountLedger = () => {
               headers,
             }
           );
-          // console.log(response.data);
           setAccountData(response.data);
         } catch (error) {
           console.error('Error fetching data:', error);

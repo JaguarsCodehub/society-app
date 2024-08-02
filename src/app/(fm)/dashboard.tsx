@@ -22,7 +22,6 @@ const FmDashboard = () => {
     const [cookies, setCookies] = useState<CookieUserData | null>(null);
     const [loading, setLoading] = useState(false);
     const [chartKey, setChartKey] = React.useState(0);
-    // const [barData, setBarData] = React.useState<barDataItem[]>([]);
 
     useEffect(() => {
         const fetchAsyncStorageData = async () => {
@@ -85,16 +84,6 @@ const FmDashboard = () => {
                         yAxisTextStyle={{ color: "gray" }}
                         isAnimated
                         animationDuration={300}
-                    // rulesColor={"#00000020"}
-                    // backgroundColor={"white"}
-                    // showGradient
-                    // gradientColor={"blue"}
-                    // barInnerComponent={() => (
-                    //   <View style={{ backgroundColor: "pink", height: "100%" }} />
-                    // )}
-                    // showLine
-                    // dashGap={0}
-                    // dashWidth={0}
                     />
                 </View>
 
@@ -136,7 +125,6 @@ export default FmDashboard
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
         marginTop: 10
     },
     header: {

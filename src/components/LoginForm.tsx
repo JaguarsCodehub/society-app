@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -14,13 +14,13 @@ import axios from 'axios';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from './ui/LoadingScreen';
-import { NetworkInfo } from 'react-native-network-info';
 
 const LoginForm: React.FC = () => {
   const [userId, setUserId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [year, setYear] = useState<string>('');
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ userId?: string; password?: string }>({});
 
   const showToastWithGravityAndOffset = (msg: string) => {
     ToastAndroid.showWithGravityAndOffset(
@@ -32,7 +32,33 @@ const LoginForm: React.FC = () => {
     );
   };
 
+  const validate = () => {
+    let valid = true;
+    const newErrors: { userId?: string; password?: string } = {};
+
+    if (!userId) {
+      newErrors.userId = 'User ID is required';
+      valid = false;
+    } else if (userId.length < 6) {
+      newErrors.userId = 'User ID must be at least 6 characters long';
+      valid = false;
+    }
+
+    if (!password) {
+      newErrors.password = 'Password is required';
+      valid = false;
+    } else if (password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters long';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const handleLogin = async () => {
+    if (!validate()) return;
+
     setLoading(true);
     try {
       const response = await axios.post(
@@ -50,14 +76,8 @@ const LoginForm: React.FC = () => {
           'Login Successful',
           `Welcome, ${response.data.data.userName}`
         );
-      } else {
-        Alert.alert('Login Failed', response.data.msg);
-      }
 
-      if (response.status === 200) {
         const { name, societyID, id } = response.data.data;
-
-        // Values are getting stored in the AsyncStorage (Device)
         await AsyncStorage.multiSet([
           ['SocietyID', societyID.toString()],
           ['ID', id.toString()],
@@ -66,14 +86,16 @@ const LoginForm: React.FC = () => {
 
         console.log('Data was added to AsyncStorage');
         showToastWithGravityAndOffset('Welcome Watchman !');
+        router.push({ pathname: '/(visitors)/dashboard' });
+        setUserId('');
+        setPassword('');
+      } else {
+        showToastWithGravityAndOffset('Incorrect ID or Password');
+        Alert.alert('Incorrect Id and Password', response.data.msg);
       }
-      router.push({ pathname: '/(visitors)/dashboard' });
-      setUserId('');
-      setPassword('');
     } catch (error) {
       setLoading(false);
-      console.error('Error logging in:', error);
-      // Alert.alert('Login Error', error,);
+      console.error('Incorrect Id and Password:', error);
     }
   };
 
@@ -86,18 +108,28 @@ const LoginForm: React.FC = () => {
       <View style={styles.card}>
         <Text style={styles.title}>Watchman Login</Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            errors.userId ? styles.errorInput : {}
+          ]}
           placeholder='Enter Your User ID'
           value={userId}
           onChangeText={setUserId}
         />
+        {errors.userId && <Text style={styles.errorText}>{errors.userId}</Text>}
+
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            errors.password ? styles.errorInput : {}
+          ]}
           placeholder='Enter your Password'
           value={password}
           onChangeText={setPassword}
           secureTextEntry
         />
+        {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+
         <Text style={styles.label}>Select Year</Text>
         <Picker
           selectedValue={year}
@@ -121,7 +153,6 @@ const LoginForm: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -152,6 +183,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
   },
+  errorInput: {
+    borderColor: 'red',
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
+  },
   label: {
     fontSize: 16,
     marginBottom: 10,
@@ -172,7 +210,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    // fontFamily: "Montserrat_400Regular"
   },
 });
 

@@ -5,38 +5,6 @@ import LoginForm from './LoginForm';
 import MemberForm from './MemberForm';
 import FmForm from './FmForm';
 
-const WatchmanForm: React.FC = () => (
-    <View style={styles.form}>
-        <Text style={styles.label}>Watchman Login</Text>
-        <TextInput placeholder="Name" style={styles.input} />
-        <TextInput placeholder="Username" style={styles.input} />
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Save changes</Text>
-        </TouchableOpacity>
-    </View>
-);
-
-const MemberForm1: React.FC = () => (
-    <View style={styles.form}>
-        <Text style={styles.label}>Member Login</Text>
-        <TextInput placeholder="Name" style={styles.input} />
-        <TextInput placeholder="Username" style={styles.input} />
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Save changes</Text>
-        </TouchableOpacity>
-    </View>
-);
-
-const FacilityManagerForm: React.FC = () => (
-    <View style={styles.form}>
-        <Text style={styles.label}>Facility Manager Login</Text>
-        <TextInput placeholder="Name" style={styles.input} />
-        <TextInput placeholder="Username" style={styles.input} />
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Save changes</Text>
-        </TouchableOpacity>
-    </View>
-);
 
 type FormType = 'watchman' | 'member' | 'facilityManager';
 

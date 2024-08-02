@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: 999, // ensure it's above other content
+        zIndex: 999,
     },
     loadingText: {
         marginTop: 20,
         fontSize: 30,
-        color: '#000', // white text color
+        color: '#000',
     },
 });
 

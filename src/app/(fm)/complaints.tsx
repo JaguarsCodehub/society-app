@@ -109,14 +109,12 @@ const Complaints = () => {
 
   const updateStatus = async () => {
     if (selectedComplaint) {
-      // Update the status logic here, e.g., making an API call
       try {
         const response = await axios.put(
           `https://api.chsltd.net/fm/updatecomplaint/${selectedComplaint.complaintCode}`,
           { status }
         );
         console.log(response.data);
-        // Update the local state to reflect the changes
         setComplaints((prev) =>
           prev.map((comp) =>
             comp.id === selectedComplaint.id ? { ...comp, status } : comp
@@ -228,7 +226,6 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 600,
     borderRadius: 5,
-    // backgroundColor: 'white',
   },
   button: {
     backgroundColor: '#00AA54',

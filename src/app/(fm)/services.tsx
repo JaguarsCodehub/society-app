@@ -15,7 +15,7 @@ interface ServiceRequest {
   ID: number;
   Code: string;
   ServiceName: string;
-  Date: string; // You could also use Date if you convert it properly
+  Date: string;
   Wing: string;
   Flat: string;
   Name: string;
@@ -134,6 +134,5 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 400,
     borderRadius: 5,
-    // backgroundColor: 'white',
   },
 });

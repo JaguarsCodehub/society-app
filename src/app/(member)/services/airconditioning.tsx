@@ -13,7 +13,6 @@ const { width, height } = Dimensions.get('window');
 const contractors: Contractor[] = [
     { id: '1', name: 'Abdul AC Repair', number: '7673981293', address: "DeviPada, Sampurti Building, Thakur Village" },
     { id: '2', name: 'Abdul AC Repair', number: '7673981293', address: "DeviPada, Sampurti Building, Thakur Village" },
-    // Add more contractors as needed
 ];
 
 const ServicesPage: React.FC = () => {

@@ -3,9 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoadingScreen from '../../components/ui/LoadingScreen';
 
-// Define the type for visitor data
 type VisitorData = {
-  // ID: number;
   date: string;
   name: string;
   wingName: string;
@@ -24,8 +22,7 @@ const ViewVisitors = () => {
         const response = await axios.get(
           'https://api.chsltd.net/visitors'
         );
-        // console.log(response.data.data);
-        // console.log(response.data.WingName)
+
         setVisitorsData(response.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -87,11 +84,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 30,
     paddingHorizontal: 10,
-    // padding: 10,
-    // height: 200,
     marginVertical: 8,
     backgroundColor: '#fff',
-    // alignItems: "center",
     borderRadius: 10,
     elevation: 2,
   },
@@ -100,11 +94,9 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: '#000',
     borderRadius: 5,
-    // marginRight: 10,
   },
   infoContainer: {
     marginLeft: 10,
-    // justifyContent: 'center',
   },
   text: {
     fontSize: 16,

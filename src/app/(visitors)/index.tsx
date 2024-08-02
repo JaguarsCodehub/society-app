@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Alert,
-  Button,
+
   Image,
   ScrollView,
   StyleSheet,
@@ -106,10 +105,8 @@ const VisitorsPage = () => {
           );
           if (response.data.data) {
             setFlats(response.data.data)
-            // console.log('Flats:', response.data.data); // Logging the Flats from one Society ID Only
           } else {
             console.error('Unexpected response data:', response.data);
-            // setFlats(response.data.data);
           }
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -132,7 +129,6 @@ const VisitorsPage = () => {
       const [wingCode, flatIDString] = flat.split('-');
       const flatID = parseInt(flatIDString, 10);
 
-      // Default to 0 or any other appropriate value if cookies are undefined
       const societyID = parseInt(cookies?.SocietyID || '0', 10);
       const ID = parseInt(cookies?.ID || '0', 10);
       const requestData = {
@@ -297,7 +293,7 @@ const VisitorsPage = () => {
           {image && <Image source={{ uri: image }} style={styles.image} />}
         </View>
 
-        {/* Submit Button */}
+
         <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
           <Text style={{ color: 'white', fontSize: 18 }}>Submit Data</Text>
           <UploadIcon name='upload' size={20} color='white' />

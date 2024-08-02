@@ -103,7 +103,6 @@ const RequestService = () => {
         'https://api.chsltd.net/member/service-requests',
         postData
       );
-      // const response = await axios.post('https://api.chsltd.net//member/service-request', postData);
       console.log('Response from server:', response.data);
       showToastWithGravityAndOffset('Service request was submitted !');
       setCategory('');
@@ -123,7 +122,7 @@ const RequestService = () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [16, 9],
+      aspect: [1, 1],
       quality: 1,
     });
 
@@ -286,11 +285,9 @@ export default RequestService;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     justifyContent: 'center',
     padding: 20,
     backgroundColor: '#f0f0f0',
-    // marginTop: 60
   },
   label: {
     fontSize: 16,
@@ -333,7 +330,6 @@ const styles = StyleSheet.create({
   },
   cameraContainer: {
     marginTop: 20,
-    // paddingHorizontal: 20
   },
   image: {
     width: 300,

@@ -12,7 +12,7 @@ const cardsData = [
         bgColor: '#D4FFE4',
         bgBorderColor: "#00A070",
         textColor: '#00A070',
-        imageSource: require('../../../assets/vendor.png'), // example image
+        imageSource: require('../../../assets/vendor.png'),
         onPress: () => console.log('Add a Visitor'),
     },
     {
@@ -23,7 +23,7 @@ const cardsData = [
         bgColor: '#D4FFE4',
         bgBorderColor: "#00BE47",
         textColor: '#00BE47',
-        imageSource: require('../../../assets/camera.png'), // example image
+        imageSource: require('../../../assets/camera.png'),
         onPress: () => console.log('Add a Visitor'),
     },
 
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         width: '48%', // 50% of the screen width minus padding
         backgroundColor: '#00A070',
         padding: 20,
-        marginBottom: 10, // space between rows
+        marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5

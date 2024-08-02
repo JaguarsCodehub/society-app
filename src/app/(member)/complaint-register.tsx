@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Button,
   Image,
   ScrollView,
   StyleSheet,
@@ -83,7 +82,6 @@ export default function ComplaintRegister() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      // Default to 0 or any other appropriate value if cookies are undefined
       const MemberSocietyID = parseInt(cookies?.MemberSocietyIDCookie || '0', 10);
       const ID = parseInt(cookies?.UserIDCookie || '0', 10);
       const postData = {
@@ -119,7 +117,7 @@ export default function ComplaintRegister() {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [16, 9],
+      aspect: [1, 1],
       quality: 1,
     });
 
@@ -249,11 +247,8 @@ export default function ComplaintRegister() {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // justifyContent: 'center',
     padding: 20,
     backgroundColor: '#f0f0f0',
-    // marginTop: 60
   },
   label: {
     fontSize: 16,
@@ -293,9 +288,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   cameraContainer: {
-    // paddingHorizontal: 30,
-    // marginTop: 20,
-    // paddingHorizontal: 20
   },
   image: {
     width: 300,

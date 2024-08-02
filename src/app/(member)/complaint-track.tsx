@@ -81,7 +81,6 @@ const ComplaintTrack = () => {
             }
           );
           console.log(response.data.data);
-          // console.log(response.data.WingName)
           setComplaints(response.data.data);
         } catch (error) {
           showToastWithGravityAndOffset('Complaints data was not fetched');
@@ -124,8 +123,6 @@ const styles = StyleSheet.create({
   image: {
     width: '40%',
     height: 400,
-    // backgroundColor: '#000',
     borderRadius: 5,
-    // marginRight: 10,
   },
 });

@@ -1,5 +1,4 @@
 import {
-  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -19,6 +18,7 @@ const FmForm = () => {
   const [password, setPassword] = useState<string>('');
   const [year, setYear] = useState<string>('');
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ userId?: string; password?: string }>({});
 
   const showToastWithGravityAndOffset = (msg: string) => {
     ToastAndroid.showWithGravityAndOffset(
@@ -30,7 +30,32 @@ const FmForm = () => {
     );
   };
 
+  const validate = () => {
+    let valid = true;
+    const newErrors: { userId?: string; password?: string } = {};
+
+    if (!userId) {
+      newErrors.userId = 'User ID is required';
+      valid = false;
+    } else if (userId.length < 6) {
+      newErrors.userId = 'User ID must be at least 6 characters long';
+      valid = false;
+    }
+
+    if (!password) {
+      newErrors.password = 'Password is required';
+      valid = false;
+    } else if (password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters long';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const handleLogin = async () => {
+    if (!validate()) return;
     setLoading(true);
 
     try {
@@ -45,16 +70,11 @@ const FmForm = () => {
       );
       setLoading(false);
 
-      // if (response.status === 200) {
-      //     Alert.alert('Login Successfull', `Welcome, ${response.data.data.UserName}`)
-      // } else {
-      //     Alert.alert('Login Failed', response.data.msg)
-      // }
+
 
       if (response.status === 200) {
         const { userName, societyID, id } = response.data.data;
 
-        // Values are getting stored in the AsyncStorage (Device)
         await AsyncStorage.multiSet([
           ['FMSocietyID', societyID.toString()],
           ['FMID', id.toString()],
@@ -84,18 +104,27 @@ const FmForm = () => {
       <View style={styles.card}>
         <Text style={styles.title}>Facility Manager Login</Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            errors.userId ? styles.errorInput : {}
+          ]}
           placeholder='Enter your Username'
           value={userId}
           onChangeText={setUserId}
         />
+        {errors.userId && <Text style={styles.errorText}>{errors.userId}</Text>}
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            errors.password ? styles.errorInput : {}
+          ]}
           placeholder='Enter your Password'
           value={password}
           onChangeText={setPassword}
           secureTextEntry
         />
+        {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+
         <Text style={styles.label}>Select Year</Text>
         <Picker
           selectedValue={year}
@@ -121,7 +150,6 @@ export default FmForm;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -137,6 +165,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+  },
+  errorInput: {
+    borderColor: 'red',
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
   },
   title: {
     fontSize: 24,

@@ -232,7 +232,6 @@ const BillDetails = () => {
             >
                 <View style={styles.container}>
                     <ScrollView>
-                        {/* The same content as in the main view, or you can use a separate component */}
                         <Text style={{ fontSize: 30, fontWeight: "600", textAlign: "center" }}>Preview of Your Bill</Text>
                         <Text style={styles.title}>Bill for the Month of {formattedDate}</Text>
                         <View style={styles.row}>

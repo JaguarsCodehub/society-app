@@ -1,10 +1,9 @@
-import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import CardComponent from '../../components/ui/CardComponent';
 import { router, Stack } from 'expo-router';
 
 
-const { width, height } = Dimensions.get('window');
 
 const cardsData = [
     {
@@ -33,12 +32,10 @@ const cardsData = [
 
 const Dashboard = () => {
     const handleAddVisitors = () => {
-        // Implement your logic for Add Visitors button here
         router.push({ pathname: "/(visitors)" })
     };
 
     const handleViewVisitors = () => {
-        // Implement your logic for View Visitors button here
         router.push({ pathname: "/(visitors)/view" })
     };
 
@@ -59,14 +56,7 @@ const Dashboard = () => {
                         <Text style={styles.buttonText}>View Visitors</Text>
                     </TouchableOpacity>
                 </View>
-                {/* 
-                <View style={{}}>
-                    <Image
-                        source={require("../../../assets/map.jpg")}
-                        resizeMode='contain'
-                        style={{ width: width, height: 200, marginTop: 20, borderRadius: 10 }}
-                    />
-                </View> */}
+
 
                 <View>
                     {cardsData.map((card, index) => (
@@ -94,10 +84,6 @@ export default Dashboard
 const styles = StyleSheet.create({
     headerContainer: {
         padding: 20
-        // flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
-        // paddingHorizontal: 20,
     },
     title: {
         fontSize: 35,
@@ -112,8 +98,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: -20
-        // width: '100%',
-        // paddingHorizontal: 40,
     },
     button: {
         backgroundColor: 'black',

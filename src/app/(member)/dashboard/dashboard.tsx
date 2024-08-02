@@ -6,18 +6,17 @@ import MenuIcon from 'react-native-vector-icons/MaterialIcons'
 import CustomDrawer from '../../../navigation/CustomDrawer'
 import InfoCard from '../../../components/ui/InfoCard'
 
-
 const infoCardsData = [
     {
         title: 'Check your Parking Slot',
         description: 'You have been given a parking slot.',
-        imageSource: require('../../../../assets/vendor.png'), // example image
+        imageSource: require('../../../../assets/vendor.png'),
         onPress: () => router.push({ pathname: "(member)/parking-slot" }),
     },
     {
         title: 'Your Account Ledger',
         description: 'Access your accounts and ledger.',
-        imageSource: require('../../../../assets/camera.png'), // example image
+        imageSource: require('../../../../assets/camera.png'),
         onPress: () => router.push({ pathname: "(member)/account-ledger" }),
     },
 ];
@@ -66,18 +65,15 @@ const Dashboard = () => {
 
                     <Stack.Screen options={{ headerShown: false }} />
                     <View style={styles.headerWrapper}>
-                        {/* Left Side Brand Name */}
                         <View style={styles.brandWrapper}>
                             <MenuIcon name='adobe' size={30} color="gray" style={{ marginTop: 5 }} />
                             <Text style={{ fontSize: 25, fontWeight: "900", marginLeft: 5, color: "black" }}>Raviva Society</Text>
                         </View>
 
-                        {/* Right Side Content */}
                         <View style={styles.rightWrapper}>
                             <View style={{ padding: 10 }}>
                                 <Icon
                                     name='bell' color="#292929" size={25}
-                                    // resizeMode='cover'
                                     style={{ alignItems: "center", justifyContent: "center", display: "flex", padding: 10, backgroundColor: "transparent", borderRadius: 50, borderColor: "lightgray", borderWidth: 1 }}
                                 />
                             </View>
@@ -92,7 +88,6 @@ const Dashboard = () => {
                         </View>
                     </View>
 
-                    {/* Rest of the screen */}
                     <View style={{ marginHorizontal: 20, marginTop: 10 }}>
                         <Text style={{ fontSize: 30, fontWeight: "600" }}>Overview</Text>
                         <View style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
