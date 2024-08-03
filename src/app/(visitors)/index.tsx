@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-
+  Modal,
   Image,
   ScrollView,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  FlatList,
 } from 'react-native';
 import { router, Stack } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -20,12 +21,15 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from '../../components/ui/LoadingScreen';
 import { uploadImageAsync } from '../../utils/uploadImageAsync';
+import SearchablePicker from '../../components/SearchablePicker';
 
 type CookieUserData = {
   SocietyID: string;
   ID: string;
   year: string;
 };
+
+
 
 const VisitorsPage = () => {
   const [date, setDate] = useState(new Date());
@@ -250,19 +254,15 @@ const VisitorsPage = () => {
 
           <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
             <Text style={styles.label}>Select Flat</Text>
-            <Picker
+            <SearchablePicker
               selectedValue={flat}
-              style={styles.picker}
-              onValueChange={(itemValue) => setFlat(itemValue)}
-            >
-              {flats.map((item: any) => (
-                <Picker.Item
-                  key={item.flatID}
-                  label={item.wingFlat}
-                  value={`${item.wingCode}-${item.flatID}`}
-                />
-              ))}
-            </Picker>
+              onValueChange={setFlat}
+              items={flats.map((flat: any) => ({
+                label: flat.wingFlat,
+                value: `${flat.wingCode}-${flat.flatID}`
+              }))}
+              placeholder="Select Flat"
+            />
           </View>
         </View>
 
@@ -381,4 +381,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     color: 'white',
   },
+
 });

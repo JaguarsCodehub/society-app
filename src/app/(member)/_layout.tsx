@@ -95,6 +95,13 @@ export default function TabLayout() {
                     href: null
                 }}
             />
+            <Tabs.Screen
+                name="positions"
+                options={{
+                    href: null,
+                    headerShown: false
+                }}
+            />
 
 
         </Tabs>

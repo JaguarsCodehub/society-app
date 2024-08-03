@@ -8,6 +8,12 @@ import InfoCard from '../../../components/ui/InfoCard'
 
 const infoCardsData = [
     {
+        title: 'Know your Members',
+        description: 'Positions of your fellow members.',
+        imageSource: require('../../../../assets/vendor.png'),
+        onPress: () => router.push({ pathname: "(member)/positions" }),
+    },
+    {
         title: 'Check your Parking Slot',
         description: 'You have been given a parking slot.',
         imageSource: require('../../../../assets/vendor.png'),
@@ -19,6 +25,7 @@ const infoCardsData = [
         imageSource: require('../../../../assets/camera.png'),
         onPress: () => router.push({ pathname: "(member)/account-ledger" }),
     },
+
 ];
 
 
@@ -90,22 +97,7 @@ const Dashboard = () => {
 
                     <View style={{ marginHorizontal: 20, marginTop: 10 }}>
                         <Text style={{ fontSize: 30, fontWeight: "600" }}>Overview</Text>
-                        <View style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
-                            <TouchableOpacity>
-                                <View style={{ backgroundColor: "black", padding: 15, borderRadius: 10, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                                    <MenuIcon name='currency-rupee' size={25} color="white" />
-                                    <Text style={{ color: "white", paddingHorizontal: 20, fontSize: 15 }}>Transfer</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={showToastWithGravityAndOffset}>
-                                <View style={{ marginLeft: 15, backgroundColor: "#FFA966", padding: 15, borderRadius: 10, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                                    <MenuIcon name='account-circle' size={25} color="black" />
-                                    <Text style={{ color: "black", paddingHorizontal: 20, fontWeight: "600" }}>Account</Text>
-                                </View>
-                            </TouchableOpacity>
 
-
-                        </View>
                         <View style={{ marginTop: 10 }}>
                             <View style={{ padding: 15, backgroundColor: "#dfdfdf", paddingTop: 10, borderRadius: 10 }}>
                                 <Text style={{ fontSize: 20, fontWeight: "500", color: "gray" }}>Your Maintainence Due</Text>

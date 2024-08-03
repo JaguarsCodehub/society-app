@@ -4,6 +4,8 @@ import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
+import { NetworkProvider } from '../context/NetworkProvider';
 
 
 export default function Layout() {
@@ -36,9 +38,11 @@ export default function Layout() {
     }
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <Stack>
-                <Stack.Screen name="index" options={{}} />
-            </Stack>
+            <NetworkProvider>
+                <Stack>
+                    <Stack.Screen name="index" options={{}} />
+                </Stack>
+            </NetworkProvider>
         </GestureHandlerRootView>
     );
 }
