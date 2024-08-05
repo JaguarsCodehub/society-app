@@ -11,12 +11,11 @@ import {
   View,
   FlatList,
 } from 'react-native';
-import { router, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Foundation';
 import UploadIcon from 'react-native-vector-icons/Feather';
 import * as ImagePicker from 'expo-image-picker';
-import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from '../../components/ui/LoadingScreen';
@@ -229,6 +228,9 @@ const VisitorsPage = () => {
                   backgroundColor: '#ececec',
                   alignItems: 'center',
                   justifyContent: 'space-between',
+                  borderColor: "#939393",
+                  borderWidth: 1,
+                  marginTop: 5
                 }}
               >
                 <Text style={styles.selectedDateText}>
@@ -244,6 +246,7 @@ const VisitorsPage = () => {
                 <DateTimePicker
                   testID='dateTimePicker'
                   value={date}
+                  // style={styles.dateButton}
                   mode={mode}
                   is24Hour={true}
                   onChange={onChange}
@@ -298,7 +301,7 @@ const VisitorsPage = () => {
           <Text style={{ color: 'white', fontSize: 18 }}>Submit Data</Text>
           <UploadIcon name='upload' size={20} color='white' />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => router.push({ pathname: '/(visitors)/view' })}
           style={{
             display: 'flex',
@@ -314,7 +317,7 @@ const VisitorsPage = () => {
           <Text style={{ color: 'black', fontSize: 18 }}>
             Go to View Visitors
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </ScrollView>
   );
@@ -334,9 +337,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   nameInput: {
+    borderColor: "#939393",
+    borderWidth: 1,
     marginTop: 5,
     padding: 10,
-    fontSize: 15,
+    fontSize: 13,
     backgroundColor: '#ececec',
   },
   selectedDateText: {
@@ -346,6 +351,8 @@ const styles = StyleSheet.create({
   },
   dateButton: {
     width: '50%',
+    borderColor: "#939393",
+    borderWidth: 1,
     borderRadius: 10,
     padding: 10,
     backgroundColor: '#00DF91',

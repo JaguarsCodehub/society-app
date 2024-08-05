@@ -136,36 +136,36 @@ const Complaints = () => {
     <View style={{ flex: 1 }}>
       <ScrollView>
         <View>
-          <Text style={{ fontSize: 30, fontWeight: '700', marginLeft: 10 }}>
+          <Text style={{ fontSize: 25, fontWeight: '600', marginLeft: 10 }}>
             ComplaintTrack
           </Text>
           {complaints.map((item) => (
             <View
               key={item.complaintCode}
               style={{
-                backgroundColor: '#C4FFE1',
+                backgroundColor: 'lightgray',
                 padding: 10,
                 margin: 10,
-                borderRadius: 15,
+                borderRadius: 5,
               }}
             >
               <Text
-                style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
+                style={{ fontSize: 15, fontWeight: '600', marginVertical: 1 }}
               >
                 MemberName: {item.memberName}
               </Text>
               <Text
-                style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
+                style={{ fontSize: 15, fontWeight: '600', marginVertical: 1 }}
               >
                 Subject: {item.subject}
               </Text>
               <Text
-                style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
+                style={{ fontSize: 15, fontWeight: '600', marginVertical: 1 }}
               >
                 Description: {item.description}
               </Text>
               <Text
-                style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
+                style={{ fontSize: 15, fontWeight: '600', marginVertical: 1 }}
               >
                 {item.complaintCode}
               </Text>
@@ -223,9 +223,11 @@ export default Complaints;
 
 const styles = StyleSheet.create({
   image: {
-    width: '80%',
-    height: 600,
+    width: '100%',
+    height: 200,
     borderRadius: 5,
+    backgroundColor: "gray",
+    marginTop: 10
   },
   button: {
     backgroundColor: '#00AA54',

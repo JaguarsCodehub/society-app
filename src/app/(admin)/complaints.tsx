@@ -32,7 +32,7 @@ const AdminComplaints = () => {
         return <LoadingScreen />
     }
     return (
-        <ScrollView>
+        <ScrollView style={styles.container}>
             <Text>AdminComplaints</Text>
             <View>
                 {complaintsData.map((item: any) => (
@@ -56,11 +56,11 @@ export default AdminComplaints
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: 'lightgray',
     },
     card: {
-        backgroundColor: '#fff',
-        borderRadius: 8,
+        backgroundColor: 'green',
+        borderRadius: 5,
         padding: 15,
         marginVertical: 10,
         shadowColor: '#000',
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 5,
+        color: "white"
     },
     image: {
         width: '100%',

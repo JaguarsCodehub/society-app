@@ -36,7 +36,7 @@ const AdminParkingSlot = () => {
     return (
         <ScrollView>
             <Text>AdminComplaints</Text>
-            <View>
+            <View style={styles.container}>
                 {parkingData.map((item: any) => (
                     <View style={styles.card} key={item.id}>
                         <Text style={styles.title}>Parking Slot Code: {item.slot}</Text>
@@ -55,10 +55,10 @@ export default AdminParkingSlot
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: 'lightgray',
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: 'green',
         borderRadius: 8,
         padding: 15,
         marginVertical: 10,
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 5,
+        color: "white"
     },
     image: {
         width: '100%',

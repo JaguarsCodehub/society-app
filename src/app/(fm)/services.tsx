@@ -83,34 +83,34 @@ const Services = () => {
             <View
               key={item.id}
               style={{
-                backgroundColor: '#EAEAEA',
+                backgroundColor: 'lightgray',
                 padding: 10,
                 margin: 10,
                 borderRadius: 4,
               }}
             >
               <Text
-                style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
+                style={{ fontSize: 15, fontWeight: '600', marginVertical: 1 }}
               >
                 ServiceName: {item.serviceName}
               </Text>
               <Text
-                style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
+                style={{ fontSize: 15, fontWeight: '600', marginVertical: 1 }}
               >
                 ServiceCode: {item.serviceCode}
               </Text>
               <Text
-                style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
+                style={{ fontSize: 15, fontWeight: '600', marginVertical: 1 }}
               >
                 Subject: {item.subject}
               </Text>
               <Text
-                style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
+                style={{ fontSize: 15, fontWeight: '600', marginVertical: 1 }}
               >
                 Description: {item.description}
               </Text>
               <Text
-                style={{ fontSize: 20, fontWeight: '600', marginVertical: 1 }}
+                style={{ fontSize: 15, fontWeight: '600', marginVertical: 1 }}
               >
                 MemberName{item.memberName}
               </Text>
@@ -131,8 +131,10 @@ export default Services;
 
 const styles = StyleSheet.create({
   image: {
-    width: '80%',
-    height: 400,
+    width: '100%',
+    height: 200,
     borderRadius: 5,
+    backgroundColor: "white",
+    marginTop: 10
   },
 });

@@ -23,6 +23,7 @@ const SocietyPickerPage = () => {
       <Stack.Screen options={{ headerShown: false }} />
       {isConnected ? (
         <>
+
           <Text style={{ fontSize: 30, fontWeight: "600" }}>Select your society</Text>
           <View>
             <Picker
@@ -36,7 +37,7 @@ const SocietyPickerPage = () => {
               <Picker.Item label='Society 3' value='3' />
             </Picker>
           </View>
-          <TouchableOpacity style={{ backgroundColor: "black", marginTop: 20, paddingHorizontal: 40, paddingVertical: 5, borderRadius: 5 }} onPress={saveSociety}>
+          <TouchableOpacity style={{ backgroundColor: "black", marginTop: 20, paddingHorizontal: 120, paddingVertical: 5, borderRadius: 5 }} onPress={saveSociety}>
             <View>
               <Text style={{ color: "white", fontSize: 20 }}>Save</Text>
             </View>

@@ -79,7 +79,7 @@ export default function TabLayout() {
                 name="account-ledger"
                 options={{
                     href: null,
-                    headerTitle: "Accounts",
+                    headerShown: false
                 }}
             />
             <Tabs.Screen

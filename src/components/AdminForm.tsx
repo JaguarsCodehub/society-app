@@ -39,16 +39,16 @@ const AdminForm: React.FC = () => {
     if (!userId) {
       newErrors.userId = 'User ID is required';
       valid = false;
-    } else if (userId.length < 6) {
-      newErrors.userId = 'User ID must be at least 6 characters long';
+    } else if (userId.length < 5) {
+      newErrors.userId = 'User ID must be at least 5 characters long';
       valid = false;
     }
 
     if (!password) {
       newErrors.password = 'Password is required';
       valid = false;
-    } else if (password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters long';
+    } else if (password.length < 3) {
+      newErrors.password = 'Password must be at least 3 characters long';
       valid = false;
     }
 

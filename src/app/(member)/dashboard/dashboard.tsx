@@ -66,11 +66,12 @@ const Dashboard = () => {
 
     return (
         <>
+            <Stack.Screen options={{ headerShown: false }} />
+
             <CustomDrawer isOpen={isDrawerOpen} closeDrawer={closeDrawer} />
             <ScrollView style={styles.container}>
                 <View>
 
-                    <Stack.Screen options={{ headerShown: false }} />
                     <View style={styles.headerWrapper}>
                         <View style={styles.brandWrapper}>
                             <MenuIcon name='adobe' size={30} color="gray" style={{ marginTop: 5 }} />
@@ -102,7 +103,7 @@ const Dashboard = () => {
                             <View style={{ padding: 15, backgroundColor: "#dfdfdf", paddingTop: 10, borderRadius: 10 }}>
                                 <Text style={{ fontSize: 20, fontWeight: "500", color: "gray" }}>Your Maintainence Due</Text>
                                 <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                    <Text style={{ fontSize: 30, paddingTop: 10, fontWeight: "900" }}>₹12,234.00</Text>
+                                    <Text style={{ fontSize: 25, paddingTop: 10, fontWeight: "900" }}>₹12,234.00</Text>
                                     <MenuIcon name='arrow-drop-up' size={30} color="green" style={{ marginTop: 0, marginLeft: 10 }} />
                                     <Text style={{ color: "green", fontSize: 20, fontWeight: "600" }}>4.12%</Text>
                                 </View>
@@ -110,12 +111,12 @@ const Dashboard = () => {
                         </View>
 
                         <TouchableOpacity onPress={() => router.push({ pathname: "/(member)/request-service" })}>
-                            <View style={{ backgroundColor: "#FFA966", paddingVertical: 30, borderRadius: 5, marginTop: 15, padding: 5 }}>
+                            <View style={{ backgroundColor: "#00b650", paddingVertical: 10, borderRadius: 5, marginTop: 15, padding: 5 }}>
                                 <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}>
                                     <MenuIcon name='add-box' size={50} color="black" style={{ marginLeft: 20 }} />
                                     <View style={{ flexDirection: "column", flex: 1 }}>
                                         <Text style={{ marginLeft: 20, fontSize: 20, fontWeight: "700", color: "black" }}>Request a Service</Text>
-                                        <Text style={{ marginLeft: 20, color: "black" }}>You can request for a service or repair and we will make sure that is fulfilled.</Text>
+                                        <Text style={{ marginLeft: 20, color: "black", fontSize: 12 }}>You can request for a service or repair and we will make sure that is fulfilled.</Text>
                                     </View>
                                 </View>
                             </View>

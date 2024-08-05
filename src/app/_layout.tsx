@@ -40,7 +40,7 @@ export default function Layout() {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <NetworkProvider>
                 <Stack>
-                    <Stack.Screen name="index" options={{}} />
+                    <Stack.Screen name="index" options={{ headerShown: false }} />
                 </Stack>
             </NetworkProvider>
         </GestureHandlerRootView>

@@ -1,8 +1,8 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import CardComponent from '../../components/ui/CardComponent';
 import { router, Stack } from 'expo-router';
-
+const { width, height } = Dimensions.get('window');
 
 
 const cardsData = [
@@ -41,8 +41,8 @@ const Dashboard = () => {
 
     return (
         <ScrollView>
-            <Stack.Screen options={{ headerTitle: "Watchman Dashboard", headerShown: true }} />
-            <View>
+            <Stack.Screen options={{ headerTitle: "Watchman Dashboard", headerShown: false }} />
+            <View style={{ marginTop: 30 }}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.title}>Welcome Watchman</Text>
                     <Text style={styles.subtitle}>We are here to make your work Easy!</Text>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     title: {
-        fontSize: 35,
+        fontSize: 30,
         fontWeight: '700',
     },
     subtitle: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 
     },
     buttonContainer: {
-        padding: 20,
+        padding: width / 25,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: -20

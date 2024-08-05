@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { Stack } from 'expo-router';
 
 type CookieUserData = {
   MemberSocietyID: string;
@@ -85,17 +86,20 @@ const ParkingSlot = () => {
 
   return (
     <View>
+      <Stack.Screen options={{ headerShown: false }} />
       <Text
         style={{ fontSize: 20, fontWeight: '700', marginLeft: 10, padding: 10 }}
       >
         ParkingSlot
       </Text>
       {parkingSlotData.map((item: any) => (
-        <View style={{ backgroundColor: 'lightgray', padding: 10, margin: 10 }}>
-          <Text>MemberName: {item.name}</Text>
-          <Text>Parking Slot: {item.slot}</Text>
-          <Text>Parking SlotCode: {item.slotCode}</Text>
-          <Text>Date: {item.date}</Text>
+        <View style={{ backgroundColor: '#dedede', padding: 10, margin: 10, borderRadius: 5 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold", color: "green" }}>Parking Slot: {item.slot}</Text>
+          <View style={{ marginTop: 10 }}>
+            <Text>MemberName: {item.name}</Text>
+            <Text>Parking SlotCode: {item.slotCode}</Text>
+            <Text>Date: {item.date}</Text>
+          </View>
         </View>
       ))}
     </View>
