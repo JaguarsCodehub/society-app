@@ -7,25 +7,25 @@ const { width, height } = Dimensions.get('window');
 
 const cardsData = [
     {
-        title: 'Chat with the community',
-        subTitle: 'Raise an issue regarding the society concern or any query regarding any specific topic',
-        buttonText: 'Join the society channel',
-        bgColor: '#D4F4FF',
-        bgBorderColor: "#1FB5FF",
-        textColor: '#1FB5FF',
-        buttonColor: '#1FB5FF',
-        imageSource: require('../../../assets/favicon.png'), // example image
-        onPress: () => console.log('Go to Discord'),
+        title: 'Send a package Request',
+        subTitle: 'Raise a courier request to the designated member',
+        buttonText: 'Send Package Request',
+        bgColor: '#ffe3af',
+        bgBorderColor: "#5a3b00",
+        textColor: '#5a3b00',
+        buttonColor: '#5a3b00',
+        imageSource: require('../../../assets/package.png'), // example image
+        onPress: () => router.push('/package'),
     },
     {
         title: 'Watch who visits your society',
         subTitle: 'Expo\'s Snack lets you try Expo with zero local setup.',
         buttonText: 'Create a Snack',
-        buttonColor: '#00BE47',
-        bgColor: '#D4FFE4',
-        bgBorderColor: "#00BE47",
-        textColor: '#00BE47',
-        imageSource: require('../../../assets/favicon.png'), // example image
+        buttonColor: '#322C2B',
+        bgColor: '#E4C59E',
+        bgBorderColor: "#322C2B",
+        textColor: '#322C2B',
+        imageSource: require('../../../assets/read.png'), // example image
         onPress: () => console.log('Add a Visitor'),
     },
 ];
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         marginTop: -20
     },
     button: {
-        backgroundColor: 'black',
+        backgroundColor: '#322C2B',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     rightButton: {
-        backgroundColor: 'black',
+        backgroundColor: '#322C2B',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,

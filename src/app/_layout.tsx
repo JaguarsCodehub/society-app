@@ -41,6 +41,7 @@ export default function Layout() {
             <NetworkProvider>
                 <Stack>
                     <Stack.Screen name="index" options={{ headerShown: false }} />
+                    <Stack.Screen name="(member)" options={{ headerShown: false }} />
                 </Stack>
             </NetworkProvider>
         </GestureHandlerRootView>

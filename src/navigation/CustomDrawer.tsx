@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, Animated, Dimensions, PanResponder, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { router } from 'expo-router'; // Import the router from expo-router
+import MenuIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const { width, height } = Dimensions.get('window');
 const DRAWER_WIDTH = width * 0.7; // Adjust drawer width as needed
@@ -124,7 +125,8 @@ const CustomDrawer = ({ isOpen, closeDrawer }: { isOpen: any, closeDrawer: any }
             {...panResponder.panHandlers}
         >
             <View style={styles.drawerContent}>
-                <TouchableOpacity onPress={closeDrawer}>
+                <TouchableOpacity onPress={closeDrawer} style={{ display: "flex", flexDirection: "row" }}>
+                    <MenuIcon name='close-circle-outline' size={25} color="black" />
                     <Text style={styles.closeButton}>Close Drawer</Text>
                 </TouchableOpacity>
                 {drawerItems.map((item, index) => (
@@ -139,7 +141,7 @@ const CustomDrawer = ({ isOpen, closeDrawer }: { isOpen: any, closeDrawer: any }
                             <Icon
                                 name={activeItem === item.label && item.items.length > 0 ? 'expand-less' : item.icon}
                                 size={24}
-                                color={activeItem === item.label ? '#00796b' : 'black'}
+                                color={activeItem === item.label ? '#fff' : 'black'}
                                 style={styles.icon}
                             />
                             <Text
@@ -192,7 +194,7 @@ const styles = StyleSheet.create({
         top: TOP_SPACE,
         width: DRAWER_WIDTH,
         height: height - TOP_SPACE, // Take full height of the screen minus top space
-        backgroundColor: 'white',
+        backgroundColor: '#FED8B1',
         borderTopLeftRadius: 10,
         zIndex: 1000,
         shadowColor: '#000',
@@ -207,8 +209,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     closeButton: {
-        fontSize: 20,
+        fontSize: 18,
         marginBottom: 20,
+        marginLeft: 10
     },
     drawerItem: {
         flexDirection: 'row',
@@ -218,14 +221,15 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     activeDrawerItem: {
-        backgroundColor: '#e0f7fa',
+        backgroundColor: '#6F4E37',
+        borderRadius: 10
     },
     drawerItemText: {
-        fontSize: 18,
+        fontSize: 15,
         marginLeft: 10,
     },
     activeDrawerItemText: {
-        color: '#00796b',
+        color: '#fff',
     },
     subDrawerItem: {
         flexDirection: 'row',
