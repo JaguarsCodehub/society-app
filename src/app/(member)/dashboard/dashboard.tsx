@@ -1,7 +1,6 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { router, Stack } from 'expo-router'
-import Icon from 'react-native-vector-icons/Feather'
 import MenuIcon from 'react-native-vector-icons/MaterialIcons'
 import MenuIcon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import CustomDrawer from '../../../navigation/CustomDrawer'
@@ -32,27 +31,6 @@ const infoCardsData = [
 
 const Dashboard = () => {
 
-    const showToast = () => {
-        ToastAndroid.show('A pikachu appeared nearby !', ToastAndroid.SHORT);
-    };
-
-    const showToastWithGravity = () => {
-        ToastAndroid.showWithGravity(
-            'All Your Base Are Belong To Us',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-        );
-    };
-
-    const showToastWithGravityAndOffset = () => {
-        ToastAndroid.showWithGravityAndOffset(
-            'A wild toast appeared!',
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            50,
-            50,
-        );
-    }
 
 
     const [isDrawerOpen, setDrawerOpen] = useState(false);

@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoadingScreen from '../../components/ui/LoadingScreen';
+import { Stack } from 'expo-router';
 
 interface ServiceRequest {
   ID: number;
@@ -75,7 +76,8 @@ const Services = () => {
   return (
     <View>
       <ScrollView>
-        <View>
+        <Stack.Screen options={{ headerShown: false }} />
+        <View style={{ marginTop: 60 }}>
           <Text style={{ fontSize: 30, fontWeight: '700', marginLeft: 10 }}>
             Service Requests
           </Text>

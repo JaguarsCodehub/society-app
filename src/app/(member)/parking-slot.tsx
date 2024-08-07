@@ -85,7 +85,7 @@ const ParkingSlot = () => {
   }, [cookies]);
 
   return (
-    <View>
+    <View style={{ marginTop: 40 }}>
       <Stack.Screen options={{ headerShown: false }} />
       <Text
         style={{ fontSize: 20, fontWeight: '700', marginLeft: 10, padding: 10 }}

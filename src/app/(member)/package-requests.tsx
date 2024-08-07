@@ -6,10 +6,10 @@ const PackageRequests = () => {
     return (
         <ScrollView style={{ padding: 20, marginTop: 20 }}>
             <View style={{ marginTop: 20 }}>
-                <Text style={{ fontSize: 20, fontWeight: "600" }}>Your Package Requests</Text>
+                <Text style={{ fontSize: 25, fontWeight: "600" }}>Your Package Requests</Text>
             </View>
             <View>
-                {/* <Image /> */}
+                <Image source={require("../../../assets/packages.jpg")} style={styles.image} />
             </View>
             <View style={{ backgroundColor: "#A67B5B", borderRadius: 5, padding: 15, marginTop: 10, paddingVertical: 20 }}>
                 <View>
@@ -23,7 +23,7 @@ const PackageRequests = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={{ backgroundColor: "#A67B5B", borderRadius: 5, padding: 15, marginTop: 10, paddingVertical: 20 }}>
+            <View style={{ backgroundColor: "#A67B5B", borderRadius: 5, padding: 15, marginTop: 10, paddingVertical: 20, paddingBottom: 40 }}>
                 <View>
                     <Text style={{ color: "black", fontWeight: "600", fontSize: 15 }}>Name of the Package: Amazon package</Text>
                     <Text style={{ color: "black", fontWeight: "600", fontSize: 15 }}>Member Name: Jay Shah</Text>
@@ -41,4 +41,11 @@ const PackageRequests = () => {
 
 export default PackageRequests
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    image: {
+        width: "100%",
+        height: 200,
+        borderRadius: 5,
+        marginTop: 20
+    }
+})

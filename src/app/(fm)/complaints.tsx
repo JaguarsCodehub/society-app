@@ -14,6 +14,7 @@ import LoadingScreen from '../../components/ui/LoadingScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { Picker } from '@react-native-picker/picker';
+import { Stack } from 'expo-router';
 
 type CookieUserData = {
   FMSocietyID: string;
@@ -133,7 +134,8 @@ const Complaints = () => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop: 60 }}>
+      <Stack.Screen options={{ headerShown: false }} />
       <ScrollView>
         <View>
           <Text style={{ fontSize: 25, fontWeight: '600', marginLeft: 10 }}>

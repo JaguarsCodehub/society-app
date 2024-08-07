@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { showToastWithGravityAndOffset } from '../../utils/showToastWithGravityAndOffset';
 import LoadingScreen from '../../components/ui/LoadingScreen';
+import { Stack } from 'expo-router';
 
 const AdminComplaints = () => {
 
@@ -33,7 +34,8 @@ const AdminComplaints = () => {
     }
     return (
         <ScrollView style={styles.container}>
-            <Text>AdminComplaints</Text>
+            <Stack.Screen options={{ headerShown: false }} />
+            <Text style={{ fontSize: 20, fontWeight: "600" }}>AdminComplaints</Text>
             <View>
                 {complaintsData.map((item: any) => (
                     <View style={styles.card}>
@@ -57,9 +59,10 @@ const styles = StyleSheet.create({
     container: {
         padding: 10,
         backgroundColor: 'lightgray',
+        marginTop: 40
     },
     card: {
-        backgroundColor: 'green',
+        backgroundColor: '#5c969e',
         borderRadius: 5,
         padding: 15,
         marginVertical: 10,

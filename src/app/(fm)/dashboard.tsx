@@ -46,7 +46,7 @@ const FmDashboard = () => {
     }, []);
     return (
         <ScrollView>
-            <Stack.Screen options={{ headerTitle: "Dashboard" }} />
+            <Stack.Screen options={{ headerShown: false }} />
             <View style={styles.container}>
                 <View style={{ padding: 20 }}>
 
@@ -125,7 +125,7 @@ export default FmDashboard
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10
+        marginTop: 60
     },
     header: {
         fontSize: 30,

@@ -88,7 +88,7 @@ const AccountLedger = () => {
 
   return (
     <ScrollView>
-      <View>
+      <View style={{ marginTop: 40 }}>
         <Text style={{ fontSize: 30, fontWeight: '600', marginLeft: 10 }}>
           Account Report
         </Text>
@@ -97,7 +97,7 @@ const AccountLedger = () => {
             <TouchableOpacity
               key={item.billNumber}
               style={{
-                backgroundColor: '#00c556',
+                backgroundColor: '#262626',
                 padding: 20,
                 margin: 10,
                 borderRadius: 5,
@@ -113,13 +113,13 @@ const AccountLedger = () => {
                 Bill Number: {item.billNumber}
               </Text>
               <View style={{ marginTop: 15 }}>
-                <Text>Ledger Type: {item.type}</Text>
-                <Text>Ledger DocDate: {item.docDate}</Text>
-                <Text>CustomerName: {item.customerName}</Text>
-                <Text>Credit: {item.credit}</Text>
-                <Text>Debit: {item.debit}</Text>
-                <Text>Balance: {item.balance}</Text>
-                <Text>Member Room: {item.member}</Text>
+                <Text style={{ color: "#D8CBBB" }}>Ledger Type: {item.type}</Text>
+                <Text style={{ color: "#D8CBBB" }}>Ledger DocDate: {item.docDate}</Text>
+                <Text style={{ color: "#D8CBBB" }}>CustomerName: {item.customerName}</Text>
+                <Text style={{ color: "#D8CBBB" }}>Credit: {item.credit}</Text>
+                <Text style={{ color: "#D8CBBB" }}>Debit: {item.debit}</Text>
+                <Text style={{ color: "#D8CBBB" }}>Balance: {item.balance}</Text>
+                <Text style={{ color: "#D8CBBB" }}>Member Room: {item.member}</Text>
               </View>
             </TouchableOpacity>
           ))}

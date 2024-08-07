@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import LoadingScreen from '../../components/ui/LoadingScreen';
 import { showToastWithGravityAndOffset } from '../../utils/showToastWithGravityAndOffset';
 import axios from 'axios';
+import { Stack } from 'expo-router';
 
 const AdminParkingSlot = () => {
 
@@ -35,16 +36,19 @@ const AdminParkingSlot = () => {
 
     return (
         <ScrollView>
-            <Text>AdminComplaints</Text>
-            <View style={styles.container}>
-                {parkingData.map((item: any) => (
-                    <View style={styles.card} key={item.id}>
-                        <Text style={styles.title}>Parking Slot Code: {item.slot}</Text>
-                        <Text>Slot Code: {item.slotCode}</Text>
-                        <Text>Member Name: {item.name}</Text>
-                        <Text>Date: {item.date}</Text>
-                    </View>
-                ))}
+            <Stack.Screen options={{ headerShown: false }} />
+            <View style={{ marginTop: 40, padding: 10 }}>
+                <Text style={{ fontSize: 20, fontWeight: "600", padding: 5 }}>All Parking Slots</Text>
+                <View style={styles.container}>
+                    {parkingData.map((item: any) => (
+                        <View style={styles.card} key={item.id}>
+                            <Text style={styles.title}>Parking Slot Code: {item.slot}</Text>
+                            <Text>Slot Code: {item.slotCode}</Text>
+                            <Text>Member Name: {item.name}</Text>
+                            <Text>Date: {item.date}</Text>
+                        </View>
+                    ))}
+                </View>
             </View>
         </ScrollView>
     )
@@ -55,10 +59,9 @@ export default AdminParkingSlot
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        backgroundColor: 'lightgray',
     },
     card: {
-        backgroundColor: 'green',
+        backgroundColor: '#8aae92',
         borderRadius: 8,
         padding: 15,
         marginVertical: 10,

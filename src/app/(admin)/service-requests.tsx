@@ -4,6 +4,7 @@ import axios from 'axios';
 import { showToastWithGravityAndOffset } from '../../utils/showToastWithGravityAndOffset';
 import LoadingScreen from '../../components/ui/LoadingScreen';
 import { ScrollView } from 'react-native';
+import { Stack } from 'expo-router';
 
 const AdminServiceRequests = () => {
 
@@ -34,21 +35,26 @@ const AdminServiceRequests = () => {
     }
     return (
         <ScrollView>
-            <Text>AdminComplaints</Text>
-            <View style={styles.container}>
-                {serviceRequestsData.map((item: any) => (
-                    <View style={styles.card}>
-                        <Text style={styles.title}>Service: {item.ServiceName}</Text>
-                        <Text>Complaint Code: {item.Code}</Text>
-                        <Text>Member Name: {item.MemberName}</Text>
-                        <Text>Flat: {item.Wing} - {item.Flat}</Text>
-                        <Text>Subject: {item.Subject}</Text>
-                        <Text>Description: {item.Description || 'No description provided'}</Text>
-                        <Text>Status: {item.Status}</Text>
-                        <Text>Date: {new Date(item.Date).toLocaleDateString()}</Text>
-                        <Text>Mobile: {item.Mobile}</Text>
-                    </View>
-                ))}
+            <Stack.Screen options={{ headerShown: false }} />
+            <View style={{ marginTop: 40 }}>
+                <View style={{ padding: 10 }}>
+                    <Text style={{ fontSize: 20, fontWeight: "600" }}>AdminComplaints</Text>
+                </View>
+                <View style={styles.container}>
+                    {serviceRequestsData.map((item: any) => (
+                        <View style={styles.card}>
+                            <Text style={styles.title}>Service: {item.ServiceName}</Text>
+                            <Text>Complaint Code: {item.Code}</Text>
+                            <Text>Member Name: {item.MemberName}</Text>
+                            <Text>Flat: {item.Wing} - {item.Flat}</Text>
+                            <Text>Subject: {item.Subject}</Text>
+                            <Text>Description: {item.Description || 'No description provided'}</Text>
+                            <Text>Status: {item.Status}</Text>
+                            <Text>Date: {new Date(item.Date).toLocaleDateString()}</Text>
+                            <Text>Mobile: {item.Mobile}</Text>
+                        </View>
+                    ))}
+                </View>
             </View>
         </ScrollView>
     )
@@ -59,10 +65,9 @@ export default AdminServiceRequests
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        backgroundColor: 'lightgray',
     },
     card: {
-        backgroundColor: 'green',
+        backgroundColor: '#a0937d',
         borderRadius: 8,
         padding: 15,
         marginVertical: 10,
