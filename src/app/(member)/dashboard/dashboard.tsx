@@ -50,7 +50,6 @@ const Dashboard = () => {
             <CustomDrawer isOpen={isDrawerOpen} closeDrawer={closeDrawer} />
             <ScrollView style={styles.container}>
                 <View>
-
                     <View style={styles.headerWrapper}>
                         <View style={styles.brandWrapper}>
                             <MenuIcon name='adobe' size={30} color="#322C2B" style={{ marginTop: 5 }} />
