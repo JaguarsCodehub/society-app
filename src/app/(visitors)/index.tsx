@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from '../../components/ui/LoadingScreen';
 import { uploadImageAsync } from '../../utils/uploadImageAsync';
 import SearchablePicker from '../../components/SearchablePicker';
+import { Picker } from '@react-native-picker/picker';
 
 type CookieUserData = {
   SocietyID: string;
@@ -41,6 +42,9 @@ const VisitorsPage = () => {
   const [name, setName] = useState<string>('');
   const [mobileNumber, setMobileNumber] = useState<string>('');
   const [cookies, setCookies] = useState<CookieUserData | null>(null);
+
+
+  const [selectedFlat, setSelectedFlat] = useState<string | null>(null);
 
   const showToastWithGravityAndOffset = (msg: string) => {
     ToastAndroid.showWithGravityAndOffset(
@@ -177,6 +181,18 @@ const VisitorsPage = () => {
     setMode('date');
   };
 
+  const renderFlat = ({ item }: { item: any }) => (
+    <TouchableOpacity
+      style={[
+        styles.flatBox,
+        selectedFlat === item.flatID ? styles.selectedBox : styles.unselectedBox,
+      ]}
+      onPress={() => setSelectedFlat(item.flatID)}
+    >
+      <Text style={styles.flatText}>{item.wingFlat}</Text>
+    </TouchableOpacity>
+  );
+
   if (loading) {
     return <LoadingScreen />;
   }
@@ -257,15 +273,15 @@ const VisitorsPage = () => {
 
           <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
             <Text style={styles.label}>Select Flat</Text>
-            <SearchablePicker
-              selectedValue={flat}
-              onValueChange={setFlat}
-              items={flats.map((flat: any) => ({
-                label: flat.wingFlat,
-                value: `${flat.wingCode}-${flat.flatID}`
-              }))}
-              placeholder="Select Flat"
+            <FlatList
+              data={flats}
+              renderItem={renderFlat}
+              keyExtractor={(item) => item.flatID.toString()}
+              numColumns={4} // Adjust based on the number of columns you want
+              contentContainerStyle={styles.flatListContainer}
             />
+
+            {selectedFlat && <Text>Selected Flat ID: {selectedFlat}</Text>}
           </View>
         </View>
 
@@ -388,5 +404,29 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     color: 'white',
   },
-
+  flatListContainer: {
+    // justifyContent: 'center',
+  },
+  flatBox: {
+    // flex: 1,
+    margin: 2,
+    height: 50,
+    width: 90,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1,
+  },
+  flatText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  selectedBox: {
+    backgroundColor: '#ffcccc',
+    borderColor: '#ff0000',
+  },
+  unselectedBox: {
+    backgroundColor: '#e0e0e0',
+    borderColor: '#ccc',
+  },
 });
