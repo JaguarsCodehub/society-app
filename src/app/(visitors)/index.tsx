@@ -128,7 +128,7 @@ const VisitorsPage = () => {
 
   const handleSubmit = async () => {
 
-    if (name === '' || mobileNumber === '' || image === '' || flat === '') {
+    if (name === '' || mobileNumber === '' || image === null || flat === '') {
       showToastWithGravityAndOffset('Please fill all the fields');
       return;
     }

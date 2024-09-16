@@ -4,6 +4,7 @@ import axios from 'axios';
 import LoadingScreen from '../../components/ui/LoadingScreen';
 
 type VisitorData = {
+  id: string;
   date: string;
   name: string;
   wingName: string;
@@ -42,9 +43,9 @@ const ViewVisitors = () => {
     <View style={styles.container}>
       <FlatList
         data={visitorsData}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.date}
         renderItem={({ item }) => (
-          <View style={styles.itemCard}>
+          <View style={styles.itemCard} key={item.date}>
             <Image
               source={{ uri: item.photo }}
               resizeMode='contain'

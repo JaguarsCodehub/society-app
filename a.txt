@@ -1,18 +1,11 @@
-1. Input Validation in Visitors
-2. View Visitors FlatList key Issue
+1. Input Validation in Visitors ✅
+2. View Visitors FlatList key Issue ✅
 3. Member Selection in Send package request
 
 ------------------------------------
-0. Super Admin
-1. Admin Master
-
-
 1. User Master
 2. Task Master
 3. Status Master *
 3. Assign Task Master
 4. Customer (Client) Master
 5. Project Master (Site)
-
-
-aasdasdasdasd
