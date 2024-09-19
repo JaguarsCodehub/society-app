@@ -43,9 +43,9 @@ const ViewVisitors = () => {
     <View style={styles.container}>
       <FlatList
         data={visitorsData}
-        keyExtractor={(item) => item.date}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.itemCard} key={item.date}>
+          <View style={styles.itemCard} key={item.id}>
             <Image
               source={{ uri: item.photo }}
               resizeMode='contain'

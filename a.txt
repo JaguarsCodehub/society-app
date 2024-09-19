@@ -1,6 +1,29 @@
+- Mobile Number Validation in Register Form
+- No Animations in the app, UI very basic
+- Main functions does not work
+- Ui unresponsive on various devices
+- Multiple Society Supports
+
+J registered
+
+
+- Document Upload (Images, PDF)
+- Gate Pass for friends and relatives
+- Staff Login ?
+- Defaulter List 
+- Announcements
+- Polling Notes (Painting)
+- Emergency Numbers
+- Notification
+
+
+
 1. Input Validation in Visitors ✅
 2. View Visitors FlatList key Issue ✅
 3. Member Selection in Send package request
+
+
+
 
 ------------------------------------
 1. User Master
