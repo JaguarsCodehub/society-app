@@ -11,10 +11,10 @@ J registered
 - Gate Pass for friends and relatives
 - Staff Login ?
 - Defaulter List 
-- Announcements
-- Polling Notes (Painting)
-- Emergency Numbers
-- Notification
+- Announcements - Frontend Done 🍁
+- Polling Notes (Painting) 🍁
+- Emergency Numbers - Frontend Done 🍁
+// - Notification
 
 
 

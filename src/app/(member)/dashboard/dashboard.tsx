@@ -25,6 +25,12 @@ const infoCardsData = [
         imageSource: require('../../../../assets/camera.png'),
         onPress: () => router.push({ pathname: "(member)/account-ledger" }),
     },
+    {
+        title: 'Emergency Numbers List',
+        description: 'Access Emergency Numbers.',
+        imageSource: require('../../../../assets/camera.png'),
+        onPress: () => router.push({ pathname: "(member)/emergency-numbers" }),
+    },
 
 ];
 
