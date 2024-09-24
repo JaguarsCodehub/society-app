@@ -8,6 +8,18 @@ import InfoCard from '../../../components/ui/InfoCard'
 
 const infoCardsData = [
     {
+        title: 'Check Notice Board',
+        description: 'Check the notice board for any important notices.',
+        imageSource: require('../../../../assets/vendor.png'),
+        onPress: () => router.push({ pathname: "(member)/noticeboard" }),
+    },
+    {
+        title: 'Vote on Polls',
+        description: 'Vote on the polls to express your opinion.',
+        imageSource: require('../../../../assets/spaces.png'),
+        onPress: () => router.push({ pathname: "(member)/vote-polls" }),
+    },
+    {
         title: 'Know your Members',
         description: 'Positions of your fellow members.',
         imageSource: require('../../../../assets/vendor.png'),
@@ -79,6 +91,17 @@ const Dashboard = () => {
                         <Text style={{ fontSize: 30, fontWeight: "600" }}>Overview</Text>
 
 
+                        <TouchableOpacity onPress={() => router.push({ pathname: "/(member)/create-register" })}>
+                            <View style={{ backgroundColor: "#A67B5B", paddingVertical: 10, borderRadius: 5, marginTop: 15, padding: 5 }}>
+                                <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}>
+                                    <MenuIcon2 name='package' size={50} color="black" style={{ marginLeft: 20 }} />
+                                    <View style={{ flexDirection: "column", flex: 1 }}>
+                                        <Text style={{ marginLeft: 20, fontSize: 15, fontWeight: "700", color: "black" }}>Create your J Register</Text>
+                                        <Text style={{ marginLeft: 20, color: "black", fontSize: 12 }}>You can create your J Register here.</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={() => router.push({ pathname: "/(member)/package-requests" })}>
                             <View style={{ backgroundColor: "#A67B5B", paddingVertical: 10, borderRadius: 5, marginTop: 15, padding: 5 }}>
                                 <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}>

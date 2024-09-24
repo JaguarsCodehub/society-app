@@ -1,0 +1,38 @@
+
+New Features discussed on Friday
+- Flat Document Upload (Images, PDF)
+- Staff Login ?
+- Announcements - Frontend + backend Done ✅ DB remaining
+- Voting Poll Notes (Painting) Frontend + backend Done ✅ DB remaining
+- Emergency Numbers - Done ✅
+
+--------------------------
+Pending Features:
+- Vote-Poll Configuration where one user can vote only one option Done ✅
+- Admin should be able to see the vote count
+- Loader for every post and get request
+
+Type of Members:
+- Nominal member
+- Sympathizer member
+- Associate member
+- Managing committee member
+- General body member
+
+FORM "J" 
+SEE RULE 33
+
+
+
+Not needed now:
+- Gate Pass for friends and relatives : QR Code Generation
+
+Settings:
+- Approval Flow
+- Visitor
+- Gate Pass
+
+
+1. Input Validation in Visitors ✅
+2. View Visitors FlatList key Issue ✅
+3. Member Selection in Send package request
