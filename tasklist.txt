@@ -3,8 +3,6 @@ New Features:
 - J Register Document Format PDF + Preview
 - J Register Table Format Truncated
 
-
-
 New Features discussed on Friday
 - J RegisterFlat Document Upload (Images, PDF) ✅ Done
 - Announcements - ✅ Done
@@ -25,7 +23,6 @@ Settings:
 - Approval Flow
 - Visitor
 - Gate Pass
-
 
 1. Input Validation in Visitors ✅
 2. View Visitors FlatList key Issue ✅
