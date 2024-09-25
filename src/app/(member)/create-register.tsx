@@ -34,6 +34,9 @@ const CreateRegister = () => {
         <ScrollView style={styles.container}>
             <Stack.Screen options={{ headerTitle: "Create Register" }} />
             <Text style={styles.header}>Create your J Register</Text>
+            <Text style={styles.header}>FORM "J"
+                SEE RULE 33
+            </Text>
             <View style={styles.section}>
                 <Text style={styles.subHeader}>Owner</Text>
                 {owners.map((owner, index) => (

@@ -62,6 +62,10 @@ const JRegisterView: React.FC = () => {
             <Card style={styles.card}>
                 <Card.Content>
                     <Title style={styles.title}>J Register</Title>
+                    {/* <Title style={styles.title}>
+                        FORM "J"
+                        SEE RULE 33
+                    </Title> */}
                     <Picker
                         selectedValue={selectedRegister?.RegisterCode}
                         onValueChange={(itemValue) =>

@@ -1,3 +1,9 @@
+New Features:
+- Loader for every post and get request
+- J Register Document Format PDF + Preview
+- J Register Table Format Truncated
+
+
 
 New Features discussed on Friday
 - J RegisterFlat Document Upload (Images, PDF) ✅ Done
@@ -10,17 +16,6 @@ Pending Features:
 - Vote-Poll Configuration where one user can vote only one option. ✅ Done
 - Admin should be able to see the vote count ✅ Done
 - Loader for every post and get request
-
-Type of Members:
-- Nominal member
-- Sympathizer member
-- Associate member
-- Managing committee member
-- General body member
-
-FORM "J" 
-SEE RULE 33
-
 
 
 Not needed now:
