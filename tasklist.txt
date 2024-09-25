@@ -1,15 +1,14 @@
 
 New Features discussed on Friday
-- Flat Document Upload (Images, PDF)
-- Staff Login ?
-- Announcements - Frontend + backend Done ✅ DB remaining
-- Voting Poll Notes (Painting) Frontend + backend Done ✅ DB remaining
-- Emergency Numbers - Done ✅
+- J RegisterFlat Document Upload (Images, PDF) ✅ Done
+- Announcements - ✅ Done
+- Voting Poll Notes (Painting) ✅ Done
+- Emergency Numbers - ✅ Done
 
 --------------------------
 Pending Features:
-- Vote-Poll Configuration where one user can vote only one option Done ✅
-- Admin should be able to see the vote count
+- Vote-Poll Configuration where one user can vote only one option. ✅ Done
+- Admin should be able to see the vote count ✅ Done
 - Loader for every post and get request
 
 Type of Members:

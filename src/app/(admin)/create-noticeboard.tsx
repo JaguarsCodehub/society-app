@@ -8,7 +8,7 @@ const CreateNoticeScreen = () => {
   const [content, setContent] = useState('');
 
   const handleSubmit = async () => {
-    const response = await fetch('http://192.168.1.12:3000/notices', {
+    const response = await fetch('http://192.168.1.11:3000/notices', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title, content, author: 'admin' }),

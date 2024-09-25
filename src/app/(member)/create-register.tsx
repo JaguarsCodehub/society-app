@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, ScrollView, StyleSheet, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Stack } from 'expo-router';
+import axios from 'axios'; // Make sure to install axios: npm install axios
 
 const CreateRegister = () => {
     const [owners, setOwners] = useState([{ name: '', mobile: '', email: '' }]);
@@ -13,6 +14,20 @@ const CreateRegister = () => {
 
     const addJointMember = () => {
         setJointMembers([...jointMembers, { name: '', address: '', role: '' }]);
+    };
+
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.post('http://192.168.1.11:3000/api/create-register', {
+                owners,
+                jointMembers
+            });
+            Alert.alert('Success', `Register created successfully with code: ${response.data.code}`);
+            // Reset form or navigate to another screen
+        } catch (error) {
+            console.error('Error creating register:', error);
+            Alert.alert('Error', 'Failed to create register. Please try again.');
+        }
     };
 
     return (
@@ -45,7 +60,7 @@ const CreateRegister = () => {
                         />
                         <TextInput
                             style={styles.input}
-                            placeholder="EmailAddress"
+                            placeholder="Email Address"
                             value={owner.email}
                             onChangeText={(text) => {
                                 const newOwners = [...owners];
@@ -58,7 +73,7 @@ const CreateRegister = () => {
                 <Button title="Add Owner" onPress={addOwner} />
             </View>
             <View style={styles.section}>
-                <Text style={styles.subHeader}>Register Details</Text>
+                <Text style={styles.subHeader}>Joint Members</Text>
                 {jointMembers.map((member, index) => (
                     <View key={index} style={styles.inputGroup}>
                         <TextInput
@@ -84,13 +99,13 @@ const CreateRegister = () => {
                         <Picker
                             selectedValue={member.role}
                             style={styles.input}
-                            onValueChange={(itemValue: any) => {
+                            onValueChange={(itemValue) => {
                                 const newMembers = [...jointMembers];
                                 newMembers[index].role = itemValue;
                                 setJointMembers(newMembers);
                             }}
                         >
-                            <Picker.Item label="Choose Type of Member" value="#" enabled={false} />
+                            <Picker.Item label="Choose Type of Member" value="" />
                             <Picker.Item label="Nominal member" value="Nominal member" />
                             <Picker.Item label="Sympathizer member" value="Sympathizer member" />
                             <Picker.Item label="Associate member" value="Associate member" />
@@ -101,6 +116,7 @@ const CreateRegister = () => {
                 ))}
                 <Button title="Add Joint Member" onPress={addJointMember} />
             </View>
+            <Button title="Submit" onPress={handleSubmit} />
         </ScrollView>
     );
 };

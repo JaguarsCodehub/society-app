@@ -1,10 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import NotificationProvider from '../../providers/NotificationProvider';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 export default function TabLayout() {
     return (
-        <NotificationProvider>
+        // <NotificationProvider>
+        <PaperProvider>
             <Tabs screenOptions={{ tabBarActiveTintColor: '#A67B5B', headerShown: true, }}>
                 <Tabs.Screen
                     name="dashboard/dashboard"
@@ -114,6 +116,7 @@ export default function TabLayout() {
 
 
             </Tabs>
-        </NotificationProvider>
+        </PaperProvider>
+        // </NotificationProvider>
     );
 }

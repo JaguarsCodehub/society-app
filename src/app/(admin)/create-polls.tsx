@@ -17,7 +17,7 @@ const AdminPollCreator = () => {
 
     const createPoll = async () => {
         try {
-            const response = await axios.post('http://192.168.1.12:3000/polls', {
+            const response = await axios.post('http://192.168.1.11:3000/polls', {
                 question,
                 options: options.filter(option => option.trim() !== '')
             });

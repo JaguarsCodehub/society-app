@@ -27,6 +27,17 @@ const cardsData = [
         onPress: () => router.push('/check-polls'),
     },
     {
+        title: 'Check J Registers',
+        subTitle: 'Check the J Registers for the society.',
+        buttonText: 'Check J Registers',
+        buttonColor: '#00A070',
+        bgColor: '#D4FFE4',
+        bgBorderColor: "#00A070",
+        textColor: '#00A070',
+        imageSource: require('../../../assets/vendor.png'),
+        onPress: () => router.push('/check-j-registers'),
+    },
+    {
         title: 'Create a Poll',
         subTitle: 'Create a poll for the society.',
         buttonText: 'Create a Poll',
@@ -90,7 +101,6 @@ const AdminHomePage = () => {
                         <Text style={styles.buttonText}>Sales Register</Text>
                     </TouchableOpacity>
                 </View>
-
 
                 <View>
                     {cardsData.map((card, index) => (

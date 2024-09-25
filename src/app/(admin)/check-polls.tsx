@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
-import { Card, Title, Paragraph, Button } from 'react-native-paper';
+import { Card, Title, Paragraph, ProgressBar } from 'react-native-paper';
 import axios from 'axios';
 import { Stack } from 'expo-router';
 
@@ -11,7 +11,7 @@ const CheckPolls = () => {
     useEffect(() => {
         const fetchPolls = async () => {
             try {
-                const response = await axios.get('http://192.168.1.12:3000/polls');
+                const response = await axios.get('http://192.168.1.11:3000/polls');
                 setPolls(response.data);
                 console.log(response.data);
             } catch (error) {
@@ -24,34 +24,48 @@ const CheckPolls = () => {
         fetchPolls();
     }, []);
 
+    const getTotalVotes = (votes: number[]) => votes.reduce((sum, vote) => sum + vote, 0);
+
     if (loading) {
         return (
             <View style={styles.loader}>
                 <ActivityIndicator size="large" color="#0000ff" />
+                <Text style={styles.headerText}>Loading...</Text>
             </View>
         );
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: '#f5f5f5', marginTop: 30 }}>
+        <View style={styles.container}>
             <Stack.Screen options={{ headerShown: false }} />
-            <Text style={{ fontSize: 20, fontWeight: 'bold', margin: 10 }}>Check Polls</Text>
+            <Text style={styles.headerText}>Here's the Vote Count !</Text>
             <FlatList
                 data={polls}
                 keyExtractor={(item: any) => item.id.toString()}
-                renderItem={({ item }) => (
-                    <Card style={styles.card}>
-                        <Card.Content>
-                            <Title style={styles.title}>{item.question}</Title>
-                            <Paragraph style={styles.paragraph}>Description</Paragraph>
-                            {item.options.map((option: any, index: any) => (
-                                <View key={index} style={styles.option}>
-                                    <Text>{option}: {item.votes[index]}</Text>
-                                </View>
-                            ))}
-                        </Card.Content>
-                    </Card>
-                )}
+                renderItem={({ item }) => {
+                    const totalVotes = getTotalVotes(item.votes);
+                    return (
+                        <Card style={styles.card}>
+                            <Card.Content>
+                                <Title style={styles.title}>{item.question}</Title>
+                                <Paragraph style={styles.paragraph}>Total Votes: {totalVotes}</Paragraph>
+                                {item.options.map((option: string, index: number) => (
+                                    <View key={index} style={styles.optionContainer}>
+                                        <View style={styles.optionTextContainer}>
+                                            <Text style={styles.optionText}>{option}</Text>
+                                            <Text style={styles.voteCount}>{item.votes[index]}</Text>
+                                        </View>
+                                        <ProgressBar
+                                            progress={totalVotes > 0 ? item.votes[index] / totalVotes : 0}
+                                            color="#4CAF50"
+                                            style={styles.progressBar}
+                                        />
+                                    </View>
+                                ))}
+                            </Card.Content>
+                        </Card>
+                    );
+                }}
             />
         </View>
     );
@@ -98,5 +112,37 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#ffffff', // White text
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#f5f5f5',
+        paddingTop: 30,
+    },
+    headerText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        margin: 20,
+        color: '#333333',
+    },
+    optionContainer: {
+        marginTop: 10,
+    },
+    optionTextContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 5,
+    },
+    optionText: {
+        fontSize: 16,
+        color: '#333333',
+    },
+    voteCount: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#4CAF50',
+    },
+    progressBar: {
+        height: 20,
+        borderRadius: 5,
     },
 });
