@@ -1,8 +1,8 @@
-// App.tsx
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { Stack } from 'expo-router';
 import { Image } from 'react-native';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolateColor } from 'react-native-reanimated';
 import LoginForm from '../../components/LoginForm';
 import MemberForm from '../../components/MemberForm';
 import FmForm from '../../components/FmForm';
@@ -10,114 +10,160 @@ import AdminForm from '../../components/AdminForm';
 
 type FormType = 'watchman' | 'member' | 'fm' | 'admin';
 
+const { width } = Dimensions.get('window');
+const TAB_WIDTH = (width - 40) / 4; // Assuming 20px padding on each side
+
 const Form: React.FC = () => {
     const [currentForm, setCurrentForm] = useState<FormType>('watchman');
+    const slideAnimation = useSharedValue(0);
+
+    const formComponents = {
+        watchman: LoginForm,
+        member: MemberForm,
+        fm: FmForm,
+        admin: AdminForm,
+    };
+
+    const animatedStyles = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateX: withSpring(slideAnimation.value * TAB_WIDTH) }],
+        };
+    });
+
+    const handleTabPress = (index: number, type: FormType) => {
+        slideAnimation.value = index;
+        setCurrentForm(type);
+    };
 
     const renderForm = () => {
-        switch (currentForm) {
-            case 'watchman':
-                return <LoginForm />;
-            case 'member':
-                return <MemberForm />;
-            case 'fm':
-                return <FmForm />;
-            case 'admin':
-                return <AdminForm />
-            default:
-                return null;
-        }
+        const Component = formComponents[currentForm];
+        return <Component />;
     };
 
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                <Stack.Screen options={{ headerShown: false }} />
-                <View style={{ padding: 20, marginTop: 10 }}>
-                    <Text style={{ fontSize: 35, fontWeight: "600" }}>Manage your society at your Finger Tips !</Text>
-                    <Text style={{ fontSize: 20, fontWeight: "500", color: "gray", marginTop: 5 }}>Let's Get to Know you First ♥</Text>
-                    <Image source={require("../../../assets/society.jpg")} resizeMode='cover' style={{ borderRadius: 10, marginTop: 10, width: "100%", height: 100 }} />
-                </View>
-                <View style={{ marginTop: 2 }}>
-                    <Text style={{ paddingHorizontal: 20, fontSize: 30, fontWeight: "600" }}>Who are you ?</Text>
-                </View>
-                <View style={styles.switcher}>
-                    <TouchableOpacity onPress={() => setCurrentForm('watchman')} style={styles.switcherButton}>
-                        <Text style={currentForm === 'watchman' ? styles.activeText : styles.inactiveText}>Watchman</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setCurrentForm('member')} style={styles.switcherButton}>
-                        <Text style={currentForm === 'member' ? styles.activeText : styles.inactiveText}>Member</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setCurrentForm('fm')} style={styles.switcherButton}>
-                        <Text style={currentForm === 'fm' ? styles.activeText : styles.inactiveText}>Fm</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setCurrentForm('admin')} style={styles.switcherButton}>
-                        <Text style={currentForm === 'admin' ? styles.activeText : styles.inactiveText}>Admin</Text>
-                    </TouchableOpacity>
-                </View>
-                {renderForm()}
-            </View>
-        </ScrollView>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.container}>
+          <Stack.Screen options={{ headerShown: false }} />
+          <View style={styles.header}>
+            <Text style={styles.title}>
+              Manage your society at your Finger Tips !
+            </Text>
+            <Text style={styles.subtitle}>Let's Get to Know you First ♥</Text>
+            <Image
+              source={require('../../../assets/society.jpg')}
+              style={styles.image}
+            />
+          </View>
+          <Text style={styles.question}>Who are you ?</Text>
+          <View style={styles.tabContainer}>
+            <Animated.View style={[styles.slider, animatedStyles]} />
+            {(['watchman', 'member', 'fm', 'admin'] as const).map(
+              (type, index) => (
+                <TouchableOpacity
+                  key={type}
+                  onPress={() => handleTabPress(index, type)}
+                  style={styles.tab}
+                >
+                  <Animated.Text
+                    style={[
+                      styles.tabText,
+                      { color: currentForm === type ? '#000' : '#8E8E93' },
+                    ]}
+                  >
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </Animated.Text>
+                </TouchableOpacity>
+              )
+            )}
+          </View>
+          <View
+            style={{
+              paddingTop: 20,
+              backgroundColor: '#FFF',
+            }}
+          >
+            {renderForm()}
+          </View>
+        </View>
+      </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
+    scrollView: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+    },
     container: {
         flex: 1,
-        marginTop: 30,
-        marginBottom: 70
-
+        marginTop: 20,
+        marginBottom: 70,
     },
-    switcher: {
+    header: {
+        padding: 20,
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: '700',
+        marginBottom: 8,
+    },
+    subtitle: {
+        fontSize: 16,
+        color: '#666',
+        marginBottom: 16,
+    },
+    image: {
+        width: '100%',
+        height: 150,
+        borderRadius: 10,
+    },
+    question: {
+        fontSize: 24,
+        fontWeight: '600',
+        marginTop: 20,
+        marginBottom: 16,
+        paddingHorizontal: 20,
+    },
+    tabContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        padding: 8,
-        backgroundColor: "#ececec",
-        marginTop: 5,
-        marginHorizontal: 10,
-        borderRadius: 5,
+        backgroundColor: '#F0F0F0',
+        marginHorizontal: 20,
+        borderRadius: 8,
+        height: 40,
+        position: 'relative',
         marginBottom: 20,
     },
-    switcherButton: {
-    },
-    activeText: {
-        fontWeight: 'bold',
-        color: 'black',
-        fontSize: 15,
-        borderRadius: 3,
-        padding: 10,
-        backgroundColor: "white"
-    },
-    inactiveText: {
-        color: 'gray',
-        fontSize: 15,
-        padding: 10,
-        borderRadius: 3,
-    },
-    form: {
-        padding: 20,
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 5,
-    },
-    label: {
-        marginBottom: 10,
-        fontWeight: 'bold',
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 5,
-        marginBottom: 10,
-        padding: 10,
-    },
-    button: {
-        backgroundColor: 'black',
-        padding: 10,
+    tab: {
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center',
     },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
+    tabText: {
+        fontSize: 14,
+        fontWeight: '600',
+    },
+    slider: {
+        position: 'absolute',
+        width: TAB_WIDTH,
+        height: '100%',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    formContainer: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        marginHorizontal: 20,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 5,
     },
 });
 

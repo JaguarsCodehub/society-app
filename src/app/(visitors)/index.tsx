@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Modal,
-  Image,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  ToastAndroid,
   TouchableOpacity,
   View,
-  FlatList,
+  Image,
+  Platform,
 } from 'react-native';
 import { Stack } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/Foundation';
-import UploadIcon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from '../../components/ui/LoadingScreen';
 import { uploadImageAsync } from '../../utils/uploadImageAsync';
 import SearchablePicker from '../../components/SearchablePicker';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
 type CookieUserData = {
   SocietyID: string;
   ID: string;
   year: string;
 };
-
-
 
 const VisitorsPage = () => {
   const [date, setDate] = useState(new Date());
@@ -41,16 +37,6 @@ const VisitorsPage = () => {
   const [name, setName] = useState<string>('');
   const [mobileNumber, setMobileNumber] = useState<string>('');
   const [cookies, setCookies] = useState<CookieUserData | null>(null);
-
-  const showToastWithGravityAndOffset = (msg: string) => {
-    ToastAndroid.showWithGravityAndOffset(
-      msg,
-      ToastAndroid.LONG,
-      ToastAndroid.BOTTOM,
-      50,
-      50
-    );
-  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchCameraAsync({
@@ -129,7 +115,6 @@ const VisitorsPage = () => {
   const handleSubmit = async () => {
 
     if (name === '' || mobileNumber === '' || image === null || flat === '') {
-      showToastWithGravityAndOffset('Please fill all the fields');
       return;
     }
     setLoading(true);
@@ -156,16 +141,8 @@ const VisitorsPage = () => {
         requestData
       );
       console.log('Response from server:', response.data);
-      showToastWithGravityAndOffset('Visitor Data was added succesfully');
-      setName('');
-      setMobileNumber('');
-      setImage(null);
-      setFlat('');
     } catch (error) {
       console.error('Error submitting data:', error);
-      showToastWithGravityAndOffset(
-        'Data was not added, Maybe the server is down'
-      );
     } finally {
       setLoading(false);
     }
@@ -187,80 +164,55 @@ const VisitorsPage = () => {
   }
 
   return (
-    <ScrollView>
-      <View style={{ marginTop: 60 }}>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
-        <View style={styles.container}>
-          <View>
-            <Text style={styles.visitorText}>Add New Visitor</Text>
-            <View style={styles.formWrapper}>
-              <Text style={{ fontSize: 15, fontWeight: '600' }}>Name</Text>
-              <TextInput
-                placeholder='Enter Name'
-                placeholderTextColor='#000'
-                style={styles.nameInput}
-                cursorColor='#000'
-                value={name}
-                onChangeText={setName}
+        <Animated.View entering={FadeInDown.duration(600).springify()}>
+          <Text style={styles.title}>Add New Visitor</Text>
+        </Animated.View>
+
+        <Animated.View entering={FadeInUp.duration(600).delay(300).springify()}>
+          <View style={styles.formSection}>
+            <Text style={styles.label}>Name</Text>
+            <TextInput
+              placeholder='Enter Name'
+              placeholderTextColor='#8E8E93'
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+            />
+          </View>
+
+          <View style={styles.formSection}>
+            <Text style={styles.label}>Mobile Number</Text>
+            <TextInput
+              placeholder='Enter Mobile Number'
+              placeholderTextColor='#8E8E93'
+              style={styles.input}
+              value={mobileNumber}
+              onChangeText={setMobileNumber}
+              keyboardType="phone-pad"
+            />
+          </View>
+
+          <View style={styles.formSection}>
+            <Text style={styles.label}>Pick a Date</Text>
+            <TouchableOpacity onPress={showDatepicker} style={styles.datePickerButton}>
+              <Text style={styles.dateText}>{date.toLocaleString()}</Text>
+              <Icon name='calendar-outline' size={24} color='#007AFF' />
+            </TouchableOpacity>
+            {show && (
+              <DateTimePicker
+                testID='dateTimePicker'
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                onChange={onChange}
               />
-            </View>
-          </View>
-          <View>
-            <View style={{ marginTop: 10, paddingHorizontal: 20 }}>
-              <Text style={{ fontSize: 15, fontWeight: '600' }}>
-                Mobile Number
-              </Text>
-              <TextInput
-                placeholder='Enter Mobile Number'
-                placeholderTextColor='#000'
-                style={styles.nameInput}
-                value={mobileNumber}
-                onChangeText={setMobileNumber}
-              />
-            </View>
+            )}
           </View>
 
-          <View>
-            <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
-              <Text style={{ fontSize: 15, fontWeight: '600' }}>
-                Pick a Date
-              </Text>
-
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  backgroundColor: '#ececec',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  borderColor: "#939393",
-                  borderWidth: 1,
-                  marginTop: 5
-                }}
-              >
-                <Text style={styles.selectedDateText}>
-                  {date.toLocaleString()}
-                </Text>
-                <TouchableOpacity onPress={showDatepicker}>
-                  <View style={{ paddingRight: 15 }}>
-                    <Icon name='calendar' size={30} color='green' />
-                  </View>
-                </TouchableOpacity>
-              </View>
-              {show && (
-                <DateTimePicker
-                  testID='dateTimePicker'
-                  value={date}
-                  // style={styles.dateButton}
-                  mode={mode}
-                  is24Hour={true}
-                  onChange={onChange}
-                />
-              )}
-            </View>
-          </View>
-
-          <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
+          <View style={styles.formSection}>
             <Text style={styles.label}>Select Flat</Text>
             <SearchablePicker
               selectedValue={flat}
@@ -272,57 +224,21 @@ const VisitorsPage = () => {
               placeholder="Select Flat"
             />
           </View>
-        </View>
 
-        <View style={styles.cameraContainer}>
-          <Text style={{ fontSize: 15, fontWeight: '600' }}>
-            Upload Visitor's Live Photo
-          </Text>
-          <TouchableOpacity
-            onPress={pickImage}
-            style={{ paddingHorizontal: 10 }}
-          >
-            <Text
-              style={{
-                marginTop: 10,
-                padding: 10,
-                backgroundColor: 'green',
-                textAlign: 'center',
-                color: 'white',
-                borderRadius: 5,
-              }}
-            >
-              Upload Photo
-            </Text>
+          <View style={styles.formSection}>
+            <Text style={styles.label}>Upload Visitor's Live Photo</Text>
+            <TouchableOpacity onPress={pickImage} style={styles.uploadButton}>
+              <Icon name='camera-outline' size={24} color='#FFFFFF' />
+              <Text style={styles.uploadButtonText}>Take Photo</Text>
+            </TouchableOpacity>
+            {image && <Image source={{ uri: image }} style={styles.image} />}
+          </View>
+
+          <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
+            <Text style={styles.submitButtonText}>Submit Data</Text>
+            <Icon name='arrow-up-circle-outline' size={24} color='#FFFFFF' />
           </TouchableOpacity>
-          <Text style={{ marginTop: 10, fontSize: 20, fontWeight: '600' }}>
-            Photo:{' '}
-          </Text>
-          {image && <Image source={{ uri: image }} style={styles.image} />}
-        </View>
-
-
-        <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
-          <Text style={{ color: 'white', fontSize: 18 }}>Submit Data</Text>
-          <UploadIcon name='upload' size={20} color='white' />
-        </TouchableOpacity>
-        {/* <TouchableOpacity
-          onPress={() => router.push({ pathname: '/(visitors)/view' })}
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 30,
-            margin: 40,
-            padding: 15,
-            backgroundColor: '#fff',
-            borderRadius: 5,
-          }}
-        >
-          <Text style={{ color: 'black', fontSize: 18 }}>
-            Go to View Visitors
-          </Text>
-        </TouchableOpacity> */}
+        </Animated.View>
       </View>
     </ScrollView>
   );
@@ -331,67 +247,85 @@ const VisitorsPage = () => {
 export default VisitorsPage;
 
 const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: '#F2F2F7',
+  },
   container: {
+    flex: 1,
     padding: 20,
+    paddingTop: Platform.OS === 'ios' ? 60 : 40,
   },
-  visitorText: {
-    fontSize: 30,
-    fontWeight: '600',
-  },
-  formWrapper: {
-    padding: 20,
-  },
-  nameInput: {
-    borderColor: "#939393",
-    borderWidth: 1,
-    marginTop: 5,
-    padding: 10,
-    fontSize: 13,
-    backgroundColor: '#ececec',
-  },
-  selectedDateText: {
-    padding: 15,
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  dateButton: {
-    width: '50%',
-    borderColor: "#939393",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    backgroundColor: '#00DF91',
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 10,
-  },
-  picker: {
-    height: 50,
-    width: '100%',
-    backgroundColor: '#ececec',
+  title: {
+    fontSize: 34,
+    fontWeight: '700',
+    color: '#000000',
     marginBottom: 20,
   },
-  cameraContainer: {
-    paddingHorizontal: 30,
-    // marginTop: 20,
-    // paddingHorizontal: 20
+  formSection: {
+    marginBottom: 20,
   },
-  image: {
-    width: 200,
-    height: 200,
+  label: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#000000',
+    marginBottom: 8,
   },
-  submitBtn: {
-    display: 'flex',
+  input: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 16,
+    fontSize: 17,
+    borderWidth: 1,
+    borderColor: '#E5E5EA',
+  },
+  datePickerButton: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 30,
-    margin: 40,
-    padding: 15,
-    backgroundColor: 'black',
-    borderRadius: 5,
-    color: 'white',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#E5E5EA',
   },
-
+  dateText: {
+    fontSize: 17,
+    color: '#000000',
+  },
+  uploadButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#007AFF',
+    borderRadius: 10,
+    padding: 16,
+    marginBottom: 16,
+  },
+  uploadButtonText: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '600',
+    marginLeft: 8,
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginTop: 16,
+  },
+  submitButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#34C759',
+    borderRadius: 10,
+    padding: 16,
+    marginTop: 20,
+  },
+  submitButtonText: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '600',
+    marginRight: 8,
+  },
 });
