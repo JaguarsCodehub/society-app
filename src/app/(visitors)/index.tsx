@@ -127,6 +127,11 @@ const VisitorsPage = () => {
   }, [cookies]);
 
   const handleSubmit = async () => {
+
+    if (name === '' || mobileNumber === '' || image === null || flat === '') {
+      showToastWithGravityAndOffset('Please fill all the fields');
+      return;
+    }
     setLoading(true);
     try {
       const [wingCode, flatIDString] = flat.split('-');

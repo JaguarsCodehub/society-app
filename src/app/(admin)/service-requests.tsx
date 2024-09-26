@@ -43,15 +43,15 @@ const AdminServiceRequests = () => {
                 <View style={styles.container}>
                     {serviceRequestsData.map((item: any) => (
                         <View style={styles.card}>
-                            <Text style={styles.title}>Service: {item.ServiceName}</Text>
-                            <Text>Complaint Code: {item.Code}</Text>
-                            <Text>Member Name: {item.MemberName}</Text>
-                            <Text>Flat: {item.Wing} - {item.Flat}</Text>
-                            <Text>Subject: {item.Subject}</Text>
-                            <Text>Description: {item.Description || 'No description provided'}</Text>
-                            <Text>Status: {item.Status}</Text>
-                            <Text>Date: {new Date(item.Date).toLocaleDateString()}</Text>
-                            <Text>Mobile: {item.Mobile}</Text>
+                            <Text style={styles.title}>Service: {item.serviceName}</Text>
+                            <Text>Complaint Code: {item.code}</Text>
+                            <Text>Member Name: {item.memberName}</Text>
+                            <Text>Flat: {item.sing} - {item.flat}</Text>
+                            <Text>Subject: {item.subject}</Text>
+                            <Text>Description: {item.description || 'No description provided'}</Text>
+                            <Text>Status: {item.status}</Text>
+                            <Text>Date: {new Date(item.date).toLocaleDateString()}</Text>
+                            <Text>Mobile: {item.mobile}</Text>
                         </View>
                     ))}
                 </View>

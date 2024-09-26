@@ -40,7 +40,7 @@ const AdminComplaints = () => {
                 {complaintsData.map((item: any) => (
                     <View style={styles.card}>
                         <Text style={styles.title}>Complaint Code: {item.complaintCode}</Text>
-                        <Text>Member Name: {item.MemberName}</Text>
+                        <Text>Member Name: {item.memberName}</Text>
                         <Text>Flat: {item.wing} - {item.flat}</Text>
                         <Text>Subject: {item.subject}</Text>
                         <Text>Description: {item.description}</Text>

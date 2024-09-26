@@ -1,0 +1,29 @@
+New Features:
+- Loader for every post and get request
+- J Register Document Format PDF + Preview
+- J Register Table Format Truncated
+
+New Features discussed on Friday
+- J RegisterFlat Document Upload (Images, PDF) ✅ Done
+- Announcements - ✅ Done
+- Voting Poll Notes (Painting) ✅ Done
+- Emergency Numbers - ✅ Done
+
+--------------------------
+Pending Features:
+- Vote-Poll Configuration where one user can vote only one option. ✅ Done
+- Admin should be able to see the vote count ✅ Done
+- Loader for every post and get request
+
+
+Not needed now:
+- Gate Pass for friends and relatives : QR Code Generation
+
+Settings:
+- Approval Flow
+- Visitor
+- Gate Pass
+
+1. Input Validation in Visitors ✅
+2. View Visitors FlatList key Issue ✅
+3. Member Selection in Send package request
