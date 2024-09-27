@@ -20,6 +20,44 @@ import { uploadImageAsync } from '../../utils/uploadImageAsync';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { Picker } from '@react-native-picker/picker';
 import { useToast } from '../../providers/ToastProvider';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
+const setUpNotificationCategories = async () => {
+  await Notifications.setNotificationCategoryAsync('visitor_response', [
+    { identifier: 'yes', buttonTitle: 'Allow', options: { isDestructive: false } },
+    { identifier: 'no', buttonTitle: 'Deny', options: { isDestructive: true } },
+  ]);
+};
+
+
+
+Notifications.addNotificationResponseReceivedListener(async (response) => {
+  const { notification, actionIdentifier } = response;
+  const { data } = notification.request.content;
+
+  console.log("Inside addNotificationResponseReceivedListener")
+
+  if (data && (actionIdentifier === 'yes' || actionIdentifier === 'no')) {
+    try {
+      await axios.post('http://192.168.1.9:3000/visitorResponse', {
+        // visitorId: data.visitorId,
+        response: actionIdentifier === 'yes' ? 'Allowed' : 'Denied'
+      });
+      console.log('Response sent successfully');
+    } catch (error) {
+      console.error('Error sending response:', error);
+    }
+  }
+});
+
 
 type CookieUserData = {
   SocietyID: string;
@@ -55,6 +93,10 @@ const VisitorsPage = () => {
       setImage(imageUrl);
     }
   };
+
+  useEffect(() => {
+    setUpNotificationCategories();
+  }, []);
 
   useEffect(() => {
     const fetchAsyncStorageData = async () => {
@@ -146,7 +188,7 @@ const VisitorsPage = () => {
       );
       console.log('Response from server:', response.data);
 
-      // Send notification to the member
+      // Send notification to the member with the visitor ID
       await sendNotificationToMember(wingCode, flatID, name);
 
       showToast('success', 'Visitor added successfully!')
@@ -168,7 +210,8 @@ const VisitorsPage = () => {
       const response = await axios.post('http://192.168.1.9:3000/sendNotification', {
         wingCode,
         flatID,
-        message: `A visitor ${visitorName} is coming to your flat.`
+        message: `A visitor ${visitorName} is coming to your flat. Do you want to allow?`,
+        categoryIdentifier: 'visitor_response',
       });
       console.log('Notification sent:', response.data);
     } catch (error) {

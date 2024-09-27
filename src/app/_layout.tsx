@@ -9,7 +9,8 @@ import { NetworkProvider } from '../context/NetworkProvider';
 import NotificationProvider from '../providers/NotificationProvider';
 import { ToastProvider } from '../providers/ToastProvider';
 import Toast from '../components/ui/Toast';
-
+import * as Notifications from 'expo-notifications';
+import axios from 'axios';
 
 export default function Layout() {
 
@@ -61,4 +62,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 })
+
 
