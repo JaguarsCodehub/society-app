@@ -25,6 +25,7 @@ const ViewVisitors = () => {
         );
 
         setVisitorsData(response.data.data);
+        // console.log('Visitors Data:', response.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {

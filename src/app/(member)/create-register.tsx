@@ -18,7 +18,7 @@ const CreateRegister = () => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('http://192.168.1.11:3000/api/create-register', {
+            const response = await axios.post('http://192.168.1.9:3000/api/create-register', {
                 owners,
                 jointMembers
             });

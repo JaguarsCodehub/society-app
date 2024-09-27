@@ -7,6 +7,8 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import { NetworkProvider } from '../context/NetworkProvider';
 import NotificationProvider from '../providers/NotificationProvider';
+import { ToastProvider } from '../providers/ToastProvider';
+import Toast from '../components/ui/Toast';
 
 
 export default function Layout() {
@@ -40,12 +42,13 @@ export default function Layout() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <NetworkProvider>
-                {/* <NotificationProvider> */}
-                <Stack>
-                    <Stack.Screen name="index" options={{ headerShown: false }} />
-                    <Stack.Screen name="(member)" options={{ headerShown: false }} />
-                </Stack>
-                {/* </NotificationProvider> */}
+                <ToastProvider>
+                    <Stack>
+                        <Stack.Screen name="index" options={{ headerShown: false }} />
+                        <Stack.Screen name="(member)" options={{ headerShown: false }} />
+                    </Stack>
+                    <Toast />
+                </ToastProvider>
             </NetworkProvider>
         </GestureHandlerRootView>
     );

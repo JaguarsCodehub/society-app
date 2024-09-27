@@ -14,7 +14,7 @@ const MemberPollVoting = () => {
 
     const fetchPolls = async () => {
         try {
-            const response = await axios.get('http://192.168.1.11:3000/polls');
+            const response = await axios.get('http://192.168.1.9:3000/polls');
             setPolls(response.data);
             console.log(response.data);
         } catch (error) {
@@ -29,7 +29,7 @@ const MemberPollVoting = () => {
         }
 
         try {
-            await axios.post(`http://192.168.1.11:3000/polls/${pollId}/vote`, { optionIndex });
+            await axios.post(`http://192.168.1.9:3000/polls/${pollId}/vote`, { optionIndex });
             setHasVoted(prevState => ({ ...prevState, [pollId]: true })); // Update voting state for the specific poll
             setVoteMessage('Your vote was counted.');
             fetchPolls();
