@@ -118,7 +118,6 @@ const VisitorsPage = () => {
   }, [cookies]);
 
   const handleSubmit = async () => {
-
     if (name === '' || mobileNumber === '' || image === null || flat === '') {
       return;
     }
@@ -129,7 +128,6 @@ const VisitorsPage = () => {
 
       const societyID = parseInt(cookies?.SocietyID || '0', 10);
       const ID = parseInt(cookies?.ID || '0', 10);
-      // const year = cookies?.year
       const requestData = {
         name,
         mobileNumber,
@@ -147,8 +145,9 @@ const VisitorsPage = () => {
         requestData
       );
       console.log('Response from server:', response.data);
-      // console.log('Request Data:', requestData);
-      // console.log('Year:', cookies?.Year);
+
+      // Send notification to the member
+      await sendNotificationToMember(wingCode, flatID, name);
 
       showToast('success', 'Visitor added successfully!')
     } catch (error) {
@@ -161,6 +160,19 @@ const VisitorsPage = () => {
       setDate(new Date());
       setFlat('');
       setImage(null);
+    }
+  };
+
+  const sendNotificationToMember = async (wingCode: string, flatID: number, visitorName: string) => {
+    try {
+      const response = await axios.post('http://192.168.1.9:3000/sendNotification', {
+        wingCode,
+        flatID,
+        message: `A visitor ${visitorName} is coming to your flat.`
+      });
+      console.log('Notification sent:', response.data);
+    } catch (error) {
+      console.error('Error sending notification:', error);
     }
   };
 

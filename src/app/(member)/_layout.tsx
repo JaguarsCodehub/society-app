@@ -113,6 +113,41 @@ export default function TabLayout() {
                         headerShown: false
                     }}
                 />
+                <Tabs.Screen
+                    name="vote-polls"
+                    options={{
+                        href: null,
+                        headerShown: false
+                    }}
+                />
+                <Tabs.Screen
+                    name="noticeboard"
+                    options={{
+                        href: null,
+                        headerShown: false
+                    }}
+                />
+                <Tabs.Screen
+                    name="showNotification"
+                    options={{
+                        href: null,
+                        headerShown: false
+                    }}
+                />
+                <Tabs.Screen
+                    name="emergency-numbers"
+                    options={{
+                        href: null,
+                        headerShown: false
+                    }}
+                />
+                <Tabs.Screen
+                    name="create-register"
+                    options={{
+                        href: null,
+                        headerShown: false
+                    }}
+                />
 
 
             </Tabs>

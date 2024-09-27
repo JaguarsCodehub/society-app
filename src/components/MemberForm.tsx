@@ -13,6 +13,8 @@ import LoadingScreen from './ui/LoadingScreen';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import * as Notifications from 'expo-notifications';
+import { Platform } from 'react-native';
 
 const MemberForm = () => {
   const [mobileNumber, setMobileNumber] = useState<string>('');
@@ -57,27 +59,23 @@ const MemberForm = () => {
   };
 
   const handleLogin = async () => {
-    // if (!validate()) return;
     setLoading(true);
 
     try {
-      console.log('Inside TryCatch Block for Getting Members');
+      const expoPushToken = await registerForPushNotificationsAsync();
+
       const response = await axios.post(
-        'https://api.chsltd.net/member/login',
+        'http://192.168.1.9:3000/member/login',
         {
           mobileNumber,
           password,
           year,
+          expoPushToken,
         }
       );
       setLoading(false);
 
-      if (response.status === 200) {
-      } else {
-        Alert.alert('Login Failed', response.data.msg);
-      }
-
-      if (response.status === 200) {
+      if (response.status === 200 && response.data.data) {
         const {
           memberName,
           societyID,
@@ -86,35 +84,71 @@ const MemberForm = () => {
           wing,
           flat,
           codePWD,
-          mobileNumber,
+          mobileNumber: responseMobileNumber,
           masterCode,
         } = response.data.data;
 
-        await AsyncStorage.multiSet([
-          ['MemberSocietyID', societyID.toString()],
-          ['MemberID', id.toString()],
-          ['UserID', userID.toString()],
-          ['MemberYear', year],
-          ['MemberName', memberName],
-          ['MemberWing', wing],
-          ['MemberFlat', flat],
-          ['MemberCode', codePWD],
-          ['MemberMobileNumber', mobileNumber],
-          ['MemberMasterCode', masterCode],
-        ]);
-        console.log('Data was addded to AsyncStorage');
+        const asyncStorageData = [
+          ['MemberSocietyID', societyID?.toString() || ''],
+          ['MemberID', id?.toString() || ''],
+          ['UserID', userID?.toString() || ''],
+          ['MemberYear', year || ''],
+          ['MemberName', memberName || ''],
+          ['MemberWing', wing || ''],
+          ['MemberFlat', flat || ''],
+          ['MemberCode', codePWD || ''],
+          ['MemberMobileNumber', responseMobileNumber || ''],
+          ['MemberMasterCode', masterCode || ''],
+          ['ExpoPushToken', expoPushToken || ''],
+        ];
+
+        await AsyncStorage.multiSet(asyncStorageData as [string, string][]);
+        console.log('Data was added to AsyncStorage');
+
+        showToastWithGravityAndOffset('Login Successful');
+        router.push({ pathname: '/(member)/dashboard/dashboard' });
+
+        setMobileNumber('');
+        setPassword('');
+      } else {
+        Alert.alert('Login Failed', response.data.msg || 'Unknown error occurred');
       }
-
-      showToastWithGravityAndOffset('Login Successfull');
-      router.push({ pathname: '/(member)/dashboard/dashboard' });
-
-      setMobileNumber('');
-      setPassword('');
     } catch (error) {
       setLoading(false);
       console.error('Error logging in:', error);
-      Alert.alert('Login Error', 'An error occured during Login');
+      Alert.alert('Login Error', 'An error occurred during Login. Please try again.');
     }
+  };
+
+  const registerForPushNotificationsAsync = async () => {
+    let token;
+
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== 'granted') {
+      Alert.alert('Failed to get push token for push notification!');
+      return;
+    }
+
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+
+    return token;
   };
 
   if (loading) {
