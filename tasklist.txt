@@ -1,7 +1,11 @@
 New Features:
-- Loader for every post and get request
-- J Register Document Format PDF + Preview
-- J Register Table Format Truncated
+- Notification setup Done ✅
+- Notification sending to particular user Done ✅
+- Backend Endpoint to support notification sending to specific user Done ✅
+- Allow and Deny Buttons configuration on Notification Done ✅
+- Member should send 'Yes' or 'No' when visitor is approved 
+- Watchman should get notification when visitor is approved 
+- Members should get to see who have visited their flat.
 
 New Features discussed on Friday
 - J RegisterFlat Document Upload (Images, PDF) ✅ Done
