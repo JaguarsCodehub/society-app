@@ -3,9 +3,9 @@ New Features:
 - Notification sending to particular user Done ✅
 - Backend Endpoint to support notification sending to specific user Done ✅
 - Allow and Deny Buttons configuration on Notification Done ✅
-- Member should send 'Yes' or 'No' when visitor is approved 
-- Watchman should get notification when visitor is approved 
-- Members should get to see who have visited their flat.
+- Member should send 'Yes' or 'No' when visitor is approved  Done ✅
+- Watchman should get notification when visitor is approved Done ✅
+- Members should get to see who have visited their flat. Done ✅
 
 
 New Features discussed on Friday
@@ -32,3 +32,13 @@ Settings:
 1. Input Validation in Visitors ✅
 2. View Visitors FlatList key Issue ✅
 3. Member Selection in Send package request
+
+type VisitorData = {
+  id: string;
+  date: string;
+  name: string;
+  wingName: string;
+  flatNumber: string;
+  mobileNumber: string;
+  photo: string;
+};

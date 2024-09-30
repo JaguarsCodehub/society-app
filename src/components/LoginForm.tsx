@@ -14,6 +14,7 @@ import axios from 'axios';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from './ui/LoadingScreen';
+import * as Notifications from 'expo-notifications';
 
 const LoginForm: React.FC = () => {
   const [userId, setUserId] = useState<string>('');
@@ -61,12 +62,16 @@ const LoginForm: React.FC = () => {
 
     setLoading(true);
     try {
+
+      const expoPushToken = await registerForPushNotificationsAsync();
+
       const response = await axios.post(
-        `https://api.chsltd.net/login`,
+        `http://192.168.1.9:3000/login`,
         {
           userId,
           password,
           year,
+          expoPushToken
         }
       );
       setLoading(false);
@@ -77,10 +82,10 @@ const LoginForm: React.FC = () => {
           `Welcome, ${response.data.data.userName}`
         );
 
-        const { name, societyID, id } = response.data.data;
+        const { name, SocietyID, ID } = response.data.data;
         await AsyncStorage.multiSet([
-          ['SocietyID', societyID.toString()],
-          ['ID', id.toString()],
+          ['SocietyID', SocietyID.toString()],
+          ['ID', ID.toString()],
           ['Year', year],
         ]);
 
@@ -97,6 +102,37 @@ const LoginForm: React.FC = () => {
       setLoading(false);
       console.error('Incorrect Id and Password:', error);
     }
+  };
+
+  const registerForPushNotificationsAsync = async () => {
+    let token;
+
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== 'granted') {
+      Alert.alert('Failed to get push token for push notification!');
+      return;
+    }
+
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+
+    return token;
   };
 
   if (loading) {

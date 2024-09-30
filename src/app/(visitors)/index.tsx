@@ -220,6 +220,7 @@ const VisitorsPage = () => {
         message: `A visitor ${visitorName} is coming to your flat. Do you want to allow?`,
         categoryIdentifier: 'visitor_response',
         data: {
+
           wingCode,
           flatID
         }
