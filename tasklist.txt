@@ -7,6 +7,7 @@ New Features:
 - Watchman should get notification when visitor is approved 
 - Members should get to see who have visited their flat.
 
+
 New Features discussed on Friday
 - J RegisterFlat Document Upload (Images, PDF) ✅ Done
 - Announcements - ✅ Done

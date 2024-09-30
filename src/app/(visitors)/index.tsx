@@ -43,17 +43,21 @@ Notifications.addNotificationResponseReceivedListener(async (response) => {
   const { notification, actionIdentifier } = response;
   const { data } = notification.request.content;
 
-  console.log("Inside addNotificationResponseReceivedListener")
+  console.log("Inside addNotificationResponseReceivedListener");
 
   if (data && (actionIdentifier === 'yes' || actionIdentifier === 'no')) {
     try {
+      console.log("Data: ", data)
+      const visitorResponse = actionIdentifier === 'yes' ? 'Allowed' : 'Denied';
       await axios.post('http://192.168.1.9:3000/visitorResponse', {
-        // visitorId: data.visitorId,
-        response: actionIdentifier === 'yes' ? 'Allowed' : 'Denied'
+        response: visitorResponse,
+        // visitorId: data.visitorId, // Assuming you're sending this in the notification data
+        wingCode: data.wingCode,
+        flatID: data.flatID
       });
       console.log('Response sent successfully');
-    } catch (error) {
-      console.error('Error sending response:', error);
+    } catch (error: any) {
+      console.error('Error sending response:', error.message);
     }
   }
 });
@@ -188,6 +192,9 @@ const VisitorsPage = () => {
       );
       console.log('Response from server:', response.data);
 
+      // Assuming the response includes the visitor ID
+      // const visitorId = response.data.visitorId;
+
       // Send notification to the member with the visitor ID
       await sendNotificationToMember(wingCode, flatID, name);
 
@@ -212,6 +219,10 @@ const VisitorsPage = () => {
         flatID,
         message: `A visitor ${visitorName} is coming to your flat. Do you want to allow?`,
         categoryIdentifier: 'visitor_response',
+        data: {
+          wingCode,
+          flatID
+        }
       });
       console.log('Notification sent:', response.data);
     } catch (error) {
