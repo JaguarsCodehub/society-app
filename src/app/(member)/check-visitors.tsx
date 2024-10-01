@@ -23,7 +23,7 @@ const CheckVisitors = () => {
                 throw new Error('Wing code or Flat ID not found in storage');
             }
 
-            const response = await axios.get('https://society-backend-h2ql.onrender.com/member/visitors', {
+            const response = await axios.get('https://society-backend-six.vercel.app/member/visitors', {
                 headers: {
                     'wingcode': wingCode,
                     'flatid': flatId,

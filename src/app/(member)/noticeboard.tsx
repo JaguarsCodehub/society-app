@@ -9,7 +9,7 @@ const NoticeBoardScreen = () => {
 
   useEffect(() => {
     const fetchNotices = async () => {
-      const response = await axios.get('https://society-backend-h2ql.onrender.com/notices');
+      const response = await axios.get('https://society-backend-six.vercel.app/notices');
       const data = response.data.data;
       setNotices(data);
       console.log(data);

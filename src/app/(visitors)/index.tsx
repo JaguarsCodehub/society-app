@@ -49,7 +49,7 @@ Notifications.addNotificationResponseReceivedListener(async (response) => {
     try {
       console.log("Data: ", data)
       const visitorResponse = actionIdentifier === 'yes' ? 'Allowed' : 'Denied';
-      await axios.post('https://society-backend-h2ql.onrender.com/visitorResponse', {
+      await axios.post('https://society-backend-six.vercel.app/visitorResponse', {
         response: visitorResponse,
         // visitorId: data.visitorId, // Assuming you're sending this in the notification data
         wingCode: data.wingCode,
@@ -214,7 +214,7 @@ const VisitorsPage = () => {
 
   const sendNotificationToMember = async (wingCode: string, flatID: number, visitorName: string) => {
     try {
-      const response = await axios.post('https://society-backend-h2ql.onrender.com/sendNotification', {
+      const response = await axios.post('https://society-backend-six.vercel.app/sendNotification', {
         wingCode,
         flatID,
         message: `A visitor ${visitorName} is coming to your flat. Do you want to allow?`,

@@ -17,7 +17,7 @@ const AdminPollCreator = () => {
 
     const createPoll = async () => {
         try {
-            const response = await axios.post('https://society-backend-h2ql.onrender.com/polls', {
+            const response = await axios.post('https://society-backend-six.vercel.app/polls', {
                 question,
                 options: options.filter(option => option.trim() !== '')
             });

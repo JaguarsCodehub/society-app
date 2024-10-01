@@ -8,7 +8,7 @@ const CreateNoticeScreen = () => {
   const [content, setContent] = useState('');
 
   const handleSubmit = async () => {
-    const response = await fetch('https://society-backend-h2ql.onrender.com/notices', {
+    const response = await fetch('https://society-backend-six.vercel.app/notices', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title, content, author: 'admin' }),

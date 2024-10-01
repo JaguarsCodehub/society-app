@@ -15,6 +15,7 @@ import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from './ui/LoadingScreen';
 import * as Notifications from 'expo-notifications';
+import * as Network from 'expo-network';
 
 const LoginForm: React.FC = () => {
   const [userId, setUserId] = useState<string>('');
@@ -62,10 +63,15 @@ const LoginForm: React.FC = () => {
 
     setLoading(true);
     try {
+      const networkState = await Network.getNetworkStateAsync();
+      if (!networkState.isConnected) {
+        throw new Error('No internet connection');
+      }
+
       const expoPushToken = await registerForPushNotificationsAsync();
 
       const response = await axios.post(
-        `https://society-backend-h2ql.onrender.com/login`,
+        `https://society-backend-six.vercel.app/login`,
         {
           userId,
           password,
@@ -95,24 +101,25 @@ const LoginForm: React.FC = () => {
         setUserId('');
         setPassword('');
       } else {
-        showToastWithGravityAndOffset('Login failed. Please try again.');
-        Alert.alert('Login Failed', response.data.msg);
+        throw new Error(response.data.msg || 'Login failed');
       }
     } catch (error) {
       setLoading(false);
       console.error('Login error:', error);
 
-      if (axios.isAxiosError(error)) {
-        if (error.code === 'ECONNABORTED') {
-          Alert.alert('Connection Timeout', 'The server is taking too long to respond. Please try again later.');
-        } else if (error.message === 'Network Error') {
-          Alert.alert('Network Error', 'Unable to connect to the server. Please check your internet connection and try again.');
+      let errorMessage = 'An unexpected error occurred. Please try again.';
+      if (error instanceof Error) {
+        if (error.message === 'No internet connection') {
+          errorMessage = 'Please check your internet connection and try again.';
+        } else if (axios.isAxiosError(error) && error.response) {
+          errorMessage = error.response.data.msg || errorMessage;
         } else {
-          Alert.alert('Login Error', 'An unexpected error occurred. Please try again later.');
+          errorMessage = error.message;
         }
-      } else {
-        Alert.alert('Login Error', 'An unexpected error occurred. Please try again later.');
       }
+
+      Alert.alert('Login Failed', errorMessage);
+      showToastWithGravityAndOffset('Login failed. Please try again.');
     }
   };
 

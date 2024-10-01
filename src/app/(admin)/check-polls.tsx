@@ -11,7 +11,7 @@ const CheckPolls = () => {
     useEffect(() => {
         const fetchPolls = async () => {
             try {
-                const response = await axios.get('https://society-backend-h2ql.onrender.com/polls');
+                const response = await axios.get('https://society-backend-six.vercel.app/polls');
                 setPolls(response.data);
                 console.log(response.data);
             } catch (error) {

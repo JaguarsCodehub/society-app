@@ -65,7 +65,7 @@ const MemberForm = () => {
       const expoPushToken = await registerForPushNotificationsAsync();
 
       const response = await axios.post(
-        'https://society-backend-h2ql.onrender.com/member/login',
+        'https://society-backend-six.vercel.app/member/login',
         {
           mobileNumber,
           password,
