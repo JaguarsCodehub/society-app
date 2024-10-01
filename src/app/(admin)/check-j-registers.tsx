@@ -36,7 +36,7 @@ const JRegisterView: React.FC = () => {
 
     const fetchRegisters = async () => {
         try {
-            const response = await axios.get<Register[]>('http://192.168.1.9:3000/api/all-registers');
+            const response = await axios.get<Register[]>('http://192.168.1.10:3000/api/all-registers');
             setRegisters(response.data);
             console.log(response.data);
             if (response.data.length > 0) {

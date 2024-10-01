@@ -65,7 +65,7 @@ const MemberForm = () => {
       const expoPushToken = await registerForPushNotificationsAsync();
 
       const response = await axios.post(
-        'http://192.168.1.9:3000/member/login',
+        'http://192.168.1.10:3000/member/login',
         {
           mobileNumber,
           password,
@@ -77,30 +77,32 @@ const MemberForm = () => {
 
       if (response.status === 200 && response.data.data) {
         const {
-          memberName,
-          societyID,
-          userID,
-          id,
-          wing,
-          flat,
+          MemberName,
+          SocietyID,
+          UserID,
+          ID,
+          Wing,
+          Flat,
           codePWD,
           mobileNumber: responseMobileNumber,
           masterCode,
         } = response.data.data;
 
         const asyncStorageData = [
-          ['MemberSocietyID', societyID?.toString() || ''],
-          ['MemberID', id?.toString() || ''],
-          ['UserID', userID?.toString() || ''],
+          ['MemberSocietyID', SocietyID?.toString() || ''],
+          ['MemberID', ID?.toString() || ''],
+          ['UserID', UserID?.toString() || ''],
           ['MemberYear', year || ''],
-          ['MemberName', memberName || ''],
-          ['MemberWing', wing || ''],
-          ['MemberFlat', flat || ''],
+          ['MemberName', MemberName.toString() || ''],
+          ['MemberWing', Wing.toString() || ''],
+          ['MemberFlat', Flat.toString() || ''],
           ['MemberCode', codePWD || ''],
           ['MemberMobileNumber', responseMobileNumber || ''],
           ['MemberMasterCode', masterCode || ''],
           ['ExpoPushToken', expoPushToken || ''],
         ];
+
+        console.log(asyncStorageData);
 
         await AsyncStorage.multiSet(asyncStorageData as [string, string][]);
         console.log('Data was added to AsyncStorage');

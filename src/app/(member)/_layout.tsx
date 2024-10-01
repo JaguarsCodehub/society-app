@@ -148,6 +148,13 @@ export default function TabLayout() {
                         headerShown: false
                     }}
                 />
+                <Tabs.Screen
+                    name="check-visitors"
+                    options={{
+                        href: null,
+                        headerShown: false
+                    }}
+                />
 
 
             </Tabs>

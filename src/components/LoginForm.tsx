@@ -66,7 +66,7 @@ const LoginForm: React.FC = () => {
       const expoPushToken = await registerForPushNotificationsAsync();
 
       const response = await axios.post(
-        `http://192.168.1.9:3000/login`,
+        `http://192.168.1.10:3000/login`,
         {
           userId,
           password,

@@ -8,6 +8,12 @@ import InfoCard from '../../../components/ui/InfoCard'
 
 const infoCardsData = [
     {
+        title: 'Check Visitors',
+        description: 'Check Visitors who visited your flat.',
+        imageSource: require('../../../../assets/vendor.png'),
+        onPress: () => router.push({ pathname: "(member)/check-visitors" }),
+    },
+    {
         title: 'Check Notice Board',
         description: 'Check the notice board for any important notices.',
         imageSource: require('../../../../assets/vendor.png'),

@@ -11,7 +11,7 @@ const CheckPolls = () => {
     useEffect(() => {
         const fetchPolls = async () => {
             try {
-                const response = await axios.get('http://192.168.1.9:3000/polls');
+                const response = await axios.get('http://192.168.1.10:3000/polls');
                 setPolls(response.data);
                 console.log(response.data);
             } catch (error) {
