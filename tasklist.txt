@@ -1,9 +1,12 @@
 New Features: 
+- Watchman should be able to see the visitor details
+- Member should get to see the visitor on screen
 - Remove button for J Register just Like Add Button
 - ScrollView for J Register
-- Preview
-- UI
+- Preview of J Register Form
+- UI Changes
 - Choose type of Property: residential or commercial
+- Remove Year Prefix from all forms
 
 
 New Features:
@@ -27,8 +30,7 @@ Pending Features:
 - Vote-Poll Configuration where one user can vote only one option. ✅ Done
 - Admin should be able to see the vote count ✅ Done
 - Loader for every post and get request
-
-
+ 
 Not needed now:
 - Gate Pass for friends and relatives : QR Code Generation
 
