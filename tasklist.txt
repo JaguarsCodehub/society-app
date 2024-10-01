@@ -1,3 +1,10 @@
+New Features: 
+- Remove button for J Register just Like Add Button
+- ScrollView for J Register
+- Preview
+- UI
+- Choose type of Property: residential or commercial
+
 
 New Features:
 - Notification setup Done ✅
