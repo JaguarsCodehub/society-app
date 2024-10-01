@@ -65,7 +65,7 @@ const MemberForm = () => {
       const expoPushToken = await registerForPushNotificationsAsync();
 
       const response = await axios.post(
-        'http://192.168.1.10:3000/member/login',
+        'https://society-backend-h2ql.onrender.com/member/login',
         {
           mobileNumber,
           password,

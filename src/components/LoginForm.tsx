@@ -62,11 +62,10 @@ const LoginForm: React.FC = () => {
 
     setLoading(true);
     try {
-
       const expoPushToken = await registerForPushNotificationsAsync();
 
       const response = await axios.post(
-        `http://192.168.1.10:3000/login`,
+        `https://society-backend-h2ql.onrender.com/login`,
         {
           userId,
           password,
@@ -74,6 +73,7 @@ const LoginForm: React.FC = () => {
           expoPushToken
         }
       );
+
       setLoading(false);
 
       if (response.status === 200) {
@@ -95,12 +95,24 @@ const LoginForm: React.FC = () => {
         setUserId('');
         setPassword('');
       } else {
-        showToastWithGravityAndOffset('Incorrect ID or Password');
-        Alert.alert('Incorrect Id and Password', response.data.msg);
+        showToastWithGravityAndOffset('Login failed. Please try again.');
+        Alert.alert('Login Failed', response.data.msg);
       }
     } catch (error) {
       setLoading(false);
-      console.error('Incorrect Id and Password:', error);
+      console.error('Login error:', error);
+
+      if (axios.isAxiosError(error)) {
+        if (error.code === 'ECONNABORTED') {
+          Alert.alert('Connection Timeout', 'The server is taking too long to respond. Please try again later.');
+        } else if (error.message === 'Network Error') {
+          Alert.alert('Network Error', 'Unable to connect to the server. Please check your internet connection and try again.');
+        } else {
+          Alert.alert('Login Error', 'An unexpected error occurred. Please try again later.');
+        }
+      } else {
+        Alert.alert('Login Error', 'An unexpected error occurred. Please try again later.');
+      }
     }
   };
 

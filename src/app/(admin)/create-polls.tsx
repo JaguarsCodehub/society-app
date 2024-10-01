@@ -17,7 +17,7 @@ const AdminPollCreator = () => {
 
     const createPoll = async () => {
         try {
-            const response = await axios.post('http://192.168.1.10:3000/polls', {
+            const response = await axios.post('https://society-backend-h2ql.onrender.com/polls', {
                 question,
                 options: options.filter(option => option.trim() !== '')
             });
