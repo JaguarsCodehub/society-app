@@ -5,9 +5,26 @@ import { Stack } from 'expo-router';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 
-const CreateRegister = () => {
-    const [owners, setOwners] = useState([{ name: '', mobile: '', email: '' }]);
-    const [jointMembers, setJointMembers] = useState([{ name: '', address: '', role: '' }]);
+interface Owner {
+    name: string;
+    mobile: string;
+    email: string;
+}
+
+interface JointMember {
+    name: string;
+    address: string;
+    role: string;
+}
+
+interface Errors {
+    [key: string]: string;
+}
+
+const CreateRegister: React.FC = () => {
+    const [owners, setOwners] = useState<Owner[]>([{ name: '', mobile: '', email: '' }]);
+    const [jointMembers, setJointMembers] = useState<JointMember[]>([{ name: '', address: '', role: '' }]);
+    const [errors, setErrors] = useState<Errors>({});
 
     const addOwner = () => {
         setOwners([...owners, { name: '', mobile: '', email: '' }]);
@@ -15,20 +32,6 @@ const CreateRegister = () => {
 
     const addJointMember = () => {
         setJointMembers([...jointMembers, { name: '', address: '', role: '' }]);
-    };
-
-    const handleSubmit = async () => {
-        try {
-            const response = await axios.post('https://society-backend-six.vercel.app/api/create-register', {
-                owners,
-                jointMembers
-            });
-            Alert.alert('Success', `Register created successfully with code: ${response.data.code}`);
-            // Reset form or navigate to another screen
-        } catch (error) {
-            console.error('Error creating register:', error);
-            Alert.alert('Error', 'Failed to create register. Please try again.');
-        }
     };
 
     const removeOwner = (index: number) => {
@@ -42,6 +45,53 @@ const CreateRegister = () => {
         if (jointMembers.length > 0) {
             const newJointMembers = jointMembers.filter((_, i) => i !== index);
             setJointMembers(newJointMembers);
+        }
+    };
+
+    const validateEmail = (email: string): boolean => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const validateMobile = (mobile: string): boolean => {
+        const re = /^[0-9]{10}$/;
+        return re.test(mobile);
+    };
+
+    const validateInputs = (): boolean => {
+        let newErrors: Errors = {};
+        owners.forEach((owner, index) => {
+            if (!owner.name) newErrors[`owner${index}Name`] = 'Name is required';
+            if (!validateMobile(owner.mobile)) newErrors[`owner${index}Mobile`] = 'Invalid mobile number';
+            if (!validateEmail(owner.email)) newErrors[`owner${index}Email`] = 'Invalid email address';
+        });
+        jointMembers.forEach((member, index) => {
+            if (!member.name) newErrors[`jointMember${index}Name`] = 'Name is required';
+            if (!member.address) newErrors[`jointMember${index}Address`] = 'Address is required';
+            if (!member.role) newErrors[`jointMember${index}Role`] = 'Role is required';
+        });
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async () => {
+        if (validateInputs()) {
+            try {
+                const response = await axios.post('https://society-backend-six.vercel.app/api/create-register', {
+                    owners,
+                    jointMembers
+                });
+                Alert.alert('Success', `Register created successfully with code: ${response.data.code}`);
+                setOwners([]);
+                setJointMembers([]);
+                setErrors({});
+                // Reset form or navigate to another screen
+            } catch (error) {
+                console.error('Error creating register:', error);
+                Alert.alert('Error', 'Failed to create register. Please try again.');
+            }
+        } else {
+            Alert.alert('Validation Error', 'Please correct the errors in the form.');
         }
     };
 
@@ -67,6 +117,7 @@ const CreateRegister = () => {
                                 setOwners(newOwners);
                             }}
                         />
+                        {errors[`owner${index}Name`] && <Text style={styles.errorText}>{errors[`owner${index}Name`]}</Text>}
                         <TextInput
                             style={styles.input}
                             placeholder="Mobile"
@@ -76,7 +127,9 @@ const CreateRegister = () => {
                                 newOwners[index].mobile = text;
                                 setOwners(newOwners);
                             }}
+                            keyboardType="phone-pad"
                         />
+                        {errors[`owner${index}Mobile`] && <Text style={styles.errorText}>{errors[`owner${index}Mobile`]}</Text>}
                         <TextInput
                             style={styles.input}
                             placeholder="Email Address"
@@ -86,7 +139,9 @@ const CreateRegister = () => {
                                 newOwners[index].email = text;
                                 setOwners(newOwners);
                             }}
+                            keyboardType="email-address"
                         />
+                        {errors[`owner${index}Email`] && <Text style={styles.errorText}>{errors[`owner${index}Email`]}</Text>}
                         {index > 0 && (
                             <TouchableOpacity
                                 style={styles.removeButton}
@@ -98,7 +153,7 @@ const CreateRegister = () => {
                     </View>
                 ))}
                 <TouchableOpacity style={styles.addButton} onPress={addOwner}>
-                    <Ionicons name="add-circle" size={24} color="#FFF" />
+                    <Ionicons name="add-circle" size={24} color="#007AFF" />
                     <Text style={styles.addButtonText}>Add Owner</Text>
                 </TouchableOpacity>
             </View>
@@ -117,6 +172,7 @@ const CreateRegister = () => {
                                 setJointMembers(newMembers);
                             }}
                         />
+                        {errors[`jointMember${index}Name`] && <Text style={styles.errorText}>{errors[`jointMember${index}Name`]}</Text>}
                         <TextInput
                             style={styles.input}
                             placeholder="Address"
@@ -127,11 +183,12 @@ const CreateRegister = () => {
                                 setJointMembers(newMembers);
                             }}
                         />
+                        {errors[`jointMember${index}Address`] && <Text style={styles.errorText}>{errors[`jointMember${index}Address`]}</Text>}
                         <View style={styles.pickerContainer}>
                             <Picker
                                 selectedValue={member.role}
                                 style={styles.picker}
-                                onValueChange={(itemValue) => {
+                                onValueChange={(itemValue: string) => {
                                     const newMembers = [...jointMembers];
                                     newMembers[index].role = itemValue;
                                     setJointMembers(newMembers);
@@ -145,6 +202,7 @@ const CreateRegister = () => {
                                 <Picker.Item label="General body member" value="General body member" />
                             </Picker>
                         </View>
+                        {errors[`jointMember${index}Role`] && <Text style={styles.errorText}>{errors[`jointMember${index}Role`]}</Text>}
                         <TouchableOpacity
                             style={styles.removeButton}
                             onPress={() => removeJointMember(index)}
@@ -154,7 +212,7 @@ const CreateRegister = () => {
                     </View>
                 ))}
                 <TouchableOpacity style={styles.addButton} onPress={addJointMember}>
-                    <Ionicons name="add-circle" size={24} color="#FFF" />
+                    <Ionicons name="add-circle" size={24} color="#007AFF" />
                     <Text style={styles.addButtonText}>Add Joint Member</Text>
                 </TouchableOpacity>
             </View>
@@ -259,6 +317,11 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 18,
         fontWeight: '600',
+    },
+    errorText: {
+        color: '#FF3B30',
+        fontSize: 14,
+        marginBottom: 8,
     },
 });
 
