@@ -1,7 +1,7 @@
 
 Features
-- Login wth Company Code
-- Account Master Customer creation. GST and FSSAi Number. Group Name : Sundry Debtors
+- Login wth Company Code ✅
+- Account Master Customer creation. GST and FSSAi Number. Group Name : Sundry Debtors ✅
 - Product Master by Group Name, then create orders https://quickbillbook.com/SalesOrder.aspx
 
 
