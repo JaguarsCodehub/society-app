@@ -9,10 +9,11 @@ New Features:
 - Watchman should be able to see the visitor details
 - Member should get to see the visitor on screen
 - Remove button for J Register just Like Add Button Done ✅
-- ScrollView for J Register Done ✅
+- ScrollView for J Register Done ✅npx expo start
 - Preview of J Register Form Done ✅
 - UI Changes Done ✅
 - Choose type of Property: residential or commercial Done ✅
+- Add Flat Provision for J Register
 
 
 
