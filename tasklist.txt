@@ -14,6 +14,7 @@ New Features:
 - UI Changes Done ✅
 - Choose type of Property: residential or commercial Done ✅
 - Add Flat Provision for J Register
+- JSON issue
 
 
 
