@@ -8,6 +8,12 @@ import InfoCard from '../../../components/ui/InfoCard'
 
 const infoCardsData = [
     {
+        title: 'Check Visitors',
+        description: 'Check Visitors who visited your flat.',
+        imageSource: require('../../../../assets/vendor.png'),
+        onPress: () => router.push({ pathname: "(member)/check-visitors" }),
+    },
+    {
         title: 'Check Notice Board',
         description: 'Check the notice board for any important notices.',
         imageSource: require('../../../../assets/vendor.png'),
@@ -89,6 +95,18 @@ const Dashboard = () => {
 
                     <View style={{ marginHorizontal: 20, marginTop: 10 }}>
                         <Text style={{ fontSize: 30, fontWeight: "600" }}>Overview</Text>
+
+                        <TouchableOpacity onPress={() => router.push({ pathname: "/(member)/showNotification" })}>
+                            <View style={{ backgroundColor: "#A67B5B", paddingVertical: 10, borderRadius: 5, marginTop: 15, padding: 5 }}>
+                                <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}>
+                                    <MenuIcon name='add-circle' size={50} color="#FED8B1" style={{ marginLeft: 20 }} />
+                                    <View style={{ flexDirection: "column", flex: 1 }}>
+                                        <Text style={{ marginLeft: 20, fontSize: 15, fontWeight: "700", color: "#FED8B1" }}>Show Notification</Text>
+                                        <Text style={{ marginLeft: 20, color: "#FED8B1", fontSize: 12 }}>Check your notifications here.</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
 
 
                         <TouchableOpacity onPress={() => router.push({ pathname: "/(member)/create-register" })}>

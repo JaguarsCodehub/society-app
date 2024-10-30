@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
   Image,
-  Platform,
+  Platform
 } from 'react-native';
 import { Stack } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -17,13 +17,56 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from '../../components/ui/LoadingScreen';
 import { uploadImageAsync } from '../../utils/uploadImageAsync';
-import SearchablePicker from '../../components/SearchablePicker';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { Picker } from '@react-native-picker/picker';
+import { useToast } from '../../providers/ToastProvider';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
+const setUpNotificationCategories = async () => {
+  await Notifications.setNotificationCategoryAsync('visitor_response', [
+    { identifier: 'yes', buttonTitle: 'Allow', options: { isDestructive: false } },
+    { identifier: 'no', buttonTitle: 'Deny', options: { isDestructive: true } },
+  ]);
+};
+
+
+
+Notifications.addNotificationResponseReceivedListener(async (response) => {
+  const { notification, actionIdentifier } = response;
+  const { data } = notification.request.content;
+
+  console.log("Inside addNotificationResponseReceivedListener");
+
+  if (data && (actionIdentifier === 'yes' || actionIdentifier === 'no')) {
+    try {
+      console.log("Data: ", data)
+      const visitorResponse = actionIdentifier === 'yes' ? 'Allowed' : 'Denied';
+      await axios.post('https://society-backend-six.vercel.app/visitorResponse', {
+        response: visitorResponse,
+        // visitorId: data.visitorId, // Assuming you're sending this in the notification data
+        wingCode: data.wingCode,
+        flatID: data.flatID
+      });
+      console.log('Response sent successfully');
+    } catch (error: any) {
+      console.error('Error sending response:', error.message);
+    }
+  }
+});
+
 
 type CookieUserData = {
   SocietyID: string;
   ID: string;
-  year: string;
+  Year: string;
 };
 
 const VisitorsPage = () => {
@@ -38,6 +81,8 @@ const VisitorsPage = () => {
   const [mobileNumber, setMobileNumber] = useState<string>('');
   const [cookies, setCookies] = useState<CookieUserData | null>(null);
 
+
+  const { showToast } = useToast()
   const pickImage = async () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -54,6 +99,10 @@ const VisitorsPage = () => {
   };
 
   useEffect(() => {
+    setUpNotificationCategories();
+  }, []);
+
+  useEffect(() => {
     const fetchAsyncStorageData = async () => {
       try {
         const keys = ['SocietyID', 'ID', 'Year'];
@@ -67,6 +116,7 @@ const VisitorsPage = () => {
         }, {} as CookieUserData);
 
         setCookies(userData);
+        console.log('Cookies:', cookies);
         console.log('Async Storage DATA from UseEffect: ', userData);
       } catch (error) {
         console.error('Error retrieving user data:', error);
@@ -83,7 +133,7 @@ const VisitorsPage = () => {
         const headers = {
           societyid: societyid,
         };
-        console.log('Headers being sent:', headers); // Log headers
+        console.log('Headers being sent:', headers);
 
         try {
           const response = await axios.get(
@@ -92,10 +142,11 @@ const VisitorsPage = () => {
               headers,
             }
           );
-          if (response.data.data) {
-            setFlats(response.data.data)
+          if (Array.isArray(response.data.data)) {
+            setFlats(response.data.data);
+            // console.log('Flats:', response.data.data);
           } else {
-            console.error('Unexpected response data:', response.data);
+            // console.error('Unexpected response data:', response.data);
           }
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -113,7 +164,6 @@ const VisitorsPage = () => {
   }, [cookies]);
 
   const handleSubmit = async () => {
-
     if (name === '' || mobileNumber === '' || image === null || flat === '') {
       return;
     }
@@ -131,7 +181,7 @@ const VisitorsPage = () => {
         image,
         wingCode,
         flatID,
-        year: cookies?.year,
+        year: cookies?.Year,
         societyID,
         ID
       };
@@ -141,10 +191,43 @@ const VisitorsPage = () => {
         requestData
       );
       console.log('Response from server:', response.data);
+
+      // Assuming the response includes the visitor ID
+      // const visitorId = response.data.visitorId;
+
+      // Send notification to the member with the visitor ID
+      await sendNotificationToMember(wingCode, flatID, name);
+
+      showToast('success', 'Visitor added successfully!')
     } catch (error) {
       console.error('Error submitting data:', error);
+      showToast('error', 'Failed to add visitor. Please try again.');
     } finally {
       setLoading(false);
+      setName('');
+      setMobileNumber('');
+      setDate(new Date());
+      setFlat('');
+      setImage(null);
+    }
+  };
+
+  const sendNotificationToMember = async (wingCode: string, flatID: number, visitorName: string) => {
+    try {
+      const response = await axios.post('https://society-backend-six.vercel.app/sendNotification', {
+        wingCode,
+        flatID,
+        message: `A visitor ${visitorName} is coming to your flat. Do you want to allow?`,
+        categoryIdentifier: 'visitor_response',
+        data: {
+
+          wingCode,
+          flatID
+        }
+      });
+      console.log('Notification sent:', response.data);
+    } catch (error) {
+      console.error('Error sending notification:', error);
     }
   };
 
@@ -214,15 +297,22 @@ const VisitorsPage = () => {
 
           <View style={styles.formSection}>
             <Text style={styles.label}>Select Flat</Text>
-            <SearchablePicker
-              selectedValue={flat}
-              onValueChange={setFlat}
-              items={flats.map((flat: any) => ({
-                label: flat.wingFlat,
-                value: `${flat.wingCode}-${flat.flatID}`
-              }))}
-              placeholder="Select Flat"
-            />
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={flat}
+                onValueChange={(itemValue) => setFlat(itemValue)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Select Flat" value="" />
+                {flats.map((flat: any) => (
+                  <Picker.Item
+                    key={`${flat.wingCode}-${flat.flatID}`}
+                    label={flat.wingFlat}
+                    value={`${flat.wingCode}-${flat.flatID}`}
+                  />
+                ))}
+              </Picker>
+            </View>
           </View>
 
           <View style={styles.formSection}>
@@ -327,5 +417,16 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
     marginRight: 8,
+  },
+  pickerContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#E5E5EA',
+    overflow: 'hidden',
+  },
+  picker: {
+    height: 50,
+    width: '100%',
   },
 });

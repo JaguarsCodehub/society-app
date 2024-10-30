@@ -1,7 +1,33 @@
+
+Features
+- Login wth Company Code ✅
+- Account Master Customer creation. GST and FSSAi Number. Group Name : Sundry Debtors ✅ Need to add validation for GST and input field
+- Product Master by Group Name, then create orders https://quickbillbook.com/SalesOrder.aspx
+- UI Changes Done ✅
+
+New Features: 
+- Watchman should be able to see the visitor details
+- Member should get to see the visitor on screen
+- Remove button for J Register just Like Add Button Done ✅
+- ScrollView for J Register Done ✅npx expo start
+- Preview of J Register Form Done ✅
+- UI Changes Done ✅
+- Choose type of Property: residential or commercial Done ✅
+- Add Flat Provision for J Register
+- JSON issue
+
+
+
+// - Remove Year Prefix from all forms
+
 New Features:
-- Loader for every post and get request
-- J Register Document Format PDF + Preview
-- J Register Table Format Truncated
+- Notification setup Done ✅
+- Notification sending to particular user Done ✅
+- Backend Endpoint to support notification sending to specific user Done ✅
+- Allow and Deny Buttons configuration on Notification Done ✅
+- Member should send 'Yes' or 'No' when visitor is approved  Done ✅
+- Watchman should get notification when visitor is approved Done ✅
+- Members should get to see who have visited their flat. Done ✅
 
 New Features discussed on Friday
 - J RegisterFlat Document Upload (Images, PDF) ✅ Done
@@ -15,7 +41,6 @@ Pending Features:
 - Admin should be able to see the vote count ✅ Done
 - Loader for every post and get request
 
-
 Not needed now:
 - Gate Pass for friends and relatives : QR Code Generation
 
@@ -27,3 +52,13 @@ Settings:
 1. Input Validation in Visitors ✅
 2. View Visitors FlatList key Issue ✅
 3. Member Selection in Send package request
+
+type VisitorData = {
+  id: string;
+  date: string;
+  name: string;
+  wingName: string;
+  flatNumber: string;
+  mobileNumber: string;
+  photo: string;
+};
